@@ -1,0 +1,11 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+}
+
+body{
+  background-color: rgb(221, 221, 221);
+}
