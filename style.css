@@ -1,11 +1,180 @@
+@import url('./fontawesome/css/fontawesome.min.css');
+@import url('/fontawesome/css/all.min.css');
+@import url('/fontawesome/css/brands.min.css');
+
 *,
 *::after,
 *::before {
   box-sizing: border-box;
-  font-family: "Nunito", sans-serif;
-  font-optical-sizing: auto;
+  padding: 0;
+  margin: 0;
 }
 
-body{
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+
+  font-family: sans-serif;
+}
+
+
+body {
   background-color: rgb(221, 221, 221);
+  position: relative;
+}
+
+.navigation-bar {
+  background-image: linear-gradient(#d83211, #ff7337);
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  padding: 0.3rem;
+}
+
+.navigation-bar .content {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.navigation-bar .content a,
+.navigation-bar .content p {
+  color: white;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: lighter;
+}
+
+.navigation-bar .links {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.4rem 0 1rem 0;
+}
+
+.navigation-bar a:hover {
+  color: rgb(201, 201, 201);
+}
+
+.navigation-bar .useful-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.navigation-bar.useful-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.navigation-bar .separator-after {
+  position: relative;
+}
+
+.navigation-bar .separator-after::after {
+  position: absolute;
+  content: '';
+  height: 1rem;
+  width: 1px;
+  right: -0.5rem;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.295);
+}
+
+.navigation-bar .useful-features {
+  display: flex;
+  gap: 1rem;
+}
+
+.navigation-bar .useful-features .avatar{
+  display:inline-block;
+  width:1rem;
+  height:1rem;
+  border:1px solid white;
+  border-radius: 50%; 
+  background-color: #ff7337;
+
+  text-align: center;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.568);
+}
+
+.navigation-bar .search-and-cart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.5rem 0 0 0;
+}
+
+.navigation-bar .home {
+  display: flex;
+  align-items: end;
+  color: white;
+}
+
+.navigation-bar .home:hover {
+  cursor: pointer;
+}
+
+.navigation-bar .home i {
+  font-size: 40px;
+}
+
+.navigation-bar .home h1 {
+  font-size: 30px;
+  font-weight: lighter;
+}
+
+.navigation-bar .cart button {
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 25px;
+  margin-right: 1rem;
+}
+
+.navigation-bar .cart button:hover {
+  cursor: pointer;
+}
+
+.navigation-bar .search{
+  flex: 1 1 100%;
+  padding: 0 2rem;
+}
+.navigation-bar .search form{
+  position: relative;
+}
+
+.navigation-bar .search form #search-bar{
+  width:100%;
+  height:2.5rem;
+  padding: 0 1rem;
+  border: none;
+  border-radius: 0.2rem;
+}
+
+.navigation-bar .search form .search-button{
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  height: 2rem;
+  width: 4rem;
+  border:none;
+  border-radius: 0.2rem;
+  background-color: #ff5635;
+  color: white;
+}
+
+.navigation-bar .search form .search-button:hover{
+  background-color: #ff7337;
+  cursor: pointer;
+}
+
+.navigation-bar .suggest-searchs{
+  display:flex;
+  gap:0.8rem;
+  padding-top: 0.5rem;
 }
