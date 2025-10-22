@@ -35,6 +35,7 @@ body {
   display: flex;
   justify-content: center;
   padding: 0.3rem;
+  z-index: 999;
 }
 
 .navigation-bar .content {
@@ -89,12 +90,12 @@ body {
   gap: 1rem;
 }
 
-.navigation-bar .useful-features .avatar{
-  display:inline-block;
-  width:1rem;
-  height:1rem;
-  border:1px solid white;
-  border-radius: 50%; 
+.navigation-bar .useful-features .avatar {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid white;
+  border-radius: 50%;
   background-color: #ff7337;
 
   text-align: center;
@@ -140,41 +141,158 @@ body {
   cursor: pointer;
 }
 
-.navigation-bar .search{
+.navigation-bar .search {
   flex: 1 1 100%;
   padding: 0 2rem;
 }
-.navigation-bar .search form{
+
+.navigation-bar .search form {
   position: relative;
 }
 
-.navigation-bar .search form #search-bar{
-  width:100%;
-  height:2.5rem;
+.navigation-bar .search form #search-bar {
+  width: 100%;
+  height: 2.5rem;
   padding: 0 1rem;
   border: none;
   border-radius: 0.2rem;
 }
 
-.navigation-bar .search form .search-button{
+.navigation-bar .search form .search-button {
   position: absolute;
   top: 0.25rem;
   right: 0.25rem;
   height: 2rem;
   width: 4rem;
-  border:none;
+  border: none;
   border-radius: 0.2rem;
   background-color: #ff5635;
   color: white;
 }
 
-.navigation-bar .search form .search-button:hover{
+.navigation-bar .search form .search-button:hover {
   background-color: #ff7337;
   cursor: pointer;
 }
 
-.navigation-bar .suggest-searchs{
-  display:flex;
-  gap:0.8rem;
+.navigation-bar .suggest-searchs {
+  display: flex;
+  gap: 0.8rem;
   padding-top: 0.5rem;
+}
+
+.sale-banner {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.sale-banner .wrapper {
+  flex: 1 1 100%;
+  max-width: 1200px;
+}
+
+.ads-banners {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.3rem;
+  margin: 1.5rem 0;
+}
+
+.ads-banners .main-banner {
+  grid-row: 1/3;
+  position: relative;
+}
+
+.ads-banners .banner img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.ads-banners .main-banner .banner-navigation,
+.ads-banners .main-banner .previous-banner-button,
+.ads-banners .main-banner .next-banner-button {
+  position: absolute;
+}
+
+.ads-banners .main-banner .banner-navigation {
+  bottom: 2%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ads-banners .banner-navigation button {
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.61);
+}
+
+.ads-banners .banner-navigation button.active {
+  background-color: orange;
+}
+
+.ads-banners .banner-navigation button:hover {
+  cursor: pointer;
+}
+
+.ads-banners .next-banner-button,
+.ads-banners .previous-banner-button {
+  width: 2rem;
+  height: 3rem;
+  border: none;
+  color: transparent;
+  background-color: transparent;
+}
+
+.ads-banners .previous-banner-button {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ads-banners .next-banner-button {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ads-banners:hover .next-banner-button,
+.ads-banners:hover .previous-banner-button {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: 200ms;
+}
+
+.ads-banners:hover .next-banner-button:hover,
+.ads-banners:hover .previous-banner-button:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.deals {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin: 1rem 0;
+  padding: 0 1rem;
+}
+
+.deals .deal {
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.deals img {
+  width: 45px;
+  height: 45px;
 }
