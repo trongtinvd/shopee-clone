@@ -61,21 +61,21 @@ body {
   color: rgb(201, 201, 201);
 }
 
-.navigation-bar .useful-links {
+.useful-links {
   display: flex;
   gap: 1rem;
 }
 
-.navigation-bar.useful-links {
+.useful-links {
   display: flex;
   gap: 1rem;
 }
 
-.navigation-bar .separator-after {
+.separator-after {
   position: relative;
 }
 
-.navigation-bar .separator-after::after {
+.separator-after::after {
   position: absolute;
   content: '';
   height: 1rem;
@@ -85,12 +85,12 @@ body {
   background-color: rgba(255, 255, 255, 0.295);
 }
 
-.navigation-bar .useful-features {
+.useful-features {
   display: flex;
   gap: 1rem;
 }
 
-.navigation-bar .useful-features .avatar {
+.avatar {
   display: inline-block;
   width: 1rem;
   height: 1rem;
@@ -103,33 +103,33 @@ body {
   color: rgba(255, 255, 255, 0.568);
 }
 
-.navigation-bar .search-and-cart {
+.search-and-cart {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 1.5rem 0 0 0;
 }
 
-.navigation-bar .home {
+.home {
   display: flex;
   align-items: end;
   color: white;
 }
 
-.navigation-bar .home:hover {
+.home:hover {
   cursor: pointer;
 }
 
-.navigation-bar .home i {
+.home i {
   font-size: 40px;
 }
 
-.navigation-bar .home h1 {
+.home h1 {
   font-size: 30px;
   font-weight: lighter;
 }
 
-.navigation-bar .cart button {
+.cart button {
   border: none;
   background-color: transparent;
   color: white;
@@ -137,20 +137,20 @@ body {
   margin-right: 1rem;
 }
 
-.navigation-bar .cart button:hover {
+.cart button:hover {
   cursor: pointer;
 }
 
-.navigation-bar .search {
+.search {
   flex: 1 1 100%;
   padding: 0 2rem;
 }
 
-.navigation-bar .search form {
+.search form {
   position: relative;
 }
 
-.navigation-bar .search form #search-bar {
+#search-bar {
   width: 100%;
   height: 2.5rem;
   padding: 0 1rem;
@@ -158,7 +158,7 @@ body {
   border-radius: 0.2rem;
 }
 
-.navigation-bar .search form .search-button {
+.search-button {
   position: absolute;
   top: 0.25rem;
   right: 0.25rem;
@@ -170,12 +170,12 @@ body {
   color: white;
 }
 
-.navigation-bar .search form .search-button:hover {
+.search-button:hover {
   background-color: #ff7337;
   cursor: pointer;
 }
 
-.navigation-bar .suggest-searchs {
+.suggest-searchs {
   display: flex;
   gap: 0.8rem;
   padding-top: 0.5rem;
@@ -296,11 +296,16 @@ body {
   height: 45px;
 }
 
-.selection {
+.main-section{
   max-width: 1200px;
+  justify-self: center;
+}
+
+.selection {
   background-color: transparent;
   justify-self: center;
   font-family: sans-serif;
+  margin:1.5rem 0;
 }
 
 .selection .wrapper .wrapper {
