@@ -202,7 +202,7 @@ body {
 
 .ads-banners .main-banner {
   grid-row: 1/3;
-  position: relative;
+  grid-column:1/2
 }
 
 .ads-banners .banner img {
@@ -211,19 +211,20 @@ body {
   height: 100%;
 }
 
-.ads-banners .main-banner .banner-navigation,
-.ads-banners .main-banner .previous-banner-button,
-.ads-banners .main-banner .next-banner-button {
-  position: absolute;
+.banner-navigation,
+.previous-banner-button,
+.next-banner-button {
+  grid-row: 1/3;
+  grid-column: 1/2;
 }
 
-.ads-banners .main-banner .banner-navigation {
-  bottom: 2%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.banner-navigation {
+  justify-self: center;
+  align-self:self-end;
+  margin-bottom: 0.5rem;;
 }
 
-.ads-banners .banner-navigation button {
+.banner-navigation button {
   width: 0.7rem;
   height: 0.7rem;
   border: 1px solid white;
@@ -231,16 +232,16 @@ body {
   background-color: rgba(255, 255, 255, 0.61);
 }
 
-.ads-banners .banner-navigation button.active {
+.banner-navigation button.active {
   background-color: orange;
 }
 
-.ads-banners .banner-navigation button:hover {
+.banner-navigation button:hover {
   cursor: pointer;
 }
 
-.ads-banners .next-banner-button,
-.ads-banners .previous-banner-button {
+.next-banner-button,
+.previous-banner-button {
   width: 2rem;
   height: 3rem;
   border: none;
@@ -249,15 +250,12 @@ body {
 }
 
 .ads-banners .previous-banner-button {
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  align-self: center;
 }
 
 .ads-banners .next-banner-button {
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  align-self: center;
+  justify-self: end;
 }
 
 .ads-banners:hover .next-banner-button,
