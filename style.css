@@ -185,6 +185,8 @@ body {
   background-color: white;
   display: flex;
   justify-content: center;
+  box-shadow: 0 0 1px black;
+  margin-bottom: 2rem;
 }
 
 .sale-banner .wrapper {
@@ -200,12 +202,12 @@ body {
   margin: 1.5rem 0;
 }
 
-.ads-banners .main-banner {
+.main-banner {
   grid-row: 1/3;
-  grid-column:1/2
+  grid-column: 1/2
 }
 
-.ads-banners .banner img {
+.banner img {
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -220,8 +222,8 @@ body {
 
 .banner-navigation {
   justify-self: center;
-  align-self:self-end;
-  margin-bottom: 0.5rem;;
+  align-self: self-end;
+  margin-bottom: 0.5rem;
 }
 
 .banner-navigation button {
@@ -248,12 +250,11 @@ body {
   color: transparent;
   background-color: transparent;
 }
-
-.ads-banners .previous-banner-button {
+.previous-banner-button {
   align-self: center;
 }
 
-.ads-banners .next-banner-button {
+.next-banner-button {
   align-self: center;
   justify-self: end;
 }
@@ -279,7 +280,7 @@ body {
   padding: 0 1rem;
 }
 
-.deals .deal {
+.deal {
   width: 100px;
   display: flex;
   flex-direction: column;
@@ -293,4 +294,96 @@ body {
 .deals img {
   width: 45px;
   height: 45px;
+}
+
+.selection {
+  max-width: 1200px;
+  background-color: transparent;
+  justify-self: center;
+  font-family: sans-serif;
+}
+
+.selection .wrapper .wrapper {
+  overflow: hidden;
+}
+
+.selection-title {
+  color: gray;
+  background-color: white;
+  padding: 1.5rem;
+}
+
+.selection-tiles {
+  width: 141%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(14, fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 1px;
+  margin: 1px 0;
+  position: relative;
+}
+
+.selection-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+
+  font-size: 0.8rem;
+  background-color: white;
+  padding: 0.5rem 0;
+}
+
+.selection-tile:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: 300ms;
+  position: relative;
+  cursor: pointer;
+}
+
+.selection-tile img {
+  object-fit: contain;
+  width: 70%;
+}
+
+.selection-tile p {
+  text-align: center;
+}
+
+.selection .wrapper {
+  position: relative;
+}
+
+.previous-tiles-button,
+.next-tiles-button {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  color: gray;
+  z-index: 1;
+}
+
+.selection:hover .previous-tiles-button,
+.selection:hover .next-tiles-button {
+  font-size: 1.2rem;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  transition: 200ms;
+}
+
+.previous-tiles-button {
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+.next-tiles-button {
+  top: 50%;
+  right: 0;
+  transform: translate(50%, -50%);
 }
