@@ -2,6 +2,24 @@
 @import url('/fontawesome/css/all.min.css');
 @import url('/fontawesome/css/brands.min.css');
 
+:root {
+  --main-color-1--: #d83211;
+  --main-color-2--: #ff7337;
+  --main-color-3--: #ffffff;
+  --background-color-1--: #dddddd;
+  --background-color-2--: #ffffff;
+  --text-color-1--: #d83211;
+  --text-color-2--: #ffffff;
+  --text-color-3--: #dddddd;
+  --text-color-4--: #000000;
+  --text-color-hover-1--: #eeeeee;
+  --hover-button-color-1--: rgba(0, 0, 0, 0.6);
+  --shadow-color-1--: #0000001a;
+  --hightlight-color-1--: yellow;
+  --remain-color-1--: #d8321193;
+}
+
+
 *,
 *::after,
 *::before {
@@ -24,12 +42,12 @@ h6 {
 
 
 body {
-  background-color: rgb(221, 221, 221);
+  background-color: var(--background-color-1--);
   position: relative;
 }
 
 .navigation-bar {
-  background-image: linear-gradient(#d83211, #ff7337);
+  background-image: linear-gradient(var(--main-color-1--), var(--main-color-2--));
   position: sticky;
   top: 0;
   display: flex;
@@ -45,7 +63,7 @@ body {
 
 .navigation-bar .content a,
 .navigation-bar .content p {
-  color: white;
+  color: var(--text-color-2--);
   text-decoration: none;
   font-size: 0.8rem;
   font-weight: lighter;
@@ -58,7 +76,7 @@ body {
 }
 
 .navigation-bar a:hover {
-  color: rgb(201, 201, 201);
+  color: var(--text-color-hover-1--);
 }
 
 .useful-links {
@@ -82,7 +100,7 @@ body {
   width: 1px;
   right: -0.5rem;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.295);
+  background-color: var(--text-color-hover-1--);
 }
 
 .useful-features {
@@ -96,11 +114,11 @@ body {
   height: 1rem;
   border: 1px solid white;
   border-radius: 50%;
-  background-color: #ff7337;
+  background-color: var(--main-color-2--);
 
   text-align: center;
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.568);
+  color: var(--text-color-hover-1--);
 }
 
 .search-and-cart {
@@ -113,7 +131,7 @@ body {
 .home {
   display: flex;
   align-items: end;
-  color: white;
+  color: var(--text-color-2--);
 }
 
 .home:hover {
@@ -132,7 +150,7 @@ body {
 .cart button {
   border: none;
   background-color: transparent;
-  color: white;
+  color: var(--text-color-2--);
   font-size: 25px;
   margin-right: 1rem;
 }
@@ -166,12 +184,12 @@ body {
   width: 4rem;
   border: none;
   border-radius: 0.2rem;
-  background-color: #ff5635;
-  color: white;
+  background-color: var(--main-color-2--);
+  color: var(--text-color-2--);
 }
 
 .search-button:hover {
-  background-color: #ff7337;
+  background-color: var(--main-color-2--);
   cursor: pointer;
 }
 
@@ -182,7 +200,7 @@ body {
 }
 
 .sale-banner {
-  background-color: white;
+  background-color: var(--main-color-3--);
   display: flex;
   justify-content: center;
   box-shadow: 0 0 1px black;
@@ -231,11 +249,11 @@ body {
   height: 0.7rem;
   border: 1px solid white;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.61);
+  background-color: var(--background-color-1--);
 }
 
 .banner-navigation button.active {
-  background-color: orange;
+  background-color: var(--main-color-2--);
 }
 
 .banner-navigation button:hover {
@@ -262,14 +280,14 @@ body {
 
 .ads-banners:hover .next-banner-button,
 .ads-banners:hover .previous-banner-button {
-  color: white;
-  background-color: rgba(0, 0, 0, 0.3);
+  color: var(--text-color-2--);
+  background-color: var(--hover-button-color-1--);
   transition: 200ms;
 }
 
 .ads-banners:hover .next-banner-button:hover,
 .ads-banners:hover .previous-banner-button:hover {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: var(--hover-button-color-1--);
   cursor: pointer;
 }
 
@@ -314,8 +332,8 @@ body {
 }
 
 .selection-title {
-  color: gray;
-  background-color: white;
+  color: var(--text-color-4--);
+  background-color: var(--background-color-2--);
   padding: 1.5rem;
 }
 
@@ -337,12 +355,12 @@ body {
   justify-items: center;
 
   font-size: 0.8rem;
-  background-color: white;
+  background-color: var(--background-color-2--);
   padding: 0.5rem 0;
 }
 
 .selection-tile:hover {
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 10px var(--shadow-color-1--);
   transition: 300ms;
   position: relative;
   cursor: pointer;
@@ -369,7 +387,7 @@ body {
   border: none;
   border-radius: 50%;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
-  color: gray;
+  color: var(--text-color-4--);
   z-index: 1;
 }
 
@@ -399,7 +417,7 @@ body {
 }
 
 .flash-sale {
-  background-color: white;
+  background-color: var(--background-color-2--);
   margin: 1.5rem 0;
 }
 
@@ -426,7 +444,7 @@ body {
   font-size: 0.8rem;
   font-weight: bold;
   text-align: center;
-  color: white;
+  color: var(--text-color-2--);
   background-color: black;
   border-radius: 0.2rem;
   padding: 0.1rem 0.2rem;
@@ -437,7 +455,7 @@ body {
 
 .flash-sale-header a {
   text-decoration: none;
-  color: #ff5635;
+  color: var(--main-color-2--);
   font-size: 0.9rem;
 }
 
@@ -496,14 +514,14 @@ body {
   grid-column: 1/2;
   align-self: self-start;
   justify-self: self-end;
-  background-color: #ffe97a;
-  color: #ff5635;
+  background-color: var(--hightlight-color-1--);
+  color: var(--main-color-2--);
 }
 
 .sale-price {
   grid-row: 2/3;
   grid-column: 1/2;
-  color: #d83211;
+  color: var(--main-color-1--);
   font-family: sans-serif;
 }
 
@@ -521,7 +539,7 @@ body {
   grid-column: 1/2;
   width: 90%;
   padding: 0.2rem;
-  background-color: #d8321193;
+  background-color: var(--remain-color-1--);
   border-radius: 1rem;
   position: relative;
 }
@@ -531,7 +549,7 @@ body {
   height: 100%;
   padding: auto;
   justify-self: self-start;
-  background-image: linear-gradient(to right, #d83211, orange);
+  background-image: linear-gradient(to right, var(--main-color-1--), var(--main-color-2--));
   border-radius: 1rem;
   position: absolute;
   top: 0;
@@ -542,7 +560,7 @@ body {
   font-weight: bold;
   font-size: 0.7rem;
   text-align: center;
-  color: white;
+  color: var(--text-color-2--);
 }
 
 .voucher-banner {
@@ -580,14 +598,14 @@ body {
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background-color: white;
-  border-bottom: 1px solid rgb(221, 221, 221);
+  background-color: var(--background-color-2--);
+  border-bottom: 1px solid var(--background-color-1--);
 }
 
 .shopee-mall-header h2 {
   font-size: 1rem;
   font-weight: lighter;
-  color: #d83211;
+  color: var(--main-color-1--);
   position: relative;
 }
 
@@ -599,25 +617,24 @@ body {
   top: 50%;
   transform: translateY(-50%);
   margin: 0 0.5rem;
-  ;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: var(--background-color-1--);
 }
 
 .shopee-mall-header i {
-  color: #d83211;
+  color: var(--main-color-1--);
   font-size: 0.8rem;
 }
 
 .shopee-mall-header a {
   margin-left: auto;
-  color: #d83211;
+  color: var(--main-color-1--);
   text-decoration: none;
 }
 
 .shopee-mall-ad {
   grid-area: ad;
   padding: 0.5rem;
-  background-color: white;
+  background-color: var(--background-color-2--);
 }
 
 .shopee-mall .wrapper {
@@ -631,13 +648,11 @@ body {
 }
 
 .shopee-mall-tiles {
-  background-color: red;
   height: 100%;
   overflow: hidden;
 }
 
 .shopee-mall-tiles .grid-wrapper {
-  background-color: blue;
   height: 100%;
   width: 200%;
 
@@ -649,7 +664,6 @@ body {
 }
 
 .grid-wrapper .shopee-mall-tile {
-  background-color: cyan;
   background-image: url("img/shopee-mall/item-1.webp");
 
   display: flex;
@@ -659,5 +673,5 @@ body {
 }
 
 .shopee-mall-tile p {
-  color: #d83211;
+  color: var(--main-color-1--);
 }
