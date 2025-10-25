@@ -542,3 +542,22 @@ body {
   text-align: center;
   color: white;
 }
+
+.voucher-banner{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  margin:1.5rem 0;
+}
+
+.voucher-banner img,
+.voucher-banner .voucher-links{
+  grid-row: 1/2;
+  grid-column:1/2;
+}
+
+.voucher-links{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
