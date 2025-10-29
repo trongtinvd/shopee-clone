@@ -37,7 +37,8 @@ h3,
 h4,
 h5,
 h6,
-span {
+span,
+li {
 
   font-family: sans-serif;
 }
@@ -934,4 +935,70 @@ body {
 .login-invitation:hover {
   cursor: pointer;
   background-color: rgb(236, 236, 236);
+}
+
+footer {
+  border-top: 5px solid var(--main-color-2--);
+  background-color: var(--background-color-2--);
+}
+
+.footer-one .wrapper {
+  width: min(90%, 1200px);
+  margin: 2rem auto;
+  font-family: sans-serif;
+}
+
+.footer-one p {
+  font-size: 0.8rem;
+  margin: 1rem 0;
+}
+
+.footer-one li {
+  font-size: 0.7rem;
+  margin-left: 2rem;
+}
+
+.footer-one a {
+  color: black;
+}
+
+.footer-two {
+  margin: 1.5rem 0;
+  padding: 1.5rem 0;
+}
+
+.footer-two .wrapper {
+  width: min(90%, 1200px);
+  margin: auto;
+  font-size: 0.9rem;
+  font-family: sans-serif;
+}
+
+.footer-two-header {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--background-color-1--);
+}
+
+.footer-two-content {
+  columns: 200px;
+}
+
+.footer-two-links {
+  break-inside: avoid;
+  margin-bottom:1.5rem;
+}
+
+.footer-two-links h2 {
+  color: rgba(0, 0, 0, .54);
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.footer-two-links a {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, .54);
+}
+
+.footer-two-links span {
+  color: rgba(0, 0, 0, .54);
 }
