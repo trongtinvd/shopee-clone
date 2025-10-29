@@ -985,7 +985,7 @@ footer {
 
 .footer-two-links {
   break-inside: avoid;
-  margin-bottom:1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .footer-two-links h2 {
@@ -1001,4 +1001,75 @@ footer {
 
 .footer-two-links span {
   color: rgba(0, 0, 0, .54);
+}
+
+.footer-three {
+  background-color: #fbfbfb;
+}
+
+.footer-three .wrapper {
+  width: min(90%, 1200px);
+  margin: 1.5rem auto;
+}
+
+.footer-three-top-section {
+  columns: 200px;
+  column-gap: 3rem;
+
+  padding: 1.5rem 0;
+}
+
+.footer-three-link-group {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+}
+
+.footer-three-link-group h2 {
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.footer-three-link-group a {
+  color: rgba(0, 0, 0, .54);
+  font-size: 0.8rem;
+  line-height: 1.8rem;
+  text-decoration: none;
+  display: block;
+}
+
+.footer-three-link-group a:hover {
+  color: var(--main-color-2--);
+}
+
+.footer-three-transport-and-payment {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+  width: fit-content;
+}
+
+.footer-three-link-group img {
+  border-radius: 0.2rem;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+}
+
+.footer-three-download-method {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  width: fit-content;
+}
+
+.qr-code {
+  grid-row: 1/4;
+  grid-column: 1/2;
+}
+
+.footer-three-bottom-section{
+  border-top: 1px solid var(--background-color-1--);
+  padding:3rem 0;
+  color: rgba(0, 0, 0, .54);
+  font-size: 0.8rem;;
 }
