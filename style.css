@@ -229,7 +229,8 @@ body {
 
   display:grid;
   grid-template-columns: repeat(10, 100%);
-  overflow: scroll;
+  overflow-x: scroll;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
 }
@@ -264,6 +265,7 @@ body {
 .banner-navigation-button {
   width: 0.7rem;
   height: 0.7rem;
+  margin:0.1rem;
   border: 1px solid white;
   border-radius: 50%;
   background-color: var(--background-color-1--);
