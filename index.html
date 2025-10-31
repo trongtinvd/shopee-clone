@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shopee copycat</title>
   <link rel="stylesheet" href="style.css">
-  <script type="module" src="index.js"></script>
+  <script type="module" src="index.js" defer></script>
 </head>
 
 <body>
@@ -56,20 +56,29 @@
     <section class="sale-banner">
       <div class="wrapper">
         <div class="ads-banners">
-          <div class="banner main-banner"> <img src="img/banners/main-1.webp" alt=""> </div>
-          <div class="banner"><img src="img/banners/sub-1.webp" alt=""></div>
-          <div class="banner"><img src="img/banners/sub-2.webp" alt=""></div>
+          <div class="main-banner">
+            <a href="#" target="_blank"><img data-banner-index="0" class="active-main-banner" src="img/banners/main-1.webp" alt=""></a>
+            <a href="#" target="_blank"><img data-banner-index="1" src="img/banners/main-2.webp" alt=""></a>
+            <a href="#" target="_blank"><img data-banner-index="2" src="img/banners/main-3.webp" alt=""></a>
+            <a href="#" target="_blank"><img data-banner-index="3" src="img/banners/main-4.webp" alt=""></a>
+            <a href="#" target="_blank"><img data-banner-index="4" src="img/banners/main-5.webp" alt=""></a>
+            <a href="#" target="_blank"><img data-banner-index="5" src="img/banners/main-6.webp" alt=""></a>
+            <a href="#" target="_blank"><img data-banner-index="6" src="img/banners/main-7.webp" alt=""></a>
+            <a href="#" target="_blank"><img data-banner-index="7" src="img/banners/main-8.webp" alt=""></a>
+          </div>
+          <a href="#" target="_blank"><div class="banner"><img src="img/banners/sub-1.webp" alt=""></div></a>
+          <a href="#" target="_blank"><div class="banner"><img src="img/banners/sub-2.webp" alt=""></div></a>
           <button class="previous-banner-button"><i class="fa-solid fa-chevron-left"></i></button>
           <button class="next-banner-button"><i class="fa-solid fa-chevron-right"></i></button>
           <div class="banner-navigation">
-            <button class="active"></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
+            <button data-banner-navigation-index="0" class="banner-navigation-button active-banner-navigation-button"></button>
+            <button data-banner-navigation-index="1" class="banner-navigation-button"></button>
+            <button data-banner-navigation-index="2" class="banner-navigation-button"></button>
+            <button data-banner-navigation-index="3" class="banner-navigation-button"></button>
+            <button data-banner-navigation-index="4" class="banner-navigation-button"></button>
+            <button data-banner-navigation-index="5" class="banner-navigation-button"></button>
+            <button data-banner-navigation-index="6" class="banner-navigation-button"></button>
+            <button data-banner-navigation-index="7" class="banner-navigation-button"></button>
           </div>
         </div>
 

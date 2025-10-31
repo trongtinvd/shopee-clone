@@ -225,10 +225,24 @@ body {
 
 .main-banner {
   grid-row: 1/3;
-  grid-column: 1/2
+  grid-column: 1/2;
+
+  display:grid;
+  grid-template-columns: repeat(10, 100%);
+  overflow: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
 }
 
-.banner img {
+.main-banner::-webkit-scrollbar{
+  display: none;
+}
+
+.main-banner img{
+  scroll-snap-align: start;
+}
+
+.main-banner img {
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -247,7 +261,7 @@ body {
   margin-bottom: 0.5rem;
 }
 
-.banner-navigation button {
+.banner-navigation-button {
   width: 0.7rem;
   height: 0.7rem;
   border: 1px solid white;
@@ -255,7 +269,7 @@ body {
   background-color: var(--background-color-1--);
 }
 
-.banner-navigation button.active {
+.active-banner-navigation-button {
   background-color: var(--main-color-2--);
 }
 
