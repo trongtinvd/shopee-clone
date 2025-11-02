@@ -12,4 +12,11 @@ function renderBanner() {
     });
 }
 
+function getAndRenderUser() {
+  fetch("./jsons/user.json")
+    .then(data => data.json())
+    .then(data => htmlRenderer.renderUser(data));
+}
+
+getAndRenderUser();
 renderBanner();
