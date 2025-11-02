@@ -73,40 +73,21 @@ function loadBannerHTML(data) {
       </div>
     </div>
   */
+  const mainBannerData = data["main-banners"];
+  const subBannerData = data["sub-banners"];
 
-  const mainBanner = data["main-banners"];
-  const subBanner = data["sub-banners"];
-  let html = `<div class="main-banner">`;
+  const mainBanner = document.querySelector(".main-banner");
+  for (let i = 0; i < mainBannerData.length; i++) {
+    mainBanner.insertAdjacentHTML("beforeend", `<a href="${mainBannerData[i].link}" target="_blank"><img data-banner-index="${i}" class="${i === 0 ? "active-main-banner" : ""}" src="${mainBannerData[i].img}" alt="main banner #${i}"></a>`);
+  }
+  mainBanner.insertAdjacentHTML("afterend", `<a href="${subBannerData[1].link}" target="_blank"><div class="banner"><img src="${subBannerData[1].img}" alt="sub banner #${1}"></div></a>`);
+  mainBanner.insertAdjacentHTML("afterend", `<a href="${subBannerData[0].link}" target="_blank"><div class="banner"><img src="${subBannerData[0].img}" alt="sub banner #${0}"></div></a>`);
 
-  for (let i = 0; i < mainBanner.length; i++) {
-    if (i === 0) {
-      html += `<a href="${mainBanner[i].link}" target="_blank"><img data-banner-index="${i}" class="active-main-banner" src="${mainBanner[i].img}" alt="main banner #${i}"></a>`;
-    }
-    else {
-      html += `<a href="${mainBanner[i].link}" target="_blank"><img data-banner-index="${i}" src="${mainBanner[i].img}" alt="main banner #${i}"></a>`;
-    }
+  const bannerNavigation = document.querySelector(".banner-navigation");
+  for (let i = 0; i < mainBannerData.length; i++) {
+    bannerNavigation.insertAdjacentHTML("beforeend", `<button data-banner-navigation-index="${i}" class="banner-navigation-button ${i === 0 ? "active-banner-navigation-button" : ""}"></button>`);
   }
 
-  html += `</div>
-      <a href="${subBanner[0].link}" target="_blank"><div class="banner"><img src="${subBanner[0].img}" alt="sub banner #${0}"></div></a>
-      <a href="${subBanner[1].link}" target="_blank"><div class="banner"><img src="${subBanner[1].img}" alt="sub banner #${1}"></div></a>
-      <button class="previous-banner-button"><i class="fa-solid fa-chevron-left"></i></button>
-      <button class="next-banner-button"><i class="fa-solid fa-chevron-right"></i></button>
-      <div class="banner-navigation">`;
-
-  for (let i = 0; i < mainBanner.length; i++) {
-    if (i === 0) {
-      html += `<button data-banner-navigation-index="${i}" class="banner-navigation-button active-banner-navigation-button"></button>`;
-    }
-    else {
-      html += `<button data-banner-navigation-index="${i}" class="banner-navigation-button"></button>`;
-    }
-  }
-
-  html += `</div>`;
-
-  console.log(html);
-  document.querySelector(".ads-banners").innerHTML = html;
   addBannerEventListeners();
 }
 
