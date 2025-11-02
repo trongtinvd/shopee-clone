@@ -203,7 +203,14 @@ body {
 .suggest-searchs {
   display: flex;
   gap: 0.8rem;
-  padding-top: 0.5rem;
+  margin: 0.5rem;
+  height:1rem;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
+.suggest-searchs a {
+  white-space: no-wrap;
 }
 
 .sale-banner {

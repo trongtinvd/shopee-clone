@@ -43,6 +43,13 @@ const htmlRenderer = {
     const avatar = document.querySelector(".avatar");
     avatar.insertAdjacentHTML("afterbegin",`<img src="${profilePicture}" alt="profile picture" >`);
     avatar.insertAdjacentHTML("beforeend", `<span> ${username}</span>`);
+  },
+
+  renderSuggestSearch: function(data){
+    const suggestSearch = document.querySelector(".suggest-searchs");
+    for(let i=0;i<data.length;i++){
+      suggestSearch.insertAdjacentHTML("afterbegin", `<a href="${data[i]["link"]}" target="_blank">${data[i]["suggest"]}</a>`)
+    }
   }
 }
 

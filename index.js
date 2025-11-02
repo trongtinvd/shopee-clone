@@ -18,5 +18,12 @@ function getAndRenderUser() {
     .then(data => htmlRenderer.renderUser(data));
 }
 
+function renderSuggestSearch() {
+  fetch("./jsons/suggest-search.json")
+    .then(data => data.json())
+    .then(data => htmlRenderer.renderSuggestSearch(data));
+}
+
 getAndRenderUser();
+renderSuggestSearch();
 renderBanner();
