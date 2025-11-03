@@ -55,7 +55,6 @@ body {
   top: 0;
   display: flex;
   justify-content: center;
-  padding: 0.3rem;
   z-index: 999;
 }
 
@@ -64,51 +63,132 @@ body {
   max-width: 1200px;
 }
 
-.navigation-bar .content a,
-.navigation-bar .content p {
+.navigation-bar .links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.useful-links,
+.useful-features {
+  max-width: 600px;
+}
+
+.useful-links {
+  display: flex;
+}
+
+.useful-links a,
+.useful-links span,
+.useful-features a {
   color: var(--text-color-2--);
   text-decoration: none;
   font-size: 0.8rem;
   font-weight: lighter;
 }
 
-.navigation-bar .links {
-  display: flex;
-  justify-content: space-between;
-  margin: 0.4rem 0 1rem 0;
+.useful-links a:hover,
+.useful-links span:hover,
+.useful-features a:hover {
+  color: var(--text-color-3--);
 }
 
-.navigation-bar a:hover {
-  color: var(--text-color-hover-1--);
-}
-
-.useful-links {
-  display: flex;
-  gap: 1rem;
-}
-
-.useful-links {
-  display: flex;
-  gap: 1rem;
-}
-
-.separator-after {
-  position: relative;
+.link-label {
+  margin: 0.5rem 0.5rem 0.5rem 0;
 }
 
 .separator-after::after {
+  content: "|";
+  color: var(--text-color-2--);
+  margin-left: 0.5rem;
+}
+
+.download-popup-detector {
+  position: relative;
+}
+
+.download-popup {
+  display: none;
+}
+
+.download-popup img {
+  margin: 0.5rem;
+}
+
+.download-popup-detector:hover .download-popup {
+  display: block;
   position: absolute;
-  content: '';
-  height: 1rem;
-  width: 1px;
-  right: -0.5rem;
-  top: 0;
-  background-color: var(--text-color-hover-1--);
+  z-index: 1;
+
+  background-color: white;
 }
 
 .useful-features {
   display: flex;
-  gap: 1rem;
+}
+
+.notification-popup {
+  display: none;
+}
+
+.notification-popup-detector {
+  position: relative;
+}
+
+.notification-popup-detector:hover .notification-popup {
+  display: block;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 400px;
+  background-color: var(--background-color-2--);
+}
+
+.notification-popup-header {
+  background-color: var(--background-color-2--);
+  padding: 0.5rem;
+  font-family: sans-serif;
+  font-size: 1rem;
+  color: var(--text-color-3--);
+}
+
+.notification-link {
+  display: grid;
+  grid-template-areas:
+    "img title"
+    "img content";
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: rgb(255, 246, 247);
+}
+
+.notification-link:hover {
+  cursor: pointer;
+  background-color: rgb(246, 249, 255);
+}
+
+.notification-image {
+  grid-area: img;
+  width: 3rem;
+}
+
+.notification-title {
+  color: black;
+}
+
+.notification-content {
+  color: gray;
+}
+
+.notification-popup-show-all {
+  text-align: center;
+  padding: 0.5rem
+}
+
+.notification-popup-show-all a {
+  color: black;
+  font-size: 1rem;
 }
 
 .avatar {
@@ -204,7 +284,7 @@ body {
   display: flex;
   gap: 0.8rem;
   margin: 0.5rem;
-  height:1rem;
+  height: 1rem;
   overflow: hidden;
   flex-wrap: wrap;
 }
