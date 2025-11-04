@@ -41,8 +41,8 @@ const htmlRenderer = {
     const profilePicture = data["profile-picture"];
 
     const avatar = document.querySelector(".avatar");
+    avatar.insertAdjacentHTML("afterbegin", `<span> ${username}</span>`);
     avatar.insertAdjacentHTML("afterbegin",`<img src="${profilePicture}" alt="profile picture" >`);
-    avatar.insertAdjacentHTML("beforeend", `<span> ${username}</span>`);
   },
 
   renderSuggestSearch: function(data){
