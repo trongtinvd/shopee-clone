@@ -161,6 +161,8 @@ body {
 
 .notification-link {
   display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: auto 1fr;
   grid-template-areas:
     "img title"
     "img content";
@@ -176,7 +178,8 @@ body {
 
 .notification-image {
   grid-area: img;
-  width: 3rem;
+  object-fit: contain;
+  width:100%;
 }
 
 .notification-title {
@@ -318,6 +321,19 @@ body {
 .cart-icon {
   color: var(--text-color-2--);
   font-size: 2rem;
+  position: relative;
+}
+
+.cart-item-count{
+  font-size: 0.8rem;
+  text-align: center;
+  background-color: var(--main-color-1--);
+  padding:0.1rem 0.2rem;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -50%);
+  border:1px solid white;
+  border-radius: .3rem;
 }
 
 .cart-popup {
@@ -337,18 +353,26 @@ body {
   right: 0;
 }
 
+.empty-cart{
+  aspect-ratio: 3/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
 .cart-content-header {
   padding: 1rem;
   color: var(--text-color-7--);
 }
 
 .cart-content-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
+  display: grid;
+  grid-template-columns: 1fr 7fr 1fr;
+  gap:0.4rem;
+  
+  padding:0.4rem;
   text-decoration: none;
-  color: var(--text-color-4--)
 }
 
 .cart-content-item:hover {
@@ -362,10 +386,13 @@ body {
 
 .cart-item-name {
   padding: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--text-color-4--);
 }
 
 .cart-item-price {
   color: var(--main-color-1--);
+  font-size: 0.8rem;
 }
 
 .cart-item-price:after {
@@ -417,7 +444,7 @@ body {
   border-radius: 0.2rem;
 }
 
-.search-suggest-popup {
+.search-history-popup {
   display: none;
   width: 90%;
   margin-top: 0.5rem;
@@ -426,22 +453,22 @@ body {
   background-color: var(--background-color-2--);
 }
 
-.search-suggest-popup a {
+.search-history-popup a {
   font-size: 0.9rem;
   color: var(--text-color-4--);
   text-decoration: none;
   padding: 0.7rem;
 }
 
-.search-suggest-popup a:hover {
+.search-history-popup a:hover {
   background-color: var(--background-color-4--);
 }
 
-.search-suggest-popup-detector {
+.search-history-popup-detector {
   position: relative;
 }
 
-.search-suggest-popup-detector input:focus+.search-suggest-popup {
+.search-history-popup-detector:focus-within .search-history-popup {
   display: flex;
   flex-direction: column;
   position: absolute;

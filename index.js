@@ -12,7 +12,7 @@ function renderBanner() {
     });
 }
 
-function getAndRenderUser() {
+function renderUser() {
   fetch("./jsons/user.json")
     .then(data => data.json())
     .then(data => htmlRenderer.renderUser(data));
@@ -24,6 +24,27 @@ function renderSuggestSearch() {
     .then(data => htmlRenderer.renderSuggestSearch(data));
 }
 
-getAndRenderUser();
+function renderNotification(){
+  fetch("./jsons/notification.json")
+    .then(data => data.json())
+    .then(data => htmlRenderer.renderNotification(data));
+}
+
+function renderSearchHistory(){
+  fetch("./jsons/search-history.json")
+    .then(data => data.json())
+    .then(data => htmlRenderer.renderSearchHistory(data));
+}
+
+function renderCart(){
+  fetch("./jsons/cart.json")
+    .then(data => data.json())
+    .then(data => htmlRenderer.renderCart(data));
+}
+
+renderUser();
 renderSuggestSearch();
 renderBanner();
+renderNotification();
+renderSearchHistory();
+renderCart();

@@ -50,6 +50,53 @@ const htmlRenderer = {
     for(let i=0;i<data.length;i++){
       suggestSearch.insertAdjacentHTML("afterbegin", `<a href="${data[i]["link"]}" target="_blank">${data[i]["suggest"]}</a>`)
     }
+  },
+
+  renderNotification: function(data){
+    const notification = document.querySelector(".notification-popup-body");
+    for (let i=0;i<data.length;i++){
+      notification.insertAdjacentHTML("beforeend", ` <a href="${data[i]["link"]}" target="_blank" rel="noopener noreferrer" class="notification-link">
+                                                        <img src="${data[i]["img"]}" alt="" class="notification-image">
+                                                        <p class="notification-title">${data[i]["name"]}</p>
+                                                        <p class="notification-content">${data[i]["description"]}</p>
+                                                      </a> `)
+    }
+  },
+
+  renderSearchHistory: function(data){
+    const searchHistory = document.querySelector(".search-history-popup");
+    for (let i=0;i<data.length;i++){
+      searchHistory.insertAdjacentHTML("beforeend", `<a href="${data[i]["link"]}" target="_blank"  rel="noopener noreferrer">${data[i]["name"]}</a>`)
+    }
+  },
+
+  renderCart: function(data){
+    const cart = document.querySelector(".cart-popup");
+    if(data.length === 0){
+      cart.innerHTML=`<div class="empty-cart"><span>Chưa có sản phẩm<span></div>`;
+      return;
+    }
+
+    cart.innerHTML= `  
+                    <div class="cart-content-header">Sằn phẩm mới xem</div>
+                    <div class="cart-content-body"></div>
+                    <div class="cart-content-show-all">
+                      <span>${data.length} hàng trong giỏ</span>
+                      <a href="#" target="_blank" rel="noopener noreferrer">Xem giỏ hàng</a>
+                    </div> `
+
+    const cartBody = document.querySelector(".cart-content-body");
+    for(let i=0;i<data.length;i++){
+      cartBody.insertAdjacentHTML("afterbegin", ` <a href="${data[i]["link"]}" target="_blank" rel="noopener noreferrer" class="cart-content-item">
+                                                    <img src="${data[i]["image"]}" alt="">
+                                                    <span class="cart-item-name">${data[i]["name"]}</span>
+                                                    <span class="cart-item-price">${data[i]["price"]}</span>
+                                                  </a>
+                                                  `);
+    }
+
+    const cartIcon = document.querySelector(".cart-icon");
+    cartIcon.insertAdjacentHTML("beforeend", `<span class="cart-item-count">${data.length}</span>`);
   }
 }
 
