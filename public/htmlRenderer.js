@@ -2,15 +2,15 @@
 const htmlRenderer = {
 
   renderBanner: function (data) {
-    const mainBannerData = data["main-banners"];
-    const subBannerData = data["sub-banners"];
 
-    const mainBanner = document.querySelector(".main-banner");
+    const { "main-banners": mainBannerData, "sub-banners": subBannerData } = data;
+
+    const mainBanners = document.querySelector(".main-banners");
     for (let i = 0; i < mainBannerData.length; i++) {
-      mainBanner.insertAdjacentHTML("beforeend", `<a href="${mainBannerData[i].link}" target="_blank"><img data-banner-index="${i}" class="${i === 0 ? "active-main-banner" : ""}" src="${mainBannerData[i].img}" alt="main banner #${i}"></a>`);
+      mainBanners.insertAdjacentHTML("beforeend", `<a href="${mainBannerData[i].link}" target="_blank"><img data-banner-index="${i}" class="${i === 0 ? "active-main-banner" : ""}" src="${mainBannerData[i].img}" alt="main banner #${i}"></a>`);
     }
-    mainBanner.insertAdjacentHTML("afterend", `<a href="${subBannerData[1].link}" target="_blank"><div class="banner"><img src="${subBannerData[1].img}" alt="sub banner #${1}"></div></a>`);
-    mainBanner.insertAdjacentHTML("afterend", `<a href="${subBannerData[0].link}" target="_blank"><div class="banner"><img src="${subBannerData[0].img}" alt="sub banner #${0}"></div></a>`);
+    mainBanners.insertAdjacentHTML("afterend", `<a href="${subBannerData[1].link}" target="_blank"><div class="banner"><img src="${subBannerData[1].img}" alt="sub banner #${1}"></div></a>`);
+    mainBanners.insertAdjacentHTML("afterend", `<a href="${subBannerData[0].link}" target="_blank"><div class="banner"><img src="${subBannerData[0].img}" alt="sub banner #${0}"></div></a>`);
 
     const bannerNavigation = document.querySelector(".banner-navigation");
     for (let i = 0; i < mainBannerData.length; i++) {
@@ -19,7 +19,7 @@ const htmlRenderer = {
   },
 
   changeActiveBanner: function (newIndex) {
-    const mainBanner = document.querySelector(".main-banner");
+    const mainBanner = document.querySelector(".main-banners");
     const oldBanner = document.querySelector(".active-main-banner");
     const oldIndex = oldBanner.dataset.bannerIndex;
     const oldButton = document.querySelector(`[data-banner-navigation-index='${oldIndex}']`);

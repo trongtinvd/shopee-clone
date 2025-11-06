@@ -5,26 +5,30 @@ const eventManager = {
   addBannerEventListeners: function () {
     this.addNextBannerButtonListener();
     this.addPreviousBannerButtonListener();
-    this.addBannerNvigationButtonListener();
+    this.addBannerNavigationButtonListener();
   },
 
   addNextBannerButtonListener: function () {
     document.querySelector(".next-banner-button").addEventListener("click", event => {
+      const mainBanners = document.querySelector(".main-banners");
       const currentBanner = document.querySelector(".active-main-banner");
-      const currentIndex = currentBanner.dataset.bannerIndex;
-      htmlRenderer.changeActiveBanner(Number(currentIndex) + 1);
+      const currentIndex = Number(currentBanner.dataset.bannerIndex);
+      const nextIndex = currentIndex === (mainBanners.childElementCount - 1) ? 0 : currentIndex + 1
+      htmlRenderer.changeActiveBanner(nextIndex);
     });
   },
 
   addPreviousBannerButtonListener: function () {
     document.querySelector(".previous-banner-button").addEventListener("click", event => {
+      const mainBanners = document.querySelector(".main-banners");
       const currentBanner = document.querySelector(".active-main-banner");
-      const currentIndex = currentBanner.dataset.bannerIndex;
-      htmlRenderer.changeActiveBanner(Number(currentIndex) - 1);
+      const currentIndex = Number(currentBanner.dataset.bannerIndex);
+      const nextIndex = currentIndex === 0 ? mainBanners.childElementCount - 1 : currentIndex - 1;
+      htmlRenderer.changeActiveBanner(nextIndex);
     });
   },
 
-  addBannerNvigationButtonListener: function () {
+  addBannerNavigationButtonListener: function () {
     document.querySelectorAll(".banner-navigation-button").forEach(button => {
       button.addEventListener("click", event => {
         const nextIndex = button.dataset.bannerNavigationIndex;
