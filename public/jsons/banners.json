@@ -1,0 +1,46 @@
+{
+  "main-banners": [
+    {
+      "img": "/img/banners/main-1.webp",
+      "link": "https://www.google.com/"
+    },
+    {
+      "img": "/img/banners/main-2.webp",
+      "link": "https://www.google.com/"
+    },
+    {
+      "img": "/img/banners/main-3.webp",
+      "link": "https://www.google.com/"
+    },
+    {
+      "img": "/img/banners/main-4.webp",
+      "link": "https://www.google.com/"
+    },
+    {
+      "img": "/img/banners/main-5.webp",
+      "link": "https://www.google.com/"
+    },
+    {
+      "img": "/img/banners/main-6.webp",
+      "link": "https://www.google.com/"
+    },
+    {
+      "img": "/img/banners/main-7.webp",
+      "link": "https://www.google.com/"
+    },
+    {
+      "img": "/img/banners/main-8.webp",
+      "link": "https://www.google.com/"
+    }
+  ],
+  "sub-banners": [
+    {
+      "img": "/img/banners/sub-1.webp",
+      "link": "https://www.google.com/"
+    },
+    {
+      "img": "/img/banners/sub-2.webp",
+      "link": "https://www.google.com/"
+    }
+  ]
+}
