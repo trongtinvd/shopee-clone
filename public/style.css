@@ -179,7 +179,7 @@ body {
 .notification-image {
   grid-area: img;
   object-fit: contain;
-  width:100%;
+  width: 100%;
 }
 
 .notification-title {
@@ -324,15 +324,15 @@ body {
   position: relative;
 }
 
-.cart-item-count{
+.cart-item-count {
   font-size: 0.8rem;
   text-align: center;
   background-color: var(--main-color-1--);
-  padding:0.1rem 0.2rem;
+  padding: 0.1rem 0.2rem;
   position: absolute;
   top: 0;
   transform: translate(-50%, -50%);
-  border:1px solid white;
+  border: 1px solid white;
   border-radius: .3rem;
 }
 
@@ -353,7 +353,7 @@ body {
   right: 0;
 }
 
-.empty-cart{
+.empty-cart {
   aspect-ratio: 3/1;
   display: flex;
   justify-content: center;
@@ -369,9 +369,9 @@ body {
 .cart-content-item {
   display: grid;
   grid-template-columns: 1fr 7fr 1fr;
-  gap:0.4rem;
-  
-  padding:0.4rem;
+  gap: 0.4rem;
+
+  padding: 0.4rem;
   text-decoration: none;
 }
 
@@ -633,6 +633,13 @@ body {
   font-family: sans-serif;
   font-size: 0.8rem;
   text-align: center;
+  text-decoration: none;
+  color: var(--text-color-4--);
+}
+
+.deal:hover {
+  position: relative;
+  top: -1px;
 }
 
 .deals img {
@@ -652,29 +659,25 @@ body {
   margin: 1.5rem 0;
 }
 
-.selection .wrapper .wrapper {
-  overflow: scroll;
-}
-
-.selection .wrapper .wrapper::-webkit-scrollbar {
-  display: none;
-}
-
 .selection-title {
   color: var(--text-color-4--);
   background-color: var(--background-color-2--);
   padding: 1.5rem;
 }
 
-.selection-tiles {
-  width: 141%;
+.selection-tiles .grid-wrapper {
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: repeat(14, fr);
+  grid-template-columns: repeat(14, 10%);
   grid-template-rows: 1fr 1fr;
-  gap: 1px;
-  margin: 1px 0;
-  position: relative;
+
+  overflow: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.selection-tiles .grid-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .selection-tile {
@@ -683,9 +686,15 @@ body {
   align-items: center;
   justify-items: center;
 
+  margin: 1px 1px 0 0;
+  padding: 0.5rem;
+
   font-size: 0.8rem;
+  text-decoration: none;
+  color: var(--text-color-4--);
   background-color: var(--background-color-2--);
-  padding: 0.5rem 0;
+
+  scroll-snap-align: start;
 }
 
 .selection-tile:hover {
@@ -704,7 +713,7 @@ body {
   text-align: center;
 }
 
-.selection .wrapper {
+.selection-body {
   position: relative;
 }
 
@@ -724,6 +733,7 @@ body {
   top: 50%;
   left: 0;
   transform: translate(-50%, -50%);
+  visibility: hidden;
 }
 
 .next-button {

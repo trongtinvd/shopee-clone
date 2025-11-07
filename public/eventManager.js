@@ -35,6 +35,32 @@ const eventManager = {
         htmlRenderer.changeActiveBanner(nextIndex);
       })
     });
+  },
+
+  addSelectionSectionEventListener: function () {
+    const nextButton = document.querySelector(".selection .next-button");
+    const previousButton = document.querySelector(".selection .previous-button");
+    const gridWrapper = document.querySelector(".selection-tiles .grid-wrapper");
+    const tileWidth = document.querySelector(".selection-tile").clientWidth;
+
+    const scrollMin = 0;
+    const scrollMax = gridWrapper.scrollWidth - (tileWidth * 10);
+    let currentScroll = 0;
+
+    nextButton.addEventListener("click", e => {
+      currentScroll = Math.min(Math.max(scrollMin, gridWrapper.scrollLeft + (tileWidth * 9)), scrollMax);
+      htmlRenderer.scrollLeft(gridWrapper, currentScroll);
+    });
+
+    previousButton.addEventListener("click", e => {
+      currentScroll = Math.min(Math.max(scrollMin, gridWrapper.scrollLeft - (tileWidth * 9)), scrollMax);
+      htmlRenderer.scrollLeft(gridWrapper, currentScroll);
+    });
+
+    gridWrapper.addEventListener("scroll", e => {
+      currentScroll >= scrollMax ? htmlRenderer.hideElement(nextButton) : htmlRenderer.showElement(nextButton);
+      currentScroll <= scrollMin ? htmlRenderer.hideElement(previousButton) : htmlRenderer.showElement(previousButton);
+    });
   }
 }
 

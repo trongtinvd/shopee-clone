@@ -49,3 +49,5 @@ renderBanner();
 renderNotification();
 renderSearchHistory();
 renderCart();
+
+eventManager.addSelectionSectionEventListener();

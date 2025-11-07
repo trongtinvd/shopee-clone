@@ -233,5 +233,4 @@ const database = {
     return cart;
   }
 }
-
-module.exports = database;
+export default database;

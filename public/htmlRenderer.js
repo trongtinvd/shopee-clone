@@ -101,6 +101,18 @@ const htmlRenderer = {
 
     const cartIcon = document.querySelector(".cart-icon");
     cartIcon.insertAdjacentHTML("beforeend", `<span class="cart-item-count">${data.length}</span>`);
+  },
+
+  scrollLeft: function (element, position) {
+    element.scrollLeft = position;
+  },
+
+  showElement: function (element) {
+    element.style.visibility = "visible";
+  },
+
+  hideElement: function (element) {
+    element.style.visibility = "hidden";
   }
 }
 

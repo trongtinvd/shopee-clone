@@ -1,6 +1,6 @@
-const express = require("express");
-const router = express.Router();
-const database = require("../mockup/databaseMockup.js")
+import { Router } from "express";
+import database from "../mockup/databaseMockup.js";
+const router = Router();
 
 
 
@@ -47,4 +47,4 @@ router.route("/cart/:userId")
   });
 
 
-module.exports = router;
+export default router;
