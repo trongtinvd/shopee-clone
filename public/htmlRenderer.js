@@ -113,6 +113,40 @@ const htmlRenderer = {
 
   hideElement: function (element) {
     element.style.visibility = "hidden";
+  },
+
+  renderFlashSale: function (data) {
+    console.log(data);
+    this.renderFlashSaleClock(data.saleStart, data.saleEnd);
+    //todo render flash sale items
+  },
+
+  renderFlashSaleClock: function (saleStart, saleEnd) {
+    const date = new Date();
+    let timeStart = saleStart.hour * 3600 + saleStart.minute * 60 + saleStart.second;
+    let timeEnd = saleEnd.hour * 3600 + saleEnd.minute * 60 + saleEnd.second;
+    let timeNow = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
+
+    if (timeNow < timeStart) {
+      return;
+    }
+
+    const hourElement = document.querySelector(".clock-item .hour");
+    const minuteElement = document.querySelector(".clock-item .minute");
+    const secondElement = document.querySelector(".clock-item .second");
+    let timeLeft = timeEnd - timeNow;
+    let hourLeft, minuteLeft, secondLeft;
+    setInterval(() => {
+      hourLeft = Math.floor((timeLeft % 86400) / 3600);
+      minuteLeft = Math.floor((timeLeft % 3600) / 60);
+      secondLeft = timeLeft % 60;
+      timeLeft--;
+
+      hourElement.innerHTML = String(hourLeft).padStart(2, "0");
+      minuteElement.innerHTML = String(minuteLeft).padStart(2, "0");
+      secondElement.innerHTML = String(secondLeft).padStart(2, "0");
+
+    }, 1000);
   }
 }
 

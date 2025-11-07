@@ -43,11 +43,26 @@ function renderCart() {
     .catch(error => htmlRenderer.renderEmptyCart());
 }
 
+function renderSelection() {
+  eventManager.addSelectionSectionEventListener();
+}
+
+function renderFlashSale() {
+  const date = new Date();
+  fetch(`/api/flashsale/${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`)
+    .then(data => data.json())
+    .then(data => {
+      htmlRenderer.renderFlashSale(data);
+      eventManager.addFlashSaleSectionListener();
+    })
+}
+
 renderUser();
 renderSuggestSearch();
 renderBanner();
 renderNotification();
 renderSearchHistory();
 renderCart();
+renderSelection();
+renderFlashSale();
 
-eventManager.addSelectionSectionEventListener();

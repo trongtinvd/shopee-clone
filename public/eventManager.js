@@ -61,6 +61,13 @@ const eventManager = {
       currentScroll >= scrollMax ? htmlRenderer.hideElement(nextButton) : htmlRenderer.showElement(nextButton);
       currentScroll <= scrollMin ? htmlRenderer.hideElement(previousButton) : htmlRenderer.showElement(previousButton);
     });
+  },
+
+  addFlashSaleSectionListener: function () {
+    const hourElement = document.querySelector(".flash-sale-clock .hour");
+    const minuteElement = document.querySelector(".flash-sale-clock .minute");
+    const secondElement = document.querySelector(".flash-sale-clock .secound");
+    //todo add navigation button
   }
 }
 
