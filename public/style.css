@@ -798,22 +798,22 @@ body {
   font-size: 0.9rem;
 }
 
-.flash-sale-items {
+.flash-sale-body {
   position: relative;
-}
-
-.flash-sale-items .wrapper {
-  overflow: scroll;
-}
-
-.flash-sale-items .wrapper::-webkit-scrollbar {
-  display: none;
 }
 
 .flash-sale-tiles {
   display: grid;
   grid-template-columns: repeat(12, 16.666%);
   width: 100%;
+
+  overflow: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.flash-sale-tiles::-webkit-scrollbar {
+  display: none;
 }
 
 .flash-sale-tile {
@@ -823,6 +823,8 @@ body {
   justify-items: center;
   align-items: center;
   text-decoration: none;
+
+  scroll-snap-align: start;
 }
 
 .flash-sale-tile img {
@@ -890,7 +892,6 @@ body {
 .sale-remain-percent {
   width: 23%;
   height: 100%;
-  padding: auto;
   justify-self: self-start;
   background-image: linear-gradient(to right, var(--main-color-1--), var(--main-color-2--));
   border-radius: 1rem;
@@ -904,6 +905,8 @@ body {
   font-size: 0.7rem;
   text-align: center;
   color: var(--text-color-2--);
+  z-index: 1;
+  position: relative;
 }
 
 .voucher-banner {

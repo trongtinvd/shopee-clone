@@ -1,4 +1,5 @@
 import htmlRenderer from "./htmlRenderer.js";
+import { clamp } from "./utils.js";
 
 const eventManager = {
 
@@ -37,37 +38,46 @@ const eventManager = {
     });
   },
 
+  addSectionNavigationButtonListener: function (scrollType, nextButton, previousButton, itemWrapper, itemWidth) {
+    if (scrollType === "x") {
+      const itemPerView = Math.floor(itemWrapper.clientWidth / itemWidth);
+      const itemPerScroll = itemPerView - 1;
+      const scrollMin = 0;
+      const scrollMax = itemWrapper.scrollWidth - (itemWidth * itemPerView) - itemWrapper.scrollWidth % itemWidth;
+      const distanceEachScroll = itemWidth * itemPerScroll;
+      let currentScroll = 0;
+
+      nextButton.addEventListener("click", e => {
+        currentScroll = clamp(scrollMin, itemWrapper.scrollLeft + distanceEachScroll, scrollMax);
+        htmlRenderer.scrollLeft(itemWrapper, currentScroll);
+      });
+
+      previousButton.addEventListener("click", e => {
+        currentScroll = Math.min(Math.max(scrollMin, itemWrapper.scrollLeft - distanceEachScroll), scrollMax);
+        htmlRenderer.scrollLeft(itemWrapper, currentScroll);
+      });
+
+      itemWrapper.addEventListener("scroll", e => {
+        itemWrapper.scrollLeft >= scrollMax ? htmlRenderer.hideElement(nextButton) : htmlRenderer.showElement(nextButton);
+        itemWrapper.scrollLeft <= scrollMin ? htmlRenderer.hideElement(previousButton) : htmlRenderer.showElement(previousButton);
+      });
+    }
+  },
+
   addSelectionSectionEventListener: function () {
     const nextButton = document.querySelector(".selection .next-button");
     const previousButton = document.querySelector(".selection .previous-button");
     const gridWrapper = document.querySelector(".selection-tiles .grid-wrapper");
     const tileWidth = document.querySelector(".selection-tile").clientWidth;
-
-    const scrollMin = 0;
-    const scrollMax = gridWrapper.scrollWidth - (tileWidth * 10);
-    let currentScroll = 0;
-
-    nextButton.addEventListener("click", e => {
-      currentScroll = Math.min(Math.max(scrollMin, gridWrapper.scrollLeft + (tileWidth * 9)), scrollMax);
-      htmlRenderer.scrollLeft(gridWrapper, currentScroll);
-    });
-
-    previousButton.addEventListener("click", e => {
-      currentScroll = Math.min(Math.max(scrollMin, gridWrapper.scrollLeft - (tileWidth * 9)), scrollMax);
-      htmlRenderer.scrollLeft(gridWrapper, currentScroll);
-    });
-
-    gridWrapper.addEventListener("scroll", e => {
-      currentScroll >= scrollMax ? htmlRenderer.hideElement(nextButton) : htmlRenderer.showElement(nextButton);
-      currentScroll <= scrollMin ? htmlRenderer.hideElement(previousButton) : htmlRenderer.showElement(previousButton);
-    });
+    this.addSectionNavigationButtonListener("x", nextButton, previousButton, gridWrapper, tileWidth);
   },
 
   addFlashSaleSectionListener: function () {
-    const hourElement = document.querySelector(".flash-sale-clock .hour");
-    const minuteElement = document.querySelector(".flash-sale-clock .minute");
-    const secondElement = document.querySelector(".flash-sale-clock .secound");
-    //todo add navigation button
+    const nextButton = document.querySelector(".flash-sale-body .next-button");
+    const previousButton = document.querySelector(".flash-sale-body .previous-button");
+    const gridWrapper = document.querySelector(".flash-sale-tiles");
+    const tileWidth = document.querySelector(".flash-sale-tile").clientWidth;
+    this.addSectionNavigationButtonListener("x", nextButton, previousButton, gridWrapper, tileWidth);
   }
 }
 

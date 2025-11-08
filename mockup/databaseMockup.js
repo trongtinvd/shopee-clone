@@ -232,7 +232,7 @@ const flashSale = {
       price: "369.200",
       discound: "-26%",
       total: 100,
-      remain: 20
+      remain: 100
     },
     {
       name: "Điện thoại thông minh",
@@ -241,7 +241,7 @@ const flashSale = {
       price: "16.200",
       discound: "-26%",
       total: 100,
-      remain: 20
+      remain: 90
     },
     {
       name: "Minh tinh điện ảnh",
@@ -250,7 +250,7 @@ const flashSale = {
       price: "5.200",
       discound: "-26%",
       total: 100,
-      remain: 20
+      remain: 80
     },
     {
       name: "Ảnh chụp chân không",
@@ -259,7 +259,7 @@ const flashSale = {
       price: "79.200",
       discound: "-26%",
       total: 100,
-      remain: 20
+      remain: 70
     },
     {
       name: "Không khí đà lạc",
@@ -268,7 +268,7 @@ const flashSale = {
       price: "542.200",
       discound: "-26%",
       total: 100,
-      remain: 20
+      remain: 60
     },
     {
       name: "Lạc đà châu phi",
@@ -277,7 +277,7 @@ const flashSale = {
       price: "66.200",
       discound: "-26%",
       total: 100,
-      remain: 20
+      remain: 50
     },
     {
       name: "Phi hành cơ",
@@ -286,7 +286,7 @@ const flashSale = {
       price: "200",
       discound: "-26%",
       total: 100,
-      remain: 20
+      remain: 40
     },
     {
       name: "Cơ bò không mỡ",
@@ -295,7 +295,7 @@ const flashSale = {
       price: "1.779.200",
       discound: "-26%",
       total: 100,
-      remain: 20
+      remain: 30
     },
     {
       name: "Mỡ lợn",
@@ -313,7 +313,7 @@ const flashSale = {
       price: "369.200",
       discound: "-26%",
       total: 100,
-      remain: 20
+      remain: 10
     },
     {
       name: "Chỉ may thượng hạng",
@@ -322,7 +322,7 @@ const flashSale = {
       price: "369.200",
       discound: "-26%",
       total: 100,
-      remain: 20
+      remain: 110
     },
     {
       name: "Hạnh nhân",
@@ -331,7 +331,7 @@ const flashSale = {
       price: "369.200",
       discound: "-26%",
       total: 100,
-      remain: 20
+      remain: 120
     }
   ]
 }

@@ -116,37 +116,53 @@ const htmlRenderer = {
   },
 
   renderFlashSale: function (data) {
-    console.log(data);
     this.renderFlashSaleClock(data.saleStart, data.saleEnd);
-    //todo render flash sale items
+    this.renderFlashSaleItems(data.items);
   },
 
   renderFlashSaleClock: function (saleStart, saleEnd) {
-    const date = new Date();
     let timeStart = saleStart.hour * 3600 + saleStart.minute * 60 + saleStart.second;
     let timeEnd = saleEnd.hour * 3600 + saleEnd.minute * 60 + saleEnd.second;
-    let timeNow = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
-
-    if (timeNow < timeStart) {
-      return;
-    }
 
     const hourElement = document.querySelector(".clock-item .hour");
     const minuteElement = document.querySelector(".clock-item .minute");
     const secondElement = document.querySelector(".clock-item .second");
-    let timeLeft = timeEnd - timeNow;
-    let hourLeft, minuteLeft, secondLeft;
+
     setInterval(() => {
-      hourLeft = Math.floor((timeLeft % 86400) / 3600);
-      minuteLeft = Math.floor((timeLeft % 3600) / 60);
-      secondLeft = timeLeft % 60;
-      timeLeft--;
+      const date = new Date();
+      let timeNow = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
+      if (timeNow > timeStart) {
+        let timeLeft = timeEnd - timeNow;
 
-      hourElement.innerHTML = String(hourLeft).padStart(2, "0");
-      minuteElement.innerHTML = String(minuteLeft).padStart(2, "0");
-      secondElement.innerHTML = String(secondLeft).padStart(2, "0");
+        const hourLeft = Math.floor((timeLeft % 86400) / 3600);
+        const minuteLeft = Math.floor((timeLeft % 3600) / 60);
+        const secondLeft = timeLeft % 60;
 
+        hourElement.innerHTML = String(hourLeft).padStart(2, "0");
+        minuteElement.innerHTML = String(minuteLeft).padStart(2, "0");
+        secondElement.innerHTML = String(secondLeft).padStart(2, "0");
+      }
     }, 1000);
+  },
+
+  renderFlashSaleItems: function(data){
+    const flashSaleGrid = document.querySelector(".flash-sale-tiles");
+    for (const item of data){
+      const html = `
+              <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="flash-sale-tile" title="${item.name}">
+                <img class="sale-item" src="${item.image}" alt="">
+                <img class="sale-overlay" src="img/flash-sale/sale-overlay.png" alt="">
+                <img class="sale-stamp" src="img/flash-sale/liked.png" alt="">
+                <span class="sale-percent"><i class="fa-solid fa-bolt-lightning"></i>${item.discound}</span>
+                <div class="sale-price">${item.price}</div>
+                <div class="sale-remain">
+                  <p>ĐANG BÁN CHẠY</p>
+                  <div style="width:${Math.floor(100*item.remain/item.total)}%" class="sale-remain-percent"></div>
+                </div>
+              </a>
+      `
+      flashSaleGrid.insertAdjacentHTML("beforeend", html);
+    }
   }
 }
 
