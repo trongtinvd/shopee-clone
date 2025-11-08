@@ -230,7 +230,7 @@ const flashSale = {
       link: "https://www.google.com/",
       image: "img/flash-sale/flash-sale-item-1.png",
       price: "369.200",
-      discound: "-26%",
+      discount: "-26%",
       total: 100,
       remain: 100
     },
@@ -239,7 +239,7 @@ const flashSale = {
       link: "https://www.google.com/",
       image: "img/flash-sale/flash-sale-item-2.png",
       price: "16.200",
-      discound: "-26%",
+      discount: "-26%",
       total: 100,
       remain: 90
     },
@@ -248,7 +248,7 @@ const flashSale = {
       link: "https://www.google.com/",
       image: "img/flash-sale/flash-sale-item-3.png",
       price: "5.200",
-      discound: "-26%",
+      discount: "-26%",
       total: 100,
       remain: 80
     },
@@ -257,7 +257,7 @@ const flashSale = {
       link: "https://www.google.com/",
       image: "img/flash-sale/flash-sale-item-4.png",
       price: "79.200",
-      discound: "-26%",
+      discount: "-26%",
       total: 100,
       remain: 70
     },
@@ -266,7 +266,7 @@ const flashSale = {
       link: "https://www.google.com/",
       image: "img/flash-sale/flash-sale-item-5.png",
       price: "542.200",
-      discound: "-26%",
+      discount: "-26%",
       total: 100,
       remain: 60
     },
@@ -275,7 +275,7 @@ const flashSale = {
       link: "https://www.google.com/",
       image: "img/flash-sale/flash-sale-item-6.png",
       price: "66.200",
-      discound: "-26%",
+      discount: "-26%",
       total: 100,
       remain: 50
     },
@@ -284,7 +284,7 @@ const flashSale = {
       link: "https://www.google.com/",
       image: "img/flash-sale/flash-sale-item-7.png",
       price: "200",
-      discound: "-26%",
+      discount: "-26%",
       total: 100,
       remain: 40
     },
@@ -293,7 +293,7 @@ const flashSale = {
       link: "https://www.google.com/",
       image: "img/flash-sale/flash-sale-item-8.png",
       price: "1.779.200",
-      discound: "-26%",
+      discount: "-26%",
       total: 100,
       remain: 30
     },
@@ -302,7 +302,7 @@ const flashSale = {
       link: "https://www.google.com/",
       image: "img/flash-sale/flash-sale-item-9.png",
       price: "25.768.200",
-      discound: "-26%",
+      discount: "-26%",
       total: 100,
       remain: 20
     },
@@ -311,7 +311,7 @@ const flashSale = {
       link: "https://www.google.com/",
       image: "img/flash-sale/flash-sale-item-10.png",
       price: "369.200",
-      discound: "-26%",
+      discount: "-26%",
       total: 100,
       remain: 10
     },
@@ -320,7 +320,7 @@ const flashSale = {
       link: "https://www.google.com/",
       image: "img/flash-sale/flash-sale-item-11.png",
       price: "369.200",
-      discound: "-26%",
+      discount: "-26%",
       total: 100,
       remain: 110
     },
@@ -329,7 +329,7 @@ const flashSale = {
       link: "https://www.google.com/",
       image: "img/flash-sale/flash-sale-item-12.png",
       price: "369.200",
-      discound: "-26%",
+      discount: "-26%",
       total: 100,
       remain: 120
     }

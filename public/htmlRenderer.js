@@ -1,20 +1,32 @@
 
 const htmlRenderer = {
 
-  renderBanner: function (data) {
+  htmlOfBannerNavigationButton: function (index) {
+    return `<button data-banner-navigation-index="${index}" class="banner-navigation-button ${index === 0 ? "active-banner-navigation-button" : ""}"></button>`;
+  },
 
+  htmlOfSubBanner: function (data, index) {
+    return `<a href="${data.link}" target="_blank"><div class="banner"><img src="${data.img}" alt="sub banner #${index}"></div></a>`;
+  },
+
+  htmlOfMainBanner: function (data, index) {
+    return `<a href="${data.link}" target="_blank"><img data-banner-index="${index}" class="${index === 0 ? "active-main-banner" : ""}" src="${data.img}" alt="main banner #${index}"></a>`;
+  },
+
+  renderBanner: function (data) {
     const { "main-banners": mainBannerData, "sub-banners": subBannerData } = data;
 
     const mainBanners = document.querySelector(".main-banners");
     for (let i = 0; i < mainBannerData.length; i++) {
-      mainBanners.insertAdjacentHTML("beforeend", `<a href="${mainBannerData[i].link}" target="_blank"><img data-banner-index="${i}" class="${i === 0 ? "active-main-banner" : ""}" src="${mainBannerData[i].img}" alt="main banner #${i}"></a>`);
+      mainBanners.insertAdjacentHTML("beforeend", this.htmlOfMainBanner(mainBannerData[i], i));
     }
-    mainBanners.insertAdjacentHTML("afterend", `<a href="${subBannerData[1].link}" target="_blank"><div class="banner"><img src="${subBannerData[1].img}" alt="sub banner #${1}"></div></a>`);
-    mainBanners.insertAdjacentHTML("afterend", `<a href="${subBannerData[0].link}" target="_blank"><div class="banner"><img src="${subBannerData[0].img}" alt="sub banner #${0}"></div></a>`);
+
+    mainBanners.insertAdjacentHTML("afterend", this.htmlOfSubBanner(subBannerData[1], 1));
+    mainBanners.insertAdjacentHTML("afterend", this.htmlOfSubBanner(subBannerData[0], 0));
 
     const bannerNavigation = document.querySelector(".banner-navigation");
     for (let i = 0; i < mainBannerData.length; i++) {
-      bannerNavigation.insertAdjacentHTML("beforeend", `<button data-banner-navigation-index="${i}" class="banner-navigation-button ${i === 0 ? "active-banner-navigation-button" : ""}"></button>`);
+      bannerNavigation.insertAdjacentHTML("beforeend", this.htmlOfBannerNavigationButton(i));
     }
   },
 
@@ -36,30 +48,43 @@ const htmlRenderer = {
     }
   },
 
-  renderUser: function (data) {
-    const username = data["username"];
-    const profilePicture = data["profile-picture"];
+  htmlOfUserName: function (username) {
+    return `<span> ${username}</span>`;
+  },
 
+  htmlOfProfilePicture: function (profilePicture) {
+    return `<img src="${profilePicture}" alt="profile picture" >`;
+  },
+
+  renderUser: function (data) {
     const avatar = document.querySelector(".avatar");
-    avatar.insertAdjacentHTML("afterbegin", `<span> ${username}</span>`);
-    avatar.insertAdjacentHTML("afterbegin", `<img src="${profilePicture}" alt="profile picture" >`);
+    avatar.insertAdjacentHTML("afterbegin", this.htmlOfUserName(data["username"]));
+    avatar.insertAdjacentHTML("afterbegin", this.htmlOfProfilePicture(data["profile-picture"]));
+  },
+
+  htmlOfSuggestSearchItem: function (data) {
+    return `<a href="${[data.link]}" target="_blank">${data.suggest}</a>`;
   },
 
   renderSuggestSearch: function (data) {
     const suggestSearch = document.querySelector(".suggest-searchs");
     for (let i = 0; i < data.length; i++) {
-      suggestSearch.insertAdjacentHTML("afterbegin", `<a href="${data[i]["link"]}" target="_blank">${data[i]["suggest"]}</a>`)
+      suggestSearch.insertAdjacentHTML("afterbegin", this.htmlOfSuggestSearchItem(data[i]));
     }
+  },
+
+  htmlOfNotificationItem: function (data) {
+    return `<a href="${data.link}" target="_blank" rel="noopener noreferrer" class="notification-link">
+              <img src="${data.img}" alt="" class="notification-image">
+              <p class="notification-title">${data.name}</p>
+              <p class="notification-content">${data.description}</p>
+            </a>`;
   },
 
   renderNotification: function (data) {
     const notification = document.querySelector(".notification-popup-body");
     for (let i = 0; i < data.length; i++) {
-      notification.insertAdjacentHTML("beforeend", ` <a href="${data[i]["link"]}" target="_blank" rel="noopener noreferrer" class="notification-link">
-                                                        <img src="${data[i]["img"]}" alt="" class="notification-image">
-                                                        <p class="notification-title">${data[i]["name"]}</p>
-                                                        <p class="notification-content">${data[i]["description"]}</p>
-                                                      </a> `)
+      notification.insertAdjacentHTML("beforeend", this.htmlOfNotificationItem(data[i]));
     }
   },
 
@@ -70,33 +95,38 @@ const htmlRenderer = {
     }
   },
 
-  renderEmptyCart: function () {
-    cart.innerHTML = `<div class="empty-cart"><span>Chưa có sản phẩm<span></div>`;
+  htmlOfEmptyCart: function () {
+    return `<div class="empty-cart"><span>Chưa có sản phẩm<span></div>`;
+  },
+
+  htmlOfCart: function (numberOfItem) {
+    return `<div class="cart-content-header">Sằn phẩm mới xem</div>
+            <div class="cart-content-body"></div>
+            <div class="cart-content-show-all">
+              <span>${numberOfItem} hàng trong giỏ</span>
+              <a href="#" target="_blank" rel="noopener noreferrer">Xem giỏ hàng</a>
+            </div> `;
+  },
+
+  htmlOfCartItem: function (data) {
+    return `<a href="${data.link}" target="_blank" rel="noopener noreferrer" class="cart-content-item">
+              <img src="${data.image}" alt="">
+              <span class="cart-item-name">${data.name}</span>
+              <span class="cart-item-price">${data.price}</span>
+            </a>`;
   },
 
   renderCart: function (data) {
     const cart = document.querySelector(".cart-popup");
     if (data.length === 0) {
-      this.renderEmptyCart();
+      cart.innerHTML = this.htmlOfEmptyCart();
       return;
     }
-
-    cart.innerHTML = `  
-                    <div class="cart-content-header">Sằn phẩm mới xem</div>
-                    <div class="cart-content-body"></div>
-                    <div class="cart-content-show-all">
-                      <span>${data.length} hàng trong giỏ</span>
-                      <a href="#" target="_blank" rel="noopener noreferrer">Xem giỏ hàng</a>
-                    </div> `
+    cart.innerHTML = this.htmlOfCart(data.length);
 
     const cartBody = document.querySelector(".cart-content-body");
     for (let i = 0; i < data.length; i++) {
-      cartBody.insertAdjacentHTML("afterbegin", ` <a href="${data[i]["link"]}" target="_blank" rel="noopener noreferrer" class="cart-content-item">
-                                                    <img src="${data[i]["image"]}" alt="">
-                                                    <span class="cart-item-name">${data[i]["name"]}</span>
-                                                    <span class="cart-item-price">${data[i]["price"]}</span>
-                                                  </a>
-                                                  `);
+      cartBody.insertAdjacentHTML("afterbegin", this.htmlOfCartItem(data[i]));
     }
 
     const cartIcon = document.querySelector(".cart-icon");
@@ -145,23 +175,24 @@ const htmlRenderer = {
     }, 1000);
   },
 
-  renderFlashSaleItems: function(data){
+  htmlOfFlashSaleItem: function (data) {
+    return `<a href="${data.link}" target="_blank" rel="noopener noreferrer" class="flash-sale-tile" title="${data.name}">
+              <img class="sale-item" src="${data.image}" alt="">
+              <img class="sale-overlay" src="img/flash-sale/sale-overlay.png" alt="">
+              <img class="sale-stamp" src="img/flash-sale/liked.png" alt="">
+              <span class="sale-percent"><i class="fa-solid fa-bolt-lightning"></i>${data.discount}</span>
+              <div class="sale-price">${data.price}</div>
+              <div class="sale-remain">
+                <p>ĐANG BÁN CHẠY</p>
+                <div style="width:${Math.floor(100 * data.remain / data.total)}%" class="sale-remain-percent"></div>
+              </div>
+            </a>`;
+  },
+
+  renderFlashSaleItems: function (data) {
     const flashSaleGrid = document.querySelector(".flash-sale-tiles");
-    for (const item of data){
-      const html = `
-              <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="flash-sale-tile" title="${item.name}">
-                <img class="sale-item" src="${item.image}" alt="">
-                <img class="sale-overlay" src="img/flash-sale/sale-overlay.png" alt="">
-                <img class="sale-stamp" src="img/flash-sale/liked.png" alt="">
-                <span class="sale-percent"><i class="fa-solid fa-bolt-lightning"></i>${item.discound}</span>
-                <div class="sale-price">${item.price}</div>
-                <div class="sale-remain">
-                  <p>ĐANG BÁN CHẠY</p>
-                  <div style="width:${Math.floor(100*item.remain/item.total)}%" class="sale-remain-percent"></div>
-                </div>
-              </a>
-      `
-      flashSaleGrid.insertAdjacentHTML("beforeend", html);
+    for (const item of data) {
+      flashSaleGrid.insertAdjacentHTML("beforeend", this.htmlOfFlashSaleItem(item));
     }
   }
 }
