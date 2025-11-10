@@ -66,6 +66,16 @@ function renderVoucherBanner() {
     })
 }
 
+function renderShopeeMall() {
+  const date = new Date();
+  fetch(`./api/shopeeMall/${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`)
+    .then(data => data.json())
+    .then(data => {
+      htmlRenderer.renderShopeeMall(data);
+      eventManager.addShopeeMallSectionListener();
+    })
+}
+
 renderUser();
 renderSuggestSearch();
 renderBanner();
@@ -75,4 +85,5 @@ renderCart();
 renderSelection();
 renderFlashSale();
 renderVoucherBanner();
+renderShopeeMall();
 

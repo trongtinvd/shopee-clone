@@ -347,6 +347,105 @@ const voucherBanner = {
   ]
 }
 
+const shopeeMall ={
+  ad:{
+    name:"shopee mall ad",
+    image:"img/shopee-mall/ad-banner.jpg",
+    link:"https://www.google.com/"
+  },
+  items:[
+    {
+      name:"Thuốc lá",
+      image:"img/shopee-mall/item-1.webp",
+      link:"https://www.google.com/",
+      description:"Ưu đãi đến 50%"
+    },
+    {
+      name:"Lá chè",
+      image:"img/shopee-mall/item-2.webp",
+      link:"https://www.google.com/",
+      description:"Mua 1 được 2"
+    },
+    {
+      name:"Chè đậu đen",
+      image:"img/shopee-mall/item-3.webp",
+      link:"https://www.google.com/",
+      description:"Mua 1 tặng 1"
+    },
+    {
+      name:"Sữa rữa mặt",
+      image:"img/shopee-mall/item-4.webp",
+      link:"https://www.google.com/",
+      description:"Mua 1 tặng 1"
+    },
+    {
+      name:"Mật ong miền đông",
+      image:"img/shopee-mall/item-5.webp",
+      link:"https://www.google.com/",
+      description:"Mua 1 tặng 1"
+    },
+    {
+      name:"Đông trùng hạ thảo",
+      image:"img/shopee-mall/item-6.webp",
+      link:"https://www.google.com/",
+      description:"Mua là có quà"
+    },
+    {
+      name:"Thảo mộc trung hoa",
+      image:"img/shopee-mall/item-7.webp",
+      link:"https://www.google.com/",
+      description:"Giảm đến 50%"
+    },
+    {
+      name:"Hoa lan hồng ngoại",
+      image:"img/shopee-mall/item-8.webp",
+      link:"https://www.google.com/",
+      description:"Quà mọi đơn"
+    },
+    {
+      name:"Ngoại xoi",
+      image:"img/shopee-mall/item-9.webp",
+      link:"https://www.google.com/",
+      description:"Mua là có quà"
+    },
+    {
+      name:"Xôi dừa",
+      image:"img/shopee-mall/item-10.webp",
+      link:"https://www.google.com/",
+      description:"Mua 1 tặng 1"
+    },
+    {
+      name:"Dừa khô tẩm đường",
+      image:"img/shopee-mall/item-11.webp",
+      link:"https://www.google.com/",
+      description:"Deli siêu sale"
+    },
+    {
+      name:"Đường nâu nhập khẩu",
+      image:"img/shopee-mall/item-12.webp",
+      link:"https://www.google.com/",
+      description:"Mua 1 được 6"
+    },
+    {
+      name:"Khẩu súng nhựa",
+      image:"img/shopee-mall/item-13.webp",
+      link:"https://www.google.com/",
+      description:"Mua là có quà"
+    },
+    {
+      name:"Nhựa chất lượng cao",
+      image:"img/shopee-mall/item-14.webp",
+      link:"https://www.google.com/",
+      description:"Giảm đến 20%"
+    },
+    {
+      name:"Cao cao hàn quốc",
+      image:"img/shopee-mall/item-15.webp",
+      link:"https://www.google.com/",
+      description:"Mua là có quà"
+    }
+  ]
+}
 
 const database = {
   banners: function () {
@@ -379,6 +478,10 @@ const database = {
 
   voucherBanner: function (year, month, date) {
     return voucherBanner;
-  }
+  },
+
+  shopeeMall: function (year, month, date) {
+    return shopeeMall;
+  },
 }
 export default database;

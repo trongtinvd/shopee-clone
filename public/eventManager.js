@@ -78,6 +78,14 @@ const eventManager = {
     const gridWrapper = document.querySelector(".flash-sale-tiles");
     const tileWidth = document.querySelector(".flash-sale-tile").clientWidth;
     this.addSectionNavigationButtonListener("x", nextButton, previousButton, gridWrapper, tileWidth);
+  },
+
+  addShopeeMallSectionListener: function(){
+    const nextButton = document.querySelector(".shopee-mall-body .next-button");
+    const previousButton = document.querySelector(".shopee-mall-body .previous-button");
+    const gridWrapper = document.querySelector(".shopee-mall-tiles");
+    const tileWidth = document.querySelector(".shopee-mall-tile").clientWidth;
+    this.addSectionNavigationButtonListener("x", nextButton, previousButton, gridWrapper, tileWidth);
   }
 }
 

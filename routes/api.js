@@ -52,6 +52,14 @@ router.route("/voucherBanner/:year/:month/:date")
     const { params: { year, month, date } } = req;
     const data = database.voucherBanner(year, month, date);
     res.status(200).json(data);
-  })
+  });
+
+router.route("/shopeeMall/:year/:month/:date")
+  .get((req, res) => {
+    const { params: { year, month, date } } = req;
+    const data = database.shopeeMall(year, month, date);
+    res.status(200).json(data);
+  });
+
 
 export default router;

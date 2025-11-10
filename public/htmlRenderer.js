@@ -211,6 +211,29 @@ const htmlRenderer = {
     for (const link of data.links) {
       voucherLinks.insertAdjacentHTML("beforeend", this.htmlOfVoucherLink(link));
     }
+  },
+
+  htmlOfShopeeAd: function(ad){
+    return `<a href="${ad.link}" target="_blank" rel="noopener noreferrer">
+              <img src="${ad.image}" alt="${ad.name}">
+            </a>`;
+  },
+
+  htmlOfShopeeTile: function(item){
+    return `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="shopee-mall-tile">
+              <img src="${item.image}" alt="${item.name}">
+              <p>${item.description}</p>
+            </a>`;
+  },
+
+  renderShopeeMall: function(data){
+    const shopeeMallAd = document.querySelector(".shopee-mall-ad");
+    shopeeMallAd.insertAdjacentHTML("afterbegin", this.htmlOfShopeeAd(data.ad));
+
+    const shopeeMallTiles = document.querySelector(".shopee-mall-tiles");
+    for(const item of data.items){
+      shopeeMallTiles.insertAdjacentHTML("afterbegin", this.htmlOfShopeeTile(item));
+    }
   }
 }
 
