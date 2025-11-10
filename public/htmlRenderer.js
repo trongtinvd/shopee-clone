@@ -250,6 +250,37 @@ const htmlRenderer = {
     for (const item of data.items) {
       topSearchedTiles.insertAdjacentHTML("beforeend", this.htmlOfTopSearchedTile(item));
     }
+  },
+
+  htmlOfTodaySuggestedItem: function (item) {
+
+    return `<div class="today-suggestion-item">
+            <a href="${item.link}" class="today-suggestion-item-body">
+              <img src="${item.image}" alt="" class="product-img">
+              ${item.overlays.image ? `<img src="${item.overlays.image}" alt="" class="sale-overlay">` : ``}
+              ${item.overlays.discount ? `<span class="discount-overlay">${item.overlays.discount}</span>` : ``}              
+              ${item.overlays.video ? `<span class="video-overlay"><i class="fa-solid fa-circle-play"></i></span>` : ``}
+              <p class="item-name">
+                ${item.labels.map(label => `<span class="${label.style}">${label.text}</span>`).join("")}                
+                ${item.name}
+              </p>
+              <div class="item-tags">
+                ${item.tags.map(tag => `<span class="${tag.style}">${tag.text}</span>`).join(" ")}
+              </div>
+              <div class="price-and-sold">
+                <p class="item-price">${item.price}</p>
+                <p class="item-sold">Đã bán ${item.sold}+</p>
+              </div>
+            </a>
+            <a href="${item.similarItems}" class="more-like-this-link">Tìm sản phẩm tương tự</a>
+          </div>`;
+  },
+
+  renderTodaySuggestions: function (data) {
+    const suggestionBody = document.querySelector(".today-suggestions-body");
+    for (const item of data) {
+      suggestionBody.insertAdjacentHTML("beforeend", this.htmlOfTodaySuggestedItem(item));
+    }
   }
 }
 

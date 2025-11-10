@@ -560,6 +560,303 @@ const topSeached = {
   ]
 }
 
+const todaySuggestions = [
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-1.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Mall", style: "mall-label" }],
+    tags: [
+      { text: "Rẻ vô địch", style: "cheap-tag" },
+      { text: "Giảm 80k", style: "discount-tag" }
+    ],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Bàn làm việc",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-2.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Yêu thích", style: "liked-label" }],
+    tags: [{ text: "Flash sale 10/11", style: "flash-sale-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-3.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Xử lý", style: "process-label" }],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-4.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Yêu thích", style: "liked-label" }],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-5.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Yêu thích+", style: "liked-label" }],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-6.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-7.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Yêu thích+", style: "liked-label" }],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-8.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-9.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Yêu thích+", style: "liked-label" }],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-10.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Yêu thích+", style: "liked-label" }],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-11.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-12.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Yêu thích", style: "liked-label" }],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-13.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Yêu thích", style: "liked-label" }],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-14.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Yêu thích", style: "liked-label" }],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-15.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Yêu thích", style: "liked-label" }],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-16.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Mall", style: "mall-label" }],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-17.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [{ text: "Yêu thích", style: "liked-label" }],
+    tags: [{ text: "10% giảm", style: "discount-tag" }],
+    similarItems: "https://www.google.com/"
+  },
+  {
+    name: "Mô hình lắp rắp",
+    link: "https://www.google.com/",
+    image: "img/today-suggestions/item-18.webp",
+    price: "120.000",
+    sold: "5k",
+    overlays:
+    {
+      discount: "-27%",
+      video: true,
+      image: "img/today-suggestions/overlay-1-voucher.png"
+    },
+    labels: [],
+    tags: [
+      { text: "Rẻ vô địch", style: "cheap-tag" },
+      { text: "Giảm 30%", style: "discount-tag" }
+    ],
+    similarItems: "https://www.google.com/"
+  }
+]
+
 const database = {
   banners: function () {
     return banners;
@@ -599,6 +896,10 @@ const database = {
 
   topSeached: function () {
     return topSeached;
+  },
+
+  todaySuggestions: function () {
+    return todaySuggestions;
   }
 }
 export default database;

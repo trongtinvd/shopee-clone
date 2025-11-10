@@ -1132,7 +1132,7 @@ body {
   z-index: 1;
 }
 
-.today-suggestions .grid-wrapper {
+.today-suggestions-body {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 0.5rem;
@@ -1140,37 +1140,70 @@ body {
 }
 
 .today-suggestion-item {
+  position: relative;
+}
+
+.more-like-this-link {
+  position: absolute;
+  top: 100%;
+  z-index: 1;
+  text-align: center;
+  color: var(--text-color-2--);
+  text-decoration: none;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: var(--main-color-1--);
+  display: none;
+}
+
+.today-suggestion-item:hover .more-like-this-link {
+  display: block;
+}
+
+.today-suggestion-item-body {
   display: grid;
-  grid-template-rows: 10fr 2fr 1fr 2fr;
+  grid-template-areas: "image-and-overlays" "name" "tags" "price-and-sold";
   grid-auto-flow: column;
+
   align-items: center;
   background-color: var(--background-color-2--);
   border: 1px solid rgba(128, 128, 128, 0.582);
   position: relative;
+  text-decoration: none;
 }
 
-.today-suggestion-item:hover {
+.today-suggestion-item-body:hover {
   border: 1px solid var(--main-color-2--);
   cursor: pointer;
   top: 0;
   left: 0;
 }
 
-.today-suggestion-item .product-img,
-.today-suggestion-item .sale-overlay {
+.today-suggestion-item-body img,
+.today-suggestion-item-body .discount-overlay,
+.today-suggestion-item-body .video-overlay {
+  grid-area: image-and-overlays;
+}
+
+.today-suggestion-item-body .item-name {
+  grid-area: name;
+}
+
+.today-suggestion-item-body .item-tags {
+  grid-area: tags;
+}
+
+.today-suggestion-item-body .price-and-sold {
+  grid-area: price-and-sold;
+}
+
+.today-suggestion-item-body .product-img,
+.today-suggestion-item-body .sale-overlay {
   width: 100%;
   object-fit: contain;
 }
 
-.today-suggestion-item .product-img,
-.today-suggestion-item .sale-overlay,
-.today-suggestion-item .discount-label,
-.today-suggestion-item .video-label {
-  grid-row: 1/2;
-  grid-column: 1/2;
-}
-
-.today-suggestion-item .discount-label {
+.discount-overlay {
   height: fit-content;
   justify-self: end;
   align-self: self-start;
@@ -1181,7 +1214,7 @@ body {
   border-bottom-left-radius: 0.4rem;
 }
 
-.today-suggestion-item .video-label {
+.video-overlay {
   justify-self: end;
   align-self: end;
   font-size: 1.2rem;
@@ -1189,20 +1222,68 @@ body {
 }
 
 .item-name {
-  padding: 0 0.3rem;
+  padding: 0.5rem;
   font-size: 0.9rem;
+  color: var(--text-color-4--);
+}
+
+.liked-label {
+  font-size: 0.6rem;
+  color: var(--text-color-2--);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.2rem;
+  background-color: var(--main-color-2--);
+}
+
+.mall-label {
+  font-size: 0.6rem;
+  color: var(--text-color-2--);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.2rem;
+  background-color: var(--main-color-1--);
+}
+
+.process-label {
+  font-size: 0.6rem;
+  color: var(--text-color-2--);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.2rem;
+  background-color: var(--main-color-1--);
+}
+
+.process-label::before {
+  content: "🛍";
+}
+
+.price-and-sold {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.item-price {
+  color: var(--main-color-1--);
+}
+
+.item-price::after {
+  content: "đ";
+  text-decoration: underline;
+  font-size: 0.9rem;
+  position: relative;
+  top: -3px;
+  padding: 0 0.2rem;
+}
+
+.item-sold {
+  font-size: 0.9rem;
+  color: var(--text-color-4--);
 }
 
 .item-tags {
-  padding: 0 0.3rem;
-}
-
-.liked-tag {
-  font-size: 0.6rem;
-  color: var(--text-color-2--);
-  background-color: var(--main-color-1--);
-  padding: 0.1rem 0.2rem;
-  border-radius: 0.2rem;
+  padding: 0.5rem;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .cheap-tag {
@@ -1221,7 +1302,7 @@ body {
   background-color: var(--main-color-2--);
 }
 
-.process-tag {
+.flash-sale-tag {
   font-size: 0.6rem;
   color: var(--text-color-2--);
   padding: 0.1rem 0.2rem;
@@ -1229,38 +1310,8 @@ body {
   background-color: var(--main-color-1--);
 }
 
-.item-price {
-  color: var(--main-color-1--);
-  padding: 0 0.3rem;
-}
-
-.item-price::after {
-  content: "đ";
-  text-decoration: underline;
-  font-size: 0.9rem;
-  position: relative;
-  top: -3px;
-  padding: 0 0.2rem;
-}
-
-.more-like-this-link {
-  position: absolute;
-  top: 100%;
-  z-index: 1;
-  text-align: center;
-  width: 100%;
-  padding: 0.5rem;
-  background-color: var(--main-color-1--);
-  display: none;
-}
-
-.more-like-this-link a {
-  color: var(--text-color-2--);
-  text-decoration: none;
-}
-
-.today-suggestion-item:hover .more-like-this-link {
-  display: block;
+.flash-sale-tag::before {
+  content: "🗲";
 }
 
 .login-invitation {
