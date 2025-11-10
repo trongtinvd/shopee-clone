@@ -43,7 +43,7 @@ const eventManager = {
       const itemPerView = Math.floor(itemWrapper.clientWidth / itemWidth);
       const itemPerScroll = itemPerView - 1;
       const scrollMin = 0;
-      const scrollMax = itemWrapper.scrollWidth - (itemWidth * itemPerView) - itemWrapper.scrollWidth % itemWidth;
+      const scrollMax = itemWrapper.scrollWidth - (itemWidth * itemPerView);
       const distanceEachScroll = itemWidth * itemPerScroll;
       let currentScroll = 0;
 
@@ -58,8 +58,8 @@ const eventManager = {
       });
 
       itemWrapper.addEventListener("scroll", e => {
-        itemWrapper.scrollLeft >= scrollMax ? htmlRenderer.hideElement(nextButton) : htmlRenderer.showElement(nextButton);
-        itemWrapper.scrollLeft <= scrollMin ? htmlRenderer.hideElement(previousButton) : htmlRenderer.showElement(previousButton);
+        itemWrapper.scrollLeft + itemWidth / 2 >= scrollMax ? htmlRenderer.hideElement(nextButton) : htmlRenderer.showElement(nextButton);
+        itemWrapper.scrollLeft - itemWidth / 2 <= scrollMin ? htmlRenderer.hideElement(previousButton) : htmlRenderer.showElement(previousButton);
       });
     }
   },
@@ -80,11 +80,19 @@ const eventManager = {
     this.addSectionNavigationButtonListener("x", nextButton, previousButton, gridWrapper, tileWidth);
   },
 
-  addShopeeMallSectionListener: function(){
+  addShopeeMallSectionListener: function () {
     const nextButton = document.querySelector(".shopee-mall-body .next-button");
     const previousButton = document.querySelector(".shopee-mall-body .previous-button");
     const gridWrapper = document.querySelector(".shopee-mall-tiles");
     const tileWidth = document.querySelector(".shopee-mall-tile").clientWidth;
+    this.addSectionNavigationButtonListener("x", nextButton, previousButton, gridWrapper, tileWidth);
+  },
+
+  addTopSearchedSectionListener: function () {
+    const nextButton = document.querySelector(".top-searched-body .next-button");
+    const previousButton = document.querySelector(".top-searched-body .previous-button");
+    const gridWrapper = document.querySelector(".top-searched-tiles");
+    const tileWidth = document.querySelector(".top-searched-tile").clientWidth;
     this.addSectionNavigationButtonListener("x", nextButton, previousButton, gridWrapper, tileWidth);
   }
 }

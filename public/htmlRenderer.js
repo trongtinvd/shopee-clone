@@ -213,26 +213,42 @@ const htmlRenderer = {
     }
   },
 
-  htmlOfShopeeAd: function(ad){
+  htmlOfShopeeAd: function (ad) {
     return `<a href="${ad.link}" target="_blank" rel="noopener noreferrer">
               <img src="${ad.image}" alt="${ad.name}">
             </a>`;
   },
 
-  htmlOfShopeeTile: function(item){
+  htmlOfShopeeTile: function (item) {
     return `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="shopee-mall-tile">
               <img src="${item.image}" alt="${item.name}">
               <p>${item.description}</p>
             </a>`;
   },
 
-  renderShopeeMall: function(data){
+  renderShopeeMall: function (data) {
     const shopeeMallAd = document.querySelector(".shopee-mall-ad");
     shopeeMallAd.insertAdjacentHTML("afterbegin", this.htmlOfShopeeAd(data.ad));
 
     const shopeeMallTiles = document.querySelector(".shopee-mall-tiles");
-    for(const item of data.items){
+    for (const item of data.items) {
       shopeeMallTiles.insertAdjacentHTML("afterbegin", this.htmlOfShopeeTile(item));
+    }
+  },
+
+  htmlOfTopSearchedTile: function (item) {
+    return `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="top-searched-tile">
+              <img class="top-searched-item" src="${item.image}" alt="${item.name}">
+              <img class="top-searched-overlay" src="img/top-searched/top-searched-overlay.png" alt="">
+              <p class="sale-rate">Bán ${item.sold}+/tháng</p>
+              <p class="product-name">${item.name}</p>
+            </a>`;
+  },
+
+  renderTopSearched: function (data) {
+    const topSearchedTiles = document.querySelector(".top-searched-tiles");
+    for (const item of data.items) {
+      topSearchedTiles.insertAdjacentHTML("beforeend", this.htmlOfTopSearchedTile(item));
     }
   }
 }

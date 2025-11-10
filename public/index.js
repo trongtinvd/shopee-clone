@@ -76,6 +76,18 @@ function renderShopeeMall() {
     })
 }
 
+function renderTopSearched() {
+  const date = new Date();
+  fetch(`./api/topSearched/`)
+    .then(data => data.json())
+    .then(data => {
+      htmlRenderer.renderTopSearched(data);
+      eventManager.addTopSearchedSectionListener();
+    })
+}
+
+
+
 renderUser();
 renderSuggestSearch();
 renderBanner();
@@ -86,4 +98,5 @@ renderSelection();
 renderFlashSale();
 renderVoucherBanner();
 renderShopeeMall();
+renderTopSearched();
 

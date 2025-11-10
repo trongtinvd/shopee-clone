@@ -61,5 +61,11 @@ router.route("/shopeeMall/:year/:month/:date")
     res.status(200).json(data);
   });
 
+router.route("/topSearched/")
+  .get((req, res) => {
+    const data = database.topSeached();
+    res.status(200).json(data);
+  });
+
 
 export default router;
