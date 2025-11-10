@@ -1,3 +1,6 @@
+
+const date = new Date();
+
 const banners = {
   "main-banners": [
     {
@@ -206,8 +209,6 @@ const cart = [
   }
 ];
 
-const date = new Date();
-
 const flashSale = {
   date: {
     date: date.getDate(),
@@ -336,6 +337,15 @@ const flashSale = {
   ]
 }
 
+const voucherBanner = {
+  image: "img/voucher-banner/three-voucher.webp",
+  name: "voucher banner",
+  links: [
+    "https://www.google.com/",
+    "https://www.google.com/",
+    "https://www.google.com/"
+  ]
+}
 
 
 const database = {
@@ -365,6 +375,10 @@ const database = {
 
   flashSale: function (year, month, date) {
     return flashSale;
+  },
+
+  voucherBanner: function (year, month, date) {
+    return voucherBanner;
   }
 }
 export default database;

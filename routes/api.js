@@ -47,5 +47,11 @@ router.route("/flashsale/:year/:month/:date")
     res.status(200).json(data);
   });
 
+router.route("/voucherBanner/:year/:month/:date")
+  .get((req, res) => {
+    const { params: { year, month, date } } = req;
+    const data = database.voucherBanner(year, month, date);
+    res.status(200).json(data);
+  })
 
 export default router;

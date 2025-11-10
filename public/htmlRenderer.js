@@ -194,6 +194,23 @@ const htmlRenderer = {
     for (const item of data) {
       flashSaleGrid.insertAdjacentHTML("beforeend", this.htmlOfFlashSaleItem(item));
     }
+  },
+
+  htmlOfVoucherBanner: function (image, name) {
+    return `<img src="${image}" alt="${name}">`;
+  },
+
+  htmlOfVoucherLink: function (link) {
+    return `<a href="${link}" target="_blank" rel="noopener noreferrer"></a>`;
+  },
+
+  renderVoucherBanner: function (data) {
+    const voucherBanner = document.querySelector(".voucher-banner");
+    const voucherLinks = document.querySelector(".voucher-links");
+    voucherBanner.insertAdjacentHTML("afterbegin", this.htmlOfVoucherBanner(data.image, data.name));
+    for (const link of data.links) {
+      voucherLinks.insertAdjacentHTML("beforeend", this.htmlOfVoucherLink(link));
+    }
   }
 }
 

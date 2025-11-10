@@ -57,6 +57,15 @@ function renderFlashSale() {
     })
 }
 
+function renderVoucherBanner() {
+  const date = new Date();
+  fetch(`./api/voucherBanner/${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`)
+    .then(data => data.json())
+    .then(data => {
+      htmlRenderer.renderVoucherBanner(data);
+    })
+}
+
 renderUser();
 renderSuggestSearch();
 renderBanner();
@@ -65,4 +74,5 @@ renderSearchHistory();
 renderCart();
 renderSelection();
 renderFlashSale();
+renderVoucherBanner();
 
