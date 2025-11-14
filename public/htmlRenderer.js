@@ -6,11 +6,11 @@ const htmlRenderer = {
   },
 
   htmlOfSubBanner: function (data, index) {
-    return `<a href="${data.link}" target="_blank"><div class="banner"><img src="${data.img}" alt="sub banner #${index}"></div></a>`;
+    return `<a href="${data.link}" target="_blank"><div class="banner"><img src="${data.image}" alt="sub banner #${index}"></div></a>`;
   },
 
   htmlOfMainBanner: function (data, index) {
-    return `<a href="${data.link}" target="_blank"><img data-banner-index="${index}" class="${index === 0 ? "active-main-banner" : ""}" src="${data.img}" alt="main banner #${index}"></a>`;
+    return `<a href="${data.link}" target="_blank"><img data-banner-index="${index}" class="${index === 0 ? "active-main-banner" : ""}" src="${data.image}" alt="main banner #${index}"></a>`;
   },
 
   renderBanner: function (data) {
@@ -75,7 +75,7 @@ const htmlRenderer = {
 
   htmlOfNotificationItem: function (data) {
     return `<a href="${data.link}" target="_blank" rel="noopener noreferrer" class="notification-link">
-              <img src="${data.img}" alt="" class="notification-image">
+              <img src="${data.image}" alt="" class="notification-image">
               <p class="notification-title">${data.name}</p>
               <p class="notification-content">${data.description}</p>
             </a>`;

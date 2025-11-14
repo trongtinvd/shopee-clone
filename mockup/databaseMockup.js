@@ -1,52 +1,13 @@
+import mysql from "mysql2/promise";
+
+const connection = await mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "shopee_clone"
+})
 
 const date = new Date();
-
-const banners = {
-  "main-banners": [
-    {
-      "img": "/img/banners/main-1.webp",
-      "link": "https://www.google.com/"
-    },
-    {
-      "img": "/img/banners/main-2.webp",
-      "link": "https://www.google.com/"
-    },
-    {
-      "img": "/img/banners/main-3.webp",
-      "link": "https://www.google.com/"
-    },
-    {
-      "img": "/img/banners/main-4.webp",
-      "link": "https://www.google.com/"
-    },
-    {
-      "img": "/img/banners/main-5.webp",
-      "link": "https://www.google.com/"
-    },
-    {
-      "img": "/img/banners/main-6.webp",
-      "link": "https://www.google.com/"
-    },
-    {
-      "img": "/img/banners/main-7.webp",
-      "link": "https://www.google.com/"
-    },
-    {
-      "img": "/img/banners/main-8.webp",
-      "link": "https://www.google.com/"
-    }
-  ],
-  "sub-banners": [
-    {
-      "img": "/img/banners/sub-1.webp",
-      "link": "https://www.google.com/"
-    },
-    {
-      "img": "/img/banners/sub-2.webp",
-      "link": "https://www.google.com/"
-    }
-  ]
-};
 
 const user = {
   "username": "Cow the Holy",
@@ -115,31 +76,31 @@ const suggestSearchs = [
 const notifications = [
   {
     "name": "Tham gia khảo sát",
-    "img": "img/notification/type-1-voucher-extra.png",
+    "image": "img/notification/type-1-voucher-extra.png",
     "link": "https://www.google.com/",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi! Qui voluptatem nisi illo, non deleniti dignissimos! Ratione, accusamus? Aspernatur, dolore magni. Repellat reiciendis accusantium odit explicabo. Ea quibusdam tempora ut voluptas in impedit odit? Reprehenderit."
   },
   {
     "name": "Giảm giá khủng 40%",
-    "img": "img/notification/type-2-voucher-hunting.png",
+    "image": "img/notification/type-2-voucher-hunting.png",
     "link": "https://www.google.com/",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum."
   },
   {
     "name": "Nhận ngay mã freeship 0đ",
-    "img": "img/notification/type-3-note.png",
+    "image": "img/notification/type-3-note.png",
     "link": "https://www.google.com/",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi!"
   },
   {
     "name": "Giao hàng thành công",
-    "img": "img/notification/type-4-fast-delivery.png",
+    "image": "img/notification/type-4-fast-delivery.png",
     "link": "https://www.google.com/",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi! Qui voluptatem nisi illo, non deleniti dignissimos! Ratione, accusamus? Aspernatur, dolore magni. Repellat reiciendis accusantium odit explicabo. Ea quibusdam tempora ut voluptas in impedit odit? Reprehenderit."
   },
   {
     "name": "Hủy đơn hàng thành công",
-    "img": "img/notification/type-5-top-deal.png",
+    "image": "img/notification/type-5-top-deal.png",
     "link": "https://www.google.com/",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. "
   }
@@ -859,7 +820,18 @@ const todaySuggestions = [
 
 const database = {
   banners: function () {
-    return banners;
+    return new Promise((resolve, reject) => {
+      const mainBanner = connection.query(`select image, link from banners where type = 'main-banner' order by date_added limit 8;`);
+      const subBanner = connection.query(`select image, link from banners where type = 'sub-banner' order by date_added limit 2;`);
+      Promise.all([mainBanner, subBanner])
+        .then(data => {
+          const result = {
+            "main-banners": data[0][0],
+            "sub-banners": data[1][0]
+          }
+          resolve(result);
+        })
+    })
   },
 
   user: function (userId) {

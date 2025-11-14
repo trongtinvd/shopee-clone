@@ -6,8 +6,9 @@ const router = Router();
 
 router.route("/banners/:year/:month/:day")
   .get((req, res) => {
-    const { params: { year, month, day } } = req;
-    res.status(200).json(database.banners());
+    database.banners()
+      .then(data => res.status(200).json(data))
+      .catch(error => console.log(`error: ${error}`));
   });
 
 router.route("/user/:userId")

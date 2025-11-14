@@ -1,4 +1,4 @@
 export function logger(req, res, next) {
-  console.log(`${req.method}${req.originalUrl} by ${req.socket.remoteAddress}`)
+  console.log(`log: ${req.method}${req.originalUrl} by ${req.socket.remoteAddress}`)
   next();
 }
