@@ -11,6 +11,6 @@ app.use(cors());
 
 
 app.use("/api", logger, apiRouter);
-app.use(express.static("public"));
+app.use(express.static("../fontend"));
 
 app.listen(3333);
