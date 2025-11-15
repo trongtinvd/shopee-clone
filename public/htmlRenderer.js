@@ -58,8 +58,8 @@ const htmlRenderer = {
 
   renderUser: function (data) {
     const avatar = document.querySelector(".avatar");
-    avatar.insertAdjacentHTML("afterbegin", this.htmlOfUserName(data["username"]));
-    avatar.insertAdjacentHTML("afterbegin", this.htmlOfProfilePicture(data["profile-picture"]));
+    avatar.insertAdjacentHTML("afterbegin", this.htmlOfUserName(data.displayName));
+    avatar.insertAdjacentHTML("afterbegin", this.htmlOfProfilePicture(data.profilePicture));
   },
 
   htmlOfSuggestSearchItem: function (data) {

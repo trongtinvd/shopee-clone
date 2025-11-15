@@ -819,23 +819,25 @@ const todaySuggestions = [
 ]
 
 const database = {
-  banners: function () {
-    return new Promise((resolve, reject) => {
-      const mainBanner = connection.query(`select image, link from banners where type = 'main-banner' order by date_added limit 8;`);
-      const subBanner = connection.query(`select image, link from banners where type = 'sub-banner' order by date_added limit 2;`);
-      Promise.all([mainBanner, subBanner])
-        .then(data => {
-          const result = {
-            "main-banners": data[0][0],
-            "sub-banners": data[1][0]
-          }
-          resolve(result);
-        })
-    })
+  banners: function (main, sub) {
+    const mainBanner = connection.query(`select image, link from banners where type = 'main-banner' order by date_added limit ${main};`);
+    const subBanner = connection.query(`select image, link from banners where type = 'sub-banner' order by date_added limit ${sub};`);
+    return Promise.all([mainBanner, subBanner])
+      .then(data => {
+        const result = {
+          "main-banners": data[0][0],
+          "sub-banners": data[1][0]
+        }
+        return result;
+      })
   },
 
-  user: function (userId) {
-    return user;
+  userInfo: function (data) {
+    return connection.query(`select display_name, profile_picture from users where username = '${data.username}' and password = '${data.password}';`)
+      .then(([result, type]) => {
+        const { display_name: displayName, profile_picture: profilePicture } = result[0];
+        return { displayName, profilePicture }
+      })
   },
 
   suggestSearchs: function (userId) {

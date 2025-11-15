@@ -4,17 +4,20 @@ const router = Router();
 
 
 
-router.route("/banners/:year/:month/:day")
+router.route("/banners/")
   .get((req, res) => {
-    database.banners()
+    database.banners(8, 2)
       .then(data => res.status(200).json(data))
       .catch(error => console.log(`error: ${error}`));
   });
 
-router.route("/user/:userId")
-  .get((req, res) => {
-    const { params: { userId } } = req;
-    res.status(200).json(database.user(userId));
+router.route("/user/")
+  .post((req, res) => {
+    database.userInfo(req.body)
+      .then(data => {
+        res.status(200).send(data)
+      })
+      .catch(error => console.log(`error: ${error}`));
   });
 
 router.route("/suggest-search/:userId")

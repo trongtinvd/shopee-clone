@@ -1,10 +1,11 @@
 import htmlRenderer from "./htmlRenderer.js";
 import eventManager from "./eventManager.js";
+import dataManager from "./dataManager.js";
 
 console.log("start");
 
 function renderBanner() {
-  fetch("/api/banners/2025/11/6")
+  fetch("/api/banners")
     .then(data => data.json())
     .then(data => {
       htmlRenderer.renderBanner(data);
@@ -13,9 +14,16 @@ function renderBanner() {
 }
 
 function renderUser() {
-  fetch("/api/user/1")
+  fetch("/api/user/", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: "username", password: "password" })
+  })
     .then(data => data.json())
-    .then(data => htmlRenderer.renderUser(data));
+    .then(data => {
+      dataManager.saveUser(data);
+      htmlRenderer.renderUser(dataManager.getUser());
+    });
 }
 
 function renderSuggestSearch() {

@@ -28,6 +28,7 @@ create table if not exists users (
     username varchar(32),
     password varchar(32),
     display_name varchar(32),
+    profile_picture varchar(255),
     first_name varchar(32),
     middle_name varchar(32),
     last_name varchar(32),
@@ -125,8 +126,11 @@ insert into banners(image, link, type, date_added) values
 ('/img/banners/sub-3.webp', '#', 'sub-banner', current_timestamp()),
 ('/img/banners/sub-4.webp', '#', 'sub-banner', current_timestamp());
 
-select * from banners;
+insert into users(username, password, display_name, profile_picture) values
+('username', 'password', 'The cow that is holy', '/img/user-profile/avatar-1.jpeg'),
+('zeropassword', 'namelessuser', 'The cat that bite', '/img/user-profile/avatar-2.jpeg');
 
+select display_name, profile_picture from users where username = 'username' and password = 'password';
 
 
 
