@@ -14,7 +14,7 @@ const htmlRenderer = {
   },
 
   renderBanner: function (data) {
-    const { "main-banners": mainBannerData, "sub-banners": subBannerData } = data;
+    const { mainBanners: mainBannerData, subBanners: subBannerData } = data;
 
     const mainBanners = document.querySelector(".main-banners");
     for (let i = 0; i < mainBannerData.length; i++) {

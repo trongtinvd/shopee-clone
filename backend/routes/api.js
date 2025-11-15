@@ -8,22 +8,34 @@ router.route("/banners/")
   .get((req, res) => {
     database.banners(8, 2)
       .then(data => res.status(200).json(data))
-      .catch(error => console.log(`error: ${error}`));
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
   });
 
 router.route("/user/")
   .post((req, res) => {
     database.userInfo(req.body)
       .then(data => {
-        res.status(200).send(data)
+        res.status(200).json(data)
       })
-      .catch(error => console.log(`error: ${error}`));
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
   });
 
-router.route("/suggest-search/:userId")
-  .get((req, res) => {
-    const { params: { userId } } = req;
-    res.status(200).json(database.suggestSearchs(userId));
+router.route("/suggest-search/")
+  .post((req, res) => {
+    database.suggestSearchs(req.body)
+      .then(result => {
+        res.status(200).json(result);
+      })
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
   });
 
 router.route("/notification/:userId")

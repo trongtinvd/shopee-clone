@@ -4,74 +4,10 @@ const connection = await mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "password",
-  database: "shopee_clone"
+  database: "shopeeClone"
 })
 
 const date = new Date();
-
-const user = {
-  "username": "Cow the Holy",
-  "profile-picture": "./img/user-profile/avatar-1.jpeg"
-};
-
-const suggestSearchs = [
-  {
-    "suggest": "Giá Đỡ Màn Hình Phụ",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "Mecha Girl",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "Đồ Công Nghệ Độc Lạ",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "Ví Kim Loại",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "Kit Nhôm",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "Đèn Edison",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "Mạch Bàn Phím Bluetooth",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "EDC",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "Ví Kim Loại",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "Kit Nhôm",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "Đèn Edison",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "Mạch Bàn Phím Bluetooth",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "EDC",
-    "link": "https://www.google.com/"
-  },
-  {
-    "suggest": "Vỏ Bàn Phím",
-    "link": "https://www.google.com/"
-  }
-];
 
 const notifications = [
   {
@@ -820,28 +756,30 @@ const todaySuggestions = [
 
 const database = {
   banners: function (main, sub) {
-    const mainBanner = connection.query(`select image, link from banners where type = 'main-banner' order by date_added limit ${main};`);
-    const subBanner = connection.query(`select image, link from banners where type = 'sub-banner' order by date_added limit ${sub};`);
+    const mainBanner = connection.query(`select image, link from banners where type = 'mainBanner' order by dateAdded limit ${main};`);
+    const subBanner = connection.query(`select image, link from banners where type = 'subBanner' order by dateAdded limit ${sub};`);
     return Promise.all([mainBanner, subBanner])
       .then(data => {
         const result = {
-          "main-banners": data[0][0],
-          "sub-banners": data[1][0]
+          mainBanners: data[0][0],
+          subBanners: data[1][0]
         }
         return result;
       })
   },
 
   userInfo: function (data) {
-    return connection.query(`select display_name, profile_picture from users where username = '${data.username}' and password = '${data.password}';`)
-      .then(([result, type]) => {
-        const { display_name: displayName, profile_picture: profilePicture } = result[0];
-        return { displayName, profilePicture }
+    return connection.query(`select displayName, profilePicture from users where username = '${data.username}' and password = '${data.password}';`)
+      .then(([result,]) => {
+        return result[0];
       })
   },
 
-  suggestSearchs: function (userId) {
-    return suggestSearchs;
+  suggestSearchs: function (data) {
+    return connection.query(`select suggest, link from suggestSearches as ss join users as u where ss.userId = u.id and u.username = '${data.username}' and u.password = '${data.password}' limit 7`)
+      .then(([result,]) => {
+        return result;
+      });
   },
 
   notifications: function (userId) {

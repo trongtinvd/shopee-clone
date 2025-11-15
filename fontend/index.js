@@ -1,6 +1,7 @@
 import htmlRenderer from "./htmlRenderer.js";
 import eventManager from "./eventManager.js";
 import dataManager from "./dataManager.js";
+import { devData } from "./utils.js";
 
 console.log("start");
 
@@ -14,11 +15,7 @@ function renderBanner() {
 }
 
 function renderUser() {
-  fetch("/api/user/", {
-    method: "POST",
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: "username", password: "password" })
-  })
+  fetch("/api/user/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user) })
     .then(data => data.json())
     .then(data => {
       dataManager.saveUser(data);
@@ -27,7 +24,7 @@ function renderUser() {
 }
 
 function renderSuggestSearch() {
-  fetch("/api/suggest-search/1")
+  fetch("/api/suggest-search/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user) })
     .then(data => data.json())
     .then(data => htmlRenderer.renderSuggestSearch(data));
 }

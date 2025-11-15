@@ -2,7 +2,8 @@ let user = {}
 
 const dataManager = {
   saveUser: function (data) {
-    ({ displayName: user.displayName, profilePicture: user.profilePicture } = data);
+    user.displayName = data.displayName;
+    user.profilePicture = data.profilePicture;
   },
   getUser: function () {
     return user;
