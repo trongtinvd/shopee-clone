@@ -3,5 +3,7 @@ export function clamp(min, desire, max) {
 }
 
 export const devData = {
-  user: { username: "username", password: "password" }
+  user: {
+    loginData: { username: "username", password: "password" }
+  }
 }

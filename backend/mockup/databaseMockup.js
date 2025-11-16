@@ -73,39 +73,6 @@ const searchHistory = [
   }
 ];
 
-const cart = [
-  {
-    "name": "Lorem ipsum dolor sit amet consectetur adipisicing.",
-    "image": "img/cart/item-1.jpg",
-    "link": "https://www.google.com/",
-    "price": "123.000"
-  },
-  {
-    "name": "Cắp quang",
-    "image": "img/cart/item-2.jpg",
-    "link": "https://www.google.com/",
-    "price": "5.000"
-  },
-  {
-    "name": "Bánh quy",
-    "image": "img/cart/item-3.jpg",
-    "link": "https://www.google.com/",
-    "price": "12.000"
-  },
-  {
-    "name": "xe máy",
-    "image": "img/cart/item-4.jpg",
-    "link": "https://www.google.com/",
-    "price": "123.000.000"
-  },
-  {
-    "name": "Xe hơi honda điện kỹ thuật số AI Max Pro",
-    "image": "img/cart/item-5.jpg",
-    "link": "https://www.google.com/",
-    "price": "1.123.000.000"
-  }
-];
-
 const flashSale = {
   date: {
     date: date.getDate(),
@@ -790,8 +757,16 @@ const database = {
     return searchHistory;
   },
 
-  cart: function (userId) {
-    return cart;
+  cart: function (data) {
+    return connection.query(`select users.username, p.name, p.image, concat('product/',p.id) as link, p.variation1, pv.value1, p.variation2, pv.value2, p.variation3, pv.value3, pv.price, ci.amount, (pv.price * ci.amount) as total 
+                              from cartItems as ci 
+                              join users on ci.userId = users.id 
+                              join productVariations as pv on ci.productVariationId = pv.id 
+                              join products as p on pv.productId = p.id 
+                              where username = '${data.username}' and password = '${data.password}';`)
+      .then(([result,]) => {
+        return result;
+      });
   },
 
   flashSale: function (year, month, date) {

@@ -112,7 +112,7 @@ const htmlRenderer = {
     return `<a href="${data.link}" target="_blank" rel="noopener noreferrer" class="cart-content-item">
               <img src="${data.image}" alt="">
               <span class="cart-item-name">${data.name}</span>
-              <span class="cart-item-price">${data.price}</span>
+              <span class="cart-item-price">${Intl.NumberFormat('en-US', { style: 'decimal' }).format(data.price)}</span>
             </a>`;
   },
 

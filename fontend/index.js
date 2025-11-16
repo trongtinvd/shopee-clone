@@ -15,7 +15,7 @@ function renderBanner() {
 }
 
 function renderUser() {
-  fetch("/api/user/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user) })
+  fetch("/api/user/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
     .then(data => data.json())
     .then(data => {
       dataManager.saveUser(data);
@@ -24,25 +24,25 @@ function renderUser() {
 }
 
 function renderSuggestSearch() {
-  fetch("/api/suggest-search/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user) })
+  fetch("/api/suggest-search/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
     .then(data => data.json())
     .then(data => htmlRenderer.renderSuggestSearch(data));
 }
 
 function renderNotification() {
-  fetch("/api/notification/1")
+  fetch("/api/notification/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
     .then(data => data.json())
     .then(data => htmlRenderer.renderNotification(data));
 }
 
 function renderSearchHistory() {
-  fetch("/api/search-history/1")
+  fetch("/api/search-history/")
     .then(data => data.json())
     .then(data => htmlRenderer.renderSearchHistory(data));
 }
 
 function renderCart() {
-  fetch("/api/cart/1")
+  fetch("/api/cart/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
     .then(data => data.json())
     .then(data => htmlRenderer.renderCart(data))
     .catch(error => htmlRenderer.renderEmptyCart());

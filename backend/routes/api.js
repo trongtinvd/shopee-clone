@@ -50,10 +50,16 @@ router.route("/search-history/:userId")
     res.status(200).json(database.searchHistory(userId));
   });
 
-router.route("/cart/:userId")
-  .get((req, res) => {
-    const { params: { userId } } = req;
-    res.status(200).json(database.cart(userId));
+router.route("/cart/")
+  .post((req, res) => {
+    database.cart(req.body)
+      .then(result => {
+        res.status(200).json(result);
+      })
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
   });
 
 router.route("/flashsale/:year/:month/:date")
