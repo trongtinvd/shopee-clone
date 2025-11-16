@@ -5,5 +5,6 @@ export function clamp(min, desire, max) {
 export const devData = {
   user: {
     loginData: { username: "username", password: "password" }
+    // loginData: { username: "zeropassword", password: "namelessuser" }
   }
 }

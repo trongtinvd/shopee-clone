@@ -9,70 +9,6 @@ const connection = await mysql.createConnection({
 
 const date = new Date();
 
-const notifications = [
-  {
-    "name": "Tham gia khảo sát",
-    "image": "img/notification/type-1-voucher-extra.png",
-    "link": "https://www.google.com/",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi! Qui voluptatem nisi illo, non deleniti dignissimos! Ratione, accusamus? Aspernatur, dolore magni. Repellat reiciendis accusantium odit explicabo. Ea quibusdam tempora ut voluptas in impedit odit? Reprehenderit."
-  },
-  {
-    "name": "Giảm giá khủng 40%",
-    "image": "img/notification/type-2-voucher-hunting.png",
-    "link": "https://www.google.com/",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum."
-  },
-  {
-    "name": "Nhận ngay mã freeship 0đ",
-    "image": "img/notification/type-3-note.png",
-    "link": "https://www.google.com/",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi!"
-  },
-  {
-    "name": "Giao hàng thành công",
-    "image": "img/notification/type-4-fast-delivery.png",
-    "link": "https://www.google.com/",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi! Qui voluptatem nisi illo, non deleniti dignissimos! Ratione, accusamus? Aspernatur, dolore magni. Repellat reiciendis accusantium odit explicabo. Ea quibusdam tempora ut voluptas in impedit odit? Reprehenderit."
-  },
-  {
-    "name": "Hủy đơn hàng thành công",
-    "image": "img/notification/type-5-top-deal.png",
-    "link": "https://www.google.com/",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. "
-  }
-];
-
-const searchHistory = [
-  {
-    "name": "Doraemon tập 77",
-    "link": "https://www.google.com/"
-  },
-  {
-    "name": "Conan tập 21",
-    "link": "https://www.google.com/"
-  },
-  {
-    "name": "PC 2",
-    "link": "https://www.google.com/"
-  },
-  {
-    "name": "Cửa kính",
-    "link": "https://www.google.com/"
-  },
-  {
-    "name": "Cửa thủy tinh",
-    "link": "https://www.google.com/"
-  },
-  {
-    "name": "Thủy tinh đánh sơn tinh",
-    "link": "https://www.google.com/"
-  },
-  {
-    "name": "Tinh Tinh cửi rồng",
-    "link": "https://www.google.com/"
-  }
-];
-
 const flashSale = {
   date: {
     date: date.getDate(),
@@ -749,12 +685,21 @@ const database = {
       });
   },
 
-  notifications: function (userId) {
-    return notifications;
+  notifications: function (data) {
+    return connection.query(`select userId, title, image, concat('notifications/', notifications.id) as link, description
+                              from notifications
+                              join users on userId = users.id
+                              where username = '${data.username}' and password='${data.password}';`)
+      .then(([result,]) => {
+        return result;
+      });
   },
 
-  searchHistory: function (userId) {
-    return searchHistory;
+  searchHistories: function (data) {
+    return connection.query(`select name, link from searchHistories where userId = (select id from users where username = '${data.username}' and password='${data.password}');`)
+      .then(([result,]) => {
+        return result;
+      });
   },
 
   cart: function (data) {

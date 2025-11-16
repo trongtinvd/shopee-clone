@@ -29,14 +29,14 @@ function renderSuggestSearch() {
     .then(data => htmlRenderer.renderSuggestSearch(data));
 }
 
-function renderNotification() {
-  fetch("/api/notification/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
+function renderNotifications() {
+  fetch("/api/notifications/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
     .then(data => data.json())
     .then(data => htmlRenderer.renderNotification(data));
 }
 
 function renderSearchHistory() {
-  fetch("/api/search-history/")
+  fetch("/api/search-histories/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
     .then(data => data.json())
     .then(data => htmlRenderer.renderSearchHistory(data));
 }
@@ -103,7 +103,7 @@ function renderTodaySuggestions() {
 renderUser();
 renderSuggestSearch();
 renderBanner();
-renderNotification();
+renderNotifications();
 renderSearchHistory();
 renderCart();
 renderSelection();

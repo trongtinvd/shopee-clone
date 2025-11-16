@@ -38,16 +38,28 @@ router.route("/suggest-search/")
       })
   });
 
-router.route("/notification/:userId")
-  .get((req, res) => {
-    const { params: { userId } } = req;
-    res.status(200).json(database.notifications(userId));
+router.route("/notifications/")
+  .post((req, res) => {
+    database.notifications(req.body)
+      .then(result => {
+        res.status(200).json(result);
+      })
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
   });
 
-router.route("/search-history/:userId")
-  .get((req, res) => {
-    const { params: { userId } } = req;
-    res.status(200).json(database.searchHistory(userId));
+router.route("/search-histories/")
+  .post((req, res) => {
+    database.searchHistories(req.body)
+      .then(result => {
+        res.status(200).json(result);
+      })
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
   });
 
 router.route("/cart/")

@@ -470,11 +470,14 @@ insert into cartItems(userId, productVariationId, amount) values
 ((select id from users where username = 'username'), (select pv.id from productVariations as pv join products as p on pv.productId = p.id where p.name ='Switch Leobog GrayWood V4' and pv.value1 = 'Leopog' and pv.value2 = 'prelube' ), 4),
 ((select id from users where username = 'username'), (select pv.id from productVariations as pv join products as p on pv.productId = p.id where p.name ='Bơm xe máy xe đạp nhỏ gọn Kiotool' and pv.value1 is null and pv.value2 is null ), 5);
 
-select users.username, p.name, pv.value1, pv.value2, pv.price, ci.amount, (pv.price * ci.amount) as total 
+/*
+select users.username, p.name, p.image, concat('product/',p.id) as link, p.variation1, pv.value1, p.variation2, pv.value2, p.variation3, pv.value3, pv.price, ci.amount, (pv.price * ci.amount) as total 
 from cartItems as ci 
 join users on ci.userId = users.id 
 join productVariations as pv on ci.productVariationId = pv.id 
-join products as p on pv.productId = p.id;
+join products as p on pv.productId = p.id
+where username = 'username';
+*/
 
 create table if not exists addresses (
 	id integer not null unique auto_increment,
@@ -539,24 +542,29 @@ select suggest, link from suggestSearches as ss join users as u where ss.userId 
 */
 
 create table if not exists notifications(
-	id integer not null auto_increment,
+	id integer not null unique auto_increment,
     userId integer not null,
-    title varchar(1000) not null,
-    image varchar(1000)	not null,
-    link varchar(1000) not null,
-    description varchar(1000) not null,
-    primary key (id),
+    title varchar(1000),
+    image varchar(1000),
+    description varchar(1000),
+    primary key(id),
     foreign key (userId) references users(id)
 );
-insert into notifications (userId, title, image, link, description) values
-((select id from users where username ='username'), 'Tham gia khảo sát', 'img/notification/type-1-voucher-extra.png', '#', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi! Qui voluptatem nisi illo, non deleniti dignissimos! Ratione, accusamus? Aspernatur, dolore magni. Repellat reiciendis accusantium odit explicabo. Ea quibusdam tempora ut voluptas in impedit odit? Reprehenderit.'),
-((select id from users where username ='username'), 'Giảm giá khủng 40%', 'img/notification/type-2-voucher-hunting.png', '#', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum.'),
-((select id from users where username ='username'), 'Nhận ngay mã freeship 0đ', 'img/notification/type-3-note.png', '#', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi!'),
-((select id from users where username ='username'), 'Giao hàng thành công', 'img/notification/type-4-fast-delivery.png', '#', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi! Qui voluptatem nisi illo, non deleniti dignissimos! Ratione, accusamus? Aspernatur, dolore magni. Repellat reiciendis accusantium odit explicabo. Ea quibusdam tempora ut voluptas in impedit odit? Reprehenderit.'),
-((select id from users where username ='username'), 'Hủy đơn hàng thành công', 'img/notification/type-5-top-deal.png', '#', 'Lorem ipsum dolor sit amet consectetur adipisicing elit.');
+
+insert into notifications (userId, title, image, description) values
+((select id from users where username ='username'), 'Tham gia khảo sát', 'img/notifications/type-1-voucher-extra.png', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi! Qui voluptatem nisi illo, non deleniti dignissimos! Ratione, accusamus? Aspernatur, dolore magni. Repellat reiciendis accusantium odit explicabo. Ea quibusdam tempora ut voluptas in impedit odit? Reprehenderit.'),
+((select id from users where username ='username'), 'Giảm giá khủng 40%', 'img/notifications/type-2-voucher-hunting.png', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum.'),
+((select id from users where username ='username'), 'Nhận ngay mã freeship 0đ', 'img/notifications/type-3-note.png', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi!'),
+((select id from users where username ='username'), 'Giao hàng thành công', 'img/notifications/type-4-fast-delivery.png', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi! Qui voluptatem nisi illo, non deleniti dignissimos! Ratione, accusamus? Aspernatur, dolore magni. Repellat reiciendis accusantium odit explicabo. Ea quibusdam tempora ut voluptas in impedit odit? Reprehenderit.'),
+((select id from users where username ='username'), 'Hủy đơn hàng thành công', 'img/notifications/type-5-top-deal.png', 'Lorem ipsum dolor sit amet consectetur adipisicing elit.');
+
 /*
-select userId, title, image, link, description from notifications where userId = (select id from users where username = 'username');
+select userId, title, image, concat('notifications/', notifications.id) as link, description
+from notifications
+join users on userId = users.id
+where username = 'username' and password='password';
 */
+
 
 create table if not exists searchHistories(
 	id integer not null auto_increment,
@@ -576,7 +584,7 @@ insert into searchHistories (userId, name, link) values
 ((select id from users where username ='username'),'Thủy tinh đánh sơn tinh','#'),
 ((select id from users where username ='username'),'Tinh Tinh cưỡi rồng','#');
 /*
-select name, link from searchHistories where userId = (select id from users where username = 'username');
+select name, link from searchHistories where userId = (select id from users where username = 'username' and password='password');
 */
 
 
