@@ -2,7 +2,7 @@ drop database if exists shopeeClone;
 create database shopeeClone DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
 use shopeeClone;
 create table if not exists productTypes (
-	id integer not null auto_increment,
+	id integer not null unique auto_increment,
     parentId integer,
     name varchar(1000),
     code varchar(1000) unique,
@@ -41,7 +41,7 @@ insert into productTypes(name, code) values
 ('Dụng Cụ & Thiết Bị Tiện Ích','dung-cu');
 
 create table products(
-	id integer not null auto_increment,
+	id integer not null unique auto_increment,
     typeId integer,
     sellerId integer,
     brandId integer,
@@ -56,7 +56,7 @@ create table products(
 );
 
 create table if not exists productImages (
-	id integer not null auto_increment,
+	id integer not null unique auto_increment,
 	productId integer not null,
     image varchar(1000),
     primary key(id),
@@ -64,7 +64,7 @@ create table if not exists productImages (
 );
 
 create table if not exists productVariations(
-	id integer not null auto_increment,
+	id integer not null unique auto_increment,
     productId integer not null,
     price integer,
     image varchar(1000),
@@ -437,7 +437,7 @@ select * from products join productVariations on products.id = productVariations
 */
 
 create table if not exists users (
-	id integer not null auto_increment,
+	id integer not null unique auto_increment,
     username varchar(32),
     password varchar(32),
     displayName varchar(32),
@@ -453,7 +453,7 @@ insert into users(username, password, displayName, profilePicture) values
 ('zeropassword', 'namelessuser', 'The cat that bite', '/img/user-profile/avatar-2.jpeg');
 
 create table if not exists cartItems(
-	id integer not null auto_increment,
+	id integer not null unique auto_increment,
 	userId integer not null,
     productVariationId integer not null,
     amount integer default 0,
@@ -489,7 +489,7 @@ create table if not exists addresses (
 );
 
 create table if not exists banners(
-	id integer not null auto_increment,
+	id integer not null unique auto_increment,
     image varchar(1000),
     link varchar(1000),
     dateAdded datetime,
@@ -567,7 +567,7 @@ where username = 'username' and password='password';
 
 
 create table if not exists searchHistories(
-	id integer not null auto_increment,
+	id integer not null unique auto_increment,
     userId integer not null,
     name varchar(1000) not null,
     link varchar(1000) not null,
@@ -587,9 +587,49 @@ insert into searchHistories (userId, name, link) values
 select name, link from searchHistories where userId = (select id from users where username = 'username' and password='password');
 */
 
+create table if not exists flashSales(
+	id integer not null unique auto_increment,
+    start datetime not null,
+    end datetime not null,
+    primary key(id)
+);
 
+create table if not exists flashSaleItems(
+	id integer not null unique auto_increment,
+    flashSaleId integer not null,
+    productId integer not null,
+    percentDiscount integer default 0,
+    stamp varchar(1000),
+    total integer,
+    remain integer,
+    primary key (id),
+    foreign key (flashSaleId) references flashSales(id),
+    foreign key (productId) references products(id),
+    key(flashSaleId, productId)
+);
 
-
+insert into flashSales(start, end) values ('2025-11-17', '2025-11-18');
+insert into flashSaleItems(flashSaleId, productId, percentDiscount, stamp, total, remain) values
+((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Thắt lưng nam cao cấp'), 30, 'Yêu thích', 100, 90),
+((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Ô Dù Mini gấp gọn'), 27, 'Yêu thích+', 120, 79),
+((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Balo chống gù PTLUXURY'), 99, 'Mall', 314, 217),
+((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Túi cói Merci đi du lịch'), 69, 'Choice', 5, 1),
+((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Tinh Dầu Thơm Thiên Nhiên'), 20, 'Choice', 721, 4),
+((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Dép Nam, Nữ Quai Ngang Đúc Liền Khối Siêu Nhẹ DUWA'), 55, 'Mall', 32, 7),
+((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Thẻ nhớ Micro SD'), 6, 'Yêu thích+', 64, 63),
+((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Áo thun ôm body cotton lông mịn'), 1, 'Yêu thích', 22, 11);
+/*
+select start, end from flashSales where start <= curdate() and curdate() <= end;
+*/
+/*
+select p.id, p.name, concat('product/', p.id) as link, p.image, min(v.price) as price, i.stamp, i.percentDiscount as discount, i.total, i.remain
+from products as p 
+join flashSaleItems as i on  p.id = i.productId 
+join flashSales as fl on fl.id = i.flashSaleId
+join productVariations as v on p.id = v.productId
+where start = start <= curdate() and curdate() <= end
+group by p.id, p.name, link, p.image, i.stamp, discount, i.total, i.remain;
+*/
 
 
 

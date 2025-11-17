@@ -146,23 +146,27 @@ const htmlRenderer = {
   },
 
   renderFlashSale: function (data) {
-    this.renderFlashSaleClock(data.saleStart, data.saleEnd);
+    this.renderFlashSaleClock(data.start, data.end);
     this.renderFlashSaleItems(data.items);
+    this.updateInlineCss(".flash-sale-tiles", `grid-template-columns: repeat(${data.items.length}, 16.666%);`);
   },
 
-  renderFlashSaleClock: function (saleStart, saleEnd) {
-    let timeStart = saleStart.hour * 3600 + saleStart.minute * 60 + saleStart.second;
-    let timeEnd = saleEnd.hour * 3600 + saleEnd.minute * 60 + saleEnd.second;
+  updateInlineCss: function (element, styles) {
+    document.querySelector(element).style.cssText = styles;
+  },
+
+  renderFlashSaleClock: function (start, end) {
+    const timeStart = new Date(start).getTime();
+    const timeEnd = new Date(end).getTime();
 
     const hourElement = document.querySelector(".clock-item .hour");
     const minuteElement = document.querySelector(".clock-item .minute");
     const secondElement = document.querySelector(".clock-item .second");
 
     setInterval(() => {
-      const date = new Date();
-      let timeNow = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
+      let timeNow = new Date().getTime();
       if (timeNow > timeStart) {
-        let timeLeft = timeEnd - timeNow;
+        let timeLeft = Math.floor((timeEnd - timeNow) / 1000);
 
         const hourLeft = Math.floor((timeLeft % 86400) / 3600);
         const minuteLeft = Math.floor((timeLeft % 3600) / 60);
@@ -175,13 +179,20 @@ const htmlRenderer = {
     }, 1000);
   },
 
+  flashSaleStamps: {
+    'Yêu thích': 'img/flash-sale/liked.png',
+    'Yêu thích+': 'img/flash-sale/liked+.png',
+    'Mall': 'img/flash-sale/mall.png',
+    'Choice': 'img/flash-sale/choice.png'
+  },
+
   htmlOfFlashSaleItem: function (data) {
     return `<a href="${data.link}" target="_blank" rel="noopener noreferrer" class="flash-sale-tile" title="${data.name}">
               <img class="sale-item" src="${data.image}" alt="">
               <img class="sale-overlay" src="img/flash-sale/sale-overlay.png" alt="">
-              <img class="sale-stamp" src="img/flash-sale/liked.png" alt="">
-              <span class="sale-percent"><i class="fa-solid fa-bolt-lightning"></i>${data.discount}</span>
-              <div class="sale-price">${data.price}</div>
+              <img class="sale-stamp" src="${this.flashSaleStamps[data.stamp]}" alt="">
+              <span class="sale-percent"><i class="fa-solid fa-bolt-lightning"></i>-${data.discount}%</span>
+              <div class="sale-price">${Intl.NumberFormat('en-US', { style: 'decimal' }).format(data.price)}</div>
               <div class="sale-remain">
                 <p>ĐANG BÁN CHẠY</p>
                 <div style="width:${Math.floor(100 * data.remain / data.total)}%" class="sale-remain-percent"></div>

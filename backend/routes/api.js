@@ -74,11 +74,14 @@ router.route("/cart/")
       })
   });
 
-router.route("/flashsale/:year/:month/:date")
+router.route("/flashsale/")
   .get((req, res) => {
-    const { params: { year, month, date } } = req;
-    const data = database.flashSale(year, month, date);
-    res.status(200).json(data);
+    database.flashSale()
+      .then(data => res.status(200).json(data))
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
   });
 
 router.route("/voucherBanner/:year/:month/:date")

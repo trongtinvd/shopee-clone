@@ -54,7 +54,7 @@ function renderSelection() {
 
 function renderFlashSale() {
   const date = new Date();
-  fetch(`/api/flashsale/${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`)
+  fetch(`/api/flashsale`)
     .then(data => data.json())
     .then(data => {
       htmlRenderer.renderFlashSale(data);

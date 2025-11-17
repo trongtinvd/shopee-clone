@@ -9,133 +9,6 @@ const connection = await mysql.createConnection({
 
 const date = new Date();
 
-const flashSale = {
-  date: {
-    date: date.getDate(),
-    month: date.getMonth() + 1,
-    year: date.getFullYear()
-  },
-  saleStart: {
-    hour: 12,
-    minute: 0,
-    second: 0
-  },
-  saleEnd: {
-    hour: Math.min(date.getHours() + 3, 24),
-    minute: 0,
-    second: 0
-  },
-  items: [
-    {
-      name: "Cưa tĩnh điện",
-      link: "https://www.google.com/",
-      image: "img/flash-sale/flash-sale-item-1.png",
-      price: "369.200",
-      discount: "-26%",
-      total: 100,
-      remain: 100
-    },
-    {
-      name: "Điện thoại thông minh",
-      link: "https://www.google.com/",
-      image: "img/flash-sale/flash-sale-item-2.png",
-      price: "16.200",
-      discount: "-26%",
-      total: 100,
-      remain: 90
-    },
-    {
-      name: "Minh tinh điện ảnh",
-      link: "https://www.google.com/",
-      image: "img/flash-sale/flash-sale-item-3.png",
-      price: "5.200",
-      discount: "-26%",
-      total: 100,
-      remain: 80
-    },
-    {
-      name: "Ảnh chụp chân không",
-      link: "https://www.google.com/",
-      image: "img/flash-sale/flash-sale-item-4.png",
-      price: "79.200",
-      discount: "-26%",
-      total: 100,
-      remain: 70
-    },
-    {
-      name: "Không khí đà lạc",
-      link: "https://www.google.com/",
-      image: "img/flash-sale/flash-sale-item-5.png",
-      price: "542.200",
-      discount: "-26%",
-      total: 100,
-      remain: 60
-    },
-    {
-      name: "Lạc đà châu phi",
-      link: "https://www.google.com/",
-      image: "img/flash-sale/flash-sale-item-6.png",
-      price: "66.200",
-      discount: "-26%",
-      total: 100,
-      remain: 50
-    },
-    {
-      name: "Phi hành cơ",
-      link: "https://www.google.com/",
-      image: "img/flash-sale/flash-sale-item-7.png",
-      price: "200",
-      discount: "-26%",
-      total: 100,
-      remain: 40
-    },
-    {
-      name: "Cơ bò không mỡ",
-      link: "https://www.google.com/",
-      image: "img/flash-sale/flash-sale-item-8.png",
-      price: "1.779.200",
-      discount: "-26%",
-      total: 100,
-      remain: 30
-    },
-    {
-      name: "Mỡ lợn",
-      link: "https://www.google.com/",
-      image: "img/flash-sale/flash-sale-item-9.png",
-      price: "25.768.200",
-      discount: "-26%",
-      total: 100,
-      remain: 20
-    },
-    {
-      name: "Lợn ba chỉ",
-      link: "https://www.google.com/",
-      image: "img/flash-sale/flash-sale-item-10.png",
-      price: "369.200",
-      discount: "-26%",
-      total: 100,
-      remain: 10
-    },
-    {
-      name: "Chỉ may thượng hạng",
-      link: "https://www.google.com/",
-      image: "img/flash-sale/flash-sale-item-11.png",
-      price: "369.200",
-      discount: "-26%",
-      total: 100,
-      remain: 27
-    },
-    {
-      name: "Hạnh nhân",
-      link: "https://www.google.com/",
-      image: "img/flash-sale/flash-sale-item-12.png",
-      price: "369.200",
-      discount: "-26%",
-      total: 100,
-      remain: 15
-    }
-  ]
-}
 
 const voucherBanner = {
   image: "img/voucher-banner/three-voucher.webp",
@@ -714,8 +587,21 @@ const database = {
       });
   },
 
-  flashSale: function (year, month, date) {
-    return flashSale;
+  flashSale: function (data) {
+    const c1 = connection.query(`select start, end from flashSales where start <= curdate() and curdate() <= end;`);
+    const c2 = connection.query(`select p.id, p.name, concat('product/', p.id) as link, p.image, min(v.price) as price, i.percentDiscount as discount, i.total, i.remain, i.stamp 
+                                  from products as p 
+                                  join flashSaleItems as i on  p.id = i.productId 
+                                  join flashSales as fl on fl.id = i.flashSaleId
+                                  join productVariations as v on p.id = v.productId
+                                  where start = start <= curdate() and curdate() <= end
+                                  group by p.id, p.name, link, p.image, discount, i.total, i.remain, i.stamp;`);
+
+    return Promise.all([c1, c2])
+      .then(data => {
+        const [[[result1,], name1], [result2, name2]] = data;
+        return { ...result1, items: result2 };
+      })
   },
 
   voucherBanner: function (year, month, date) {
