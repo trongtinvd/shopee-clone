@@ -66,17 +66,24 @@ function renderVoucherBanner() {
   fetch(`./api/voucherBanners/`)
     .then(data => data.json())
     .then(data => {
-      htmlRenderer.renderVoucherBanner(data);
+      htmlRenderer.renderVoucherBanners(data);
     })
 }
 
-function renderShopeeMall() {
-  const date = new Date();
-  fetch(`./api/shopeeMall/${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`)
+function renderMallBanners() {
+  fetch(`./api/mallBanners/`)
     .then(data => data.json())
     .then(data => {
-      htmlRenderer.renderShopeeMall(data);
-      eventManager.addShopeeMallSectionListener();
+      htmlRenderer.renderMallBanners(data);
+    })
+}
+
+function renderMallPromotions() {
+  fetch(`./api/mallPromotions/`)
+    .then(data => data.json())
+    .then(data => {
+      htmlRenderer.renderMallPromotions(data);
+      eventManager.addMallPromotionsSectionListener();
     })
 }
 
@@ -108,7 +115,8 @@ renderCart();
 renderSelection();
 renderFlashSale();
 renderVoucherBanner();
-renderShopeeMall();
+renderMallBanners();
+renderMallPromotions();
 renderTopSearched();
 renderTodaySuggestions();
 

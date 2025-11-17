@@ -94,11 +94,24 @@ router.route("/voucherBanners/")
       })
   });
 
-router.route("/shopeeMall/:year/:month/:date")
+router.route("/mallBanners")
   .get((req, res) => {
-    const { params: { year, month, date } } = req;
-    const data = database.shopeeMall(year, month, date);
-    res.status(200).json(data);
+    database.mallBanners()
+      .then(data => res.status(200).json(data))
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
+  });
+
+router.route("/mallPromotions")
+  .get((req, res) => {
+    database.mallPromotions()
+      .then(data => res.status(200).json(data))
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
   });
 
 router.route("/topSearched")

@@ -215,7 +215,7 @@ const htmlRenderer = {
     return `<a href="${link}" target="_blank" rel="noopener noreferrer"></a>`;
   },
 
-  renderVoucherBanner: function (data) {
+  renderVoucherBanners: function (data) {
     const voucherBanner = document.querySelector(".voucher-banner");
     const voucherLinks = document.querySelector(".voucher-links");
     voucherBanner.insertAdjacentHTML("afterbegin", this.htmlOfVoucherBanner(data.image, data.name));
@@ -224,26 +224,29 @@ const htmlRenderer = {
     voucherLinks.insertAdjacentHTML("beforeend", this.htmlOfVoucherLink(data.link3));
   },
 
-  htmlOfShopeeAd: function (ad) {
+  htmlOfShopeeBanner: function (ad) {
     return `<a href="${ad.link}" target="_blank" rel="noopener noreferrer">
               <img src="${ad.image}" alt="${ad.name}">
             </a>`;
   },
 
   htmlOfShopeeTile: function (item) {
-    return `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="shopee-mall-tile">
+    return `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="mall-promotions-tile">
               <img src="${item.image}" alt="${item.name}">
-              <p>${item.description}</p>
+              <p>${item.slogan}</p>
             </a>`;
   },
 
-  renderShopeeMall: function (data) {
-    const shopeeMallAd = document.querySelector(".shopee-mall-ad");
-    shopeeMallAd.insertAdjacentHTML("afterbegin", this.htmlOfShopeeAd(data.ad));
+  renderMallBanners: function (data) {
+    const shopeeMallAd = document.querySelector(".mall-promotions-banner");
+    shopeeMallAd.insertAdjacentHTML("afterbegin", this.htmlOfShopeeBanner(data));
+  },
 
-    const shopeeMallTiles = document.querySelector(".shopee-mall-tiles");
-    for (const item of data.items) {
-      shopeeMallTiles.insertAdjacentHTML("afterbegin", this.htmlOfShopeeTile(item));
+  renderMallPromotions: function (data) {
+    const mallPromotionTiles = document.querySelector(".mall-promotions-tiles");
+    mallPromotionTiles.style.cssText = `grid-template-columns: repeat(${Math.ceil(data.length / 2)}, 25%);`;
+    for (const item of data) {
+      mallPromotionTiles.insertAdjacentHTML("beforeend", this.htmlOfShopeeTile(item));
     }
   },
 

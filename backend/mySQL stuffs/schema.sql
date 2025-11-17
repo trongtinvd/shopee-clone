@@ -43,7 +43,7 @@ insert into productTypes(name, code) values
 create table products(
 	id integer not null unique auto_increment,
     typeId integer,
-    sellerId integer,
+    vendorId integer,
     brandId integer,
     name varchar(1000),
     description varchar(1000),
@@ -648,14 +648,72 @@ insert into voucherBanners(start, end, name, image, link1, link2, link3) values
 ('2025-04-01', '2025-07-30', 'april voucher', 'img/voucher-banner/three-voucher.webp', '#','#','#'),
 ('2025-05-01', '2025-08-30', 'june voucher', 'img/voucher-banner/three-voucher.webp', '#','#','#'),
 ('2025-01-01', '2025-12-30', '2025 voucher', 'img/voucher-banner/three-voucher.webp', '#','#','#');
+/*
+select name, image, link1, link2, link3 from voucherBanners where start <= curdate() and curdate() <= end order by start desc, end asc limit 1;
+*/
 
-select name, image, link1, link2, link3 from voucherBanners where start <= curdate() and curdate() <= end order by start limit 1;
+create table if not exists mallBanners(
+	id integer not null unique auto_increment,
+    start date,
+    end date,
+    name varchar(1000),
+    image varchar(1000),
+    link varchar(1000),
+    primary key (id)
+);
 
+insert into mallBanners(start, end, name, image, link) values 
+('2025-11-01', '2025-12-30', 'winter banner', 'img/mall-banners/ad-banner.jpg', '#'),
+('2025-10-01', '2026-02-27', 'new year banner', 'img/mall-banners/ad-banner.jpg', '#'),
+('2025-11-01', '2026-02-27', '2026 banner', 'img/mall-banners/ad-banner.jpg', '#'),
+('2025-01-01', '2025-12-30', '2025 banner', 'img/mall-banners/ad-banner.jpg', '#');
+/*
+select name, image, link from mallBanners where start <= curdate() and curdate() <= end order by start desc, end asc limit 1;
+*/
 
+-- link image name description
+create table if not exists vendors(
+	id integer not null unique auto_increment,
+    name varchar(1000),
+    isMall boolean default false,
+    primary key(id)
+);
 
+insert into vendors(name, isMall) values ('Con chồn chồn', false), ('Con đười ươi', true), ('Con mèo mướp', true);
 
+create table mallPromotions(
+	id integer not null unique auto_increment,
+    vendorId integer not null,
+    start date,
+    end date,
+    image varchar(1000),
+    slogan varchar(1000),
+    primary key (id),
+    foreign key (vendorId) references vendors(id)
+);
 
-
+insert into mallPromotions(vendorId, start, end, image, slogan) values
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-1.png', 'Ưu đãi đến 50%'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-2.png', 'Mua 1 được 2'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-3.png', 'Mua 1 tặng 1'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-4.png', 'Mua 1 tặng 1'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-5.png', 'Mua 1 tặng 1'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-6.png', 'Quà mọi đơn'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-7.png', 'Ưu đãi đến 50%'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-8.png', 'Mua là có quà'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-9.png', 'Mua 1 tặng 1'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-10.png', 'Deli siêu sale'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-11.png', 'Mua là có quà'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-12.png', 'Mua 1 tặng 6'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-13.png', 'Mua là có quà'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-14.png', 'Mua là có quà'),
+((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-15.png', 'Ưu đãi đến 20%');
+/*
+select concat('/vendor/', vendors.id) as link, image, name, slogan
+from mallPromotions as mp
+join vendors on mp.vendorId = vendors.id and vendors.isMall = true and start <= curdate() and curdate() <= end
+limit 15;
+*/
 
 
 

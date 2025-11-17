@@ -594,14 +594,27 @@ const database = {
   },
 
   voucherBanners: function () {
-    return connection.query(`select name, image, link1, link2, link3 from voucherBanners where start <= curdate() and curdate() <= end order by start limit 1;`)
+    return connection.query(`select name, image, link1, link2, link3 from voucherBanners where start <= curdate() and curdate() <= end order by start desc, end asc limit 1;`)
       .then(([result,]) => {
         return result[0];
       });
   },
 
-  shopeeMall: function (year, month, date) {
-    return shopeeMall;
+  mallBanners: function(){
+    return connection.query(`select name, image, link from mallBanners where start <= curdate() and curdate() <= end order by start desc, end asc limit 1;`)
+      .then(([result,]) => {
+        return result[0];
+      });
+  },
+
+  mallPromotions: function () {
+    return connection.query(`select concat('/vendor/', vendors.id) as link, image, name, slogan
+                              from mallPromotions as mp
+                              join vendors on mp.vendorId = vendors.id and vendors.isMall = true and start <= curdate() and curdate() <= end
+                              limit 13;`)
+      .then(([result,]) => {
+        return result;
+      });
   },
 
   topSeached: function () {

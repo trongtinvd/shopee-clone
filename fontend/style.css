@@ -747,8 +747,8 @@ body {
 .selection:hover .next-button,
 .flash-sale:hover .previous-button,
 .flash-sale:hover .next-button,
-.shopee-mall:hover .previous-button,
-.shopee-mall:hover .next-button,
+.mall-promotions:hover .previous-button,
+.mall-promotions:hover .next-button,
 .top-searched:hover .previous-button,
 .top-searched:hover .next-button {
   font-size: 1.2rem;
@@ -933,7 +933,7 @@ body {
   grid-template-rows: 1fr;
 }
 
-.shopee-mall {
+.mall-promotions {
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-template-rows: 1fr 8fr;
@@ -942,7 +942,7 @@ body {
     "ad tiles";
 }
 
-.shopee-mall-header {
+.mall-promotions-header {
   grid-area: header;
   display: flex;
   justify-content: start;
@@ -953,14 +953,14 @@ body {
   border-bottom: 1px solid var(--background-color-1--);
 }
 
-.shopee-mall-header h2 {
+.mall-promotions-header h2 {
   font-size: 1rem;
   font-weight: lighter;
   color: var(--main-color-1--);
   position: relative;
 }
 
-.shopee-mall-header h2::after {
+.mall-promotions-header h2::after {
   position: absolute;
   content: "";
   width: 1px;
@@ -971,29 +971,29 @@ body {
   background-color: var(--background-color-1--);
 }
 
-.shopee-mall-header i {
+.mall-promotions-header i {
   color: var(--main-color-1--);
   font-size: 0.8rem;
 }
 
-.shopee-mall-header a {
+.mall-promotions-header a {
   margin-left: auto;
   color: var(--main-color-1--);
   text-decoration: none;
 }
 
-.shopee-mall-ad {
+.mall-promotions-banner {
   grid-area: ad;
   padding: 0.5rem;
   background-color: var(--background-color-2--);
 }
 
-.shopee-mall-body {
+.mall-promotions-body {
   position: relative;
   background-color: white;
 }
 
-.shopee-mall-tiles {
+.mall-promotions-tiles {
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: repeat(8, 25%);
@@ -1003,11 +1003,11 @@ body {
   scroll-behavior: smooth;
 }
 
-.shopee-mall-tiles::-webkit-scrollbar {
+.mall-promotions-tiles::-webkit-scrollbar {
   display: none;
 }
 
-.shopee-mall-tile {
+.mall-promotions-tile {
   display: grid;
   grid-template-areas: "item";
   align-items: end;
@@ -1016,13 +1016,13 @@ body {
   scroll-snap-align: start;
 }
 
-.shopee-mall-tile img {
+.mall-promotions-tile img {
   grid-area: item;
   width: 100%;
   object-fit: contain;
 }
 
-.shopee-mall-tile p {
+.mall-promotions-tile p {
   grid-area: item;
   padding: 0.5rem;
   color: var(--text-color-1--);
