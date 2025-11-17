@@ -84,11 +84,14 @@ router.route("/flashsale/")
       })
   });
 
-router.route("/voucherBanner/:year/:month/:date")
+router.route("/voucherBanners/")
   .get((req, res) => {
-    const { params: { year, month, date } } = req;
-    const data = database.voucherBanner(year, month, date);
-    res.status(200).json(data);
+    database.voucherBanners()
+      .then(data => res.status(200).json(data))
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
   });
 
 router.route("/shopeeMall/:year/:month/:date")

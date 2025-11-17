@@ -219,9 +219,9 @@ const htmlRenderer = {
     const voucherBanner = document.querySelector(".voucher-banner");
     const voucherLinks = document.querySelector(".voucher-links");
     voucherBanner.insertAdjacentHTML("afterbegin", this.htmlOfVoucherBanner(data.image, data.name));
-    for (const link of data.links) {
-      voucherLinks.insertAdjacentHTML("beforeend", this.htmlOfVoucherLink(link));
-    }
+    voucherLinks.insertAdjacentHTML("beforeend", this.htmlOfVoucherLink(data.link1));
+    voucherLinks.insertAdjacentHTML("beforeend", this.htmlOfVoucherLink(data.link2));
+    voucherLinks.insertAdjacentHTML("beforeend", this.htmlOfVoucherLink(data.link3));
   },
 
   htmlOfShopeeAd: function (ad) {

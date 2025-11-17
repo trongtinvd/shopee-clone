@@ -9,17 +9,6 @@ const connection = await mysql.createConnection({
 
 const date = new Date();
 
-
-const voucherBanner = {
-  image: "img/voucher-banner/three-voucher.webp",
-  name: "voucher banner",
-  links: [
-    "https://www.google.com/",
-    "https://www.google.com/",
-    "https://www.google.com/"
-  ]
-}
-
 const shopeeMall = {
   ad: {
     name: "shopee mall ad",
@@ -604,8 +593,11 @@ const database = {
       })
   },
 
-  voucherBanner: function (year, month, date) {
-    return voucherBanner;
+  voucherBanners: function () {
+    return connection.query(`select name, image, link1, link2, link3 from voucherBanners where start <= curdate() and curdate() <= end order by start limit 1;`)
+      .then(([result,]) => {
+        return result[0];
+      });
   },
 
   shopeeMall: function (year, month, date) {

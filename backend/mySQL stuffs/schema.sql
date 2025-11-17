@@ -631,6 +631,34 @@ where start = start <= curdate() and curdate() <= end
 group by p.id, p.name, link, p.image, i.stamp, discount, i.total, i.remain;
 */
 
+create table if not exists voucherBanners(
+	id integer not null unique auto_increment,
+    start date,
+    end date,
+    name varchar(1000),
+    image varchar(1000),
+    link1 varchar(1000),
+    link2 varchar(1000),
+    link3 varchar(1000),
+    primary key (id)
+);
+
+insert into voucherBanners(start, end, name, image, link1, link2, link3) values 
+('2025-01-01', '2025-06-30', 'january voucher', 'img/voucher-banner/three-voucher.webp', '#','#','#'),
+('2025-04-01', '2025-07-30', 'april voucher', 'img/voucher-banner/three-voucher.webp', '#','#','#'),
+('2025-05-01', '2025-08-30', 'june voucher', 'img/voucher-banner/three-voucher.webp', '#','#','#'),
+('2025-01-01', '2025-12-30', '2025 voucher', 'img/voucher-banner/three-voucher.webp', '#','#','#');
+
+select name, image, link1, link2, link3 from voucherBanners where start <= curdate() and curdate() <= end order by start limit 1;
+
+
+
+
+
+
+
+
+
 
 
 
