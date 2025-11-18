@@ -114,17 +114,35 @@ router.route("/mallPromotions")
       })
   });
 
-router.route("/topSearched")
+router.route("/topSearches")
   .get((req, res) => {
-    const data = database.topSeached();
-    res.status(200).json(data);
+    database.topSearches()
+      .then(data => res.status(200).json(data))
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
   });
 
 router.route("/todaySuggestions")
   .get((req, res) => {
-    const data = database.todaySuggestions();
-    res.status(200).json(data);
-  })
+    database.mallPromotions()
+      .then(data => res.status(200).json(data))
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
+  });
+
+router.route("/productTypes")
+  .get((req, res) => {
+    database.productTypes()
+      .then(data => res.status(200).json(data))
+      .catch(error => {
+        console.log(`error: ${error}`);
+        res.status(500).send(`error: ${error}`);
+      })
+  });
 
 
 export default router;

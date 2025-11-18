@@ -48,8 +48,13 @@ function renderCart() {
     .catch(error => htmlRenderer.renderEmptyCart());
 }
 
-function renderSelection() {
-  eventManager.addSelectionSectionEventListener();
+function renderProductTypes() {
+  fetch(`./api/productTypes/`)
+    .then(data => data.json())
+    .then(data => {
+      htmlRenderer.renderProductTypes(data);
+      eventManager.addProductTypesSectionEventListener();
+    })
 }
 
 function renderFlashSale() {
@@ -87,12 +92,12 @@ function renderMallPromotions() {
     })
 }
 
-function renderTopSearched() {
-  fetch(`./api/topSearched/`)
+function renderTopSearches() {
+  fetch(`./api/topSearches/`)
     .then(data => data.json())
     .then(data => {
-      htmlRenderer.renderTopSearched(data);
-      eventManager.addTopSearchedSectionListener();
+      htmlRenderer.renderTopSearches(data);
+      eventManager.addTopSearchesSectionListener();
     })
 }
 
@@ -112,11 +117,11 @@ renderBanner();
 renderNotifications();
 renderSearchHistory();
 renderCart();
-renderSelection();
+renderProductTypes();
 renderFlashSale();
 renderVoucherBanner();
 renderMallBanners();
 renderMallPromotions();
-renderTopSearched();
+renderTopSearches();
 renderTodaySuggestions();
 

@@ -64,11 +64,11 @@ const eventManager = {
     }
   },
 
-  addSelectionSectionEventListener: function () {
-    const nextButton = document.querySelector(".selection .next-button");
-    const previousButton = document.querySelector(".selection .previous-button");
-    const gridWrapper = document.querySelector(".selection-tiles .grid-wrapper");
-    const tileWidth = document.querySelector(".selection-tile").clientWidth;
+  addProductTypesSectionEventListener: function () {
+    const nextButton = document.querySelector(".product-type .next-button");
+    const previousButton = document.querySelector(".product-type .previous-button");
+    const gridWrapper = document.querySelector(".product-type-tiles");
+    const tileWidth = document.querySelector(".product-type-tile").clientWidth;
     this.addSectionNavigationButtonListener("x", nextButton, previousButton, gridWrapper, tileWidth);
   },
 
@@ -88,11 +88,11 @@ const eventManager = {
     this.addSectionNavigationButtonListener("x", nextButton, previousButton, gridWrapper, tileWidth);
   },
 
-  addTopSearchedSectionListener: function () {
-    const nextButton = document.querySelector(".top-searched-body .next-button");
-    const previousButton = document.querySelector(".top-searched-body .previous-button");
-    const gridWrapper = document.querySelector(".top-searched-tiles");
-    const tileWidth = document.querySelector(".top-searched-tile").clientWidth;
+  addTopSearchesSectionListener: function () {
+    const nextButton = document.querySelector(".top-searches-body .next-button");
+    const previousButton = document.querySelector(".top-searches-body .previous-button");
+    const gridWrapper = document.querySelector(".top-searches-tiles");
+    const tileWidth = document.querySelector(".top-searches-tile").clientWidth;
     this.addSectionNavigationButtonListener("x", nextButton, previousButton, gridWrapper, tileWidth);
   }
 }

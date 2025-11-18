@@ -148,7 +148,7 @@ const htmlRenderer = {
   renderFlashSale: function (data) {
     this.renderFlashSaleClock(data.start, data.end);
     this.renderFlashSaleItems(data.items);
-    this.updateInlineCss(".flash-sale-tiles", `grid-template-columns: repeat(${data.items.length}, 16.666%);`);
+    this.updateInlineCss(".flash-sale-tiles", `--number-of-items: ${data.items.length}`);
   },
 
   updateInlineCss: function (element, styles) {
@@ -244,30 +244,30 @@ const htmlRenderer = {
 
   renderMallPromotions: function (data) {
     const mallPromotionTiles = document.querySelector(".mall-promotions-tiles");
-    mallPromotionTiles.style.cssText = `grid-template-columns: repeat(${Math.ceil(data.length / 2)}, 25%);`;
+    mallPromotionTiles.style.cssText = `--number-of-items: ${Math.ceil(data.length / 2)};`;
     for (const item of data) {
       mallPromotionTiles.insertAdjacentHTML("beforeend", this.htmlOfShopeeTile(item));
     }
   },
 
-  htmlOfTopSearchedTile: function (item) {
-    return `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="top-searched-tile">
-              <img class="top-searched-item" src="${item.image}" alt="${item.name}">
-              <img class="top-searched-overlay" src="img/top-searched/top-searched-overlay.png" alt="">
-              <p class="sale-rate">Bán ${item.sold}+/tháng</p>
+  htmlOfTopSearchesTile: function (item) {
+    return `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="top-searches-tile">
+              <img class="top-searches-item" src="${item.image}" alt="${item.name}">
+              <img class="top-searches-overlay" src="img/top-searches/top-searches-overlay.png" alt="">
+              <p class="sale-rate">Bán ${item.sold > 1000 ? `${Math.floor(item.sold / 1000)}k` : item.sold}+/tháng</p>
               <p class="product-name">${item.name}</p>
             </a>`;
   },
 
-  renderTopSearched: function (data) {
-    const topSearchedTiles = document.querySelector(".top-searched-tiles");
-    for (const item of data.items) {
-      topSearchedTiles.insertAdjacentHTML("beforeend", this.htmlOfTopSearchedTile(item));
+  renderTopSearches: function (data) {
+    const topSearchesTiles = document.querySelector(".top-searches-tiles");
+    topSearchesTiles.style.cssText = `--number-of-items: ${data.length};`;
+    for (const item of data) {
+      topSearchesTiles.insertAdjacentHTML("beforeend", this.htmlOfTopSearchesTile(item));
     }
   },
 
   htmlOfTodaySuggestedItem: function (item) {
-
     return `<div class="today-suggestion-item">
             <a href="${item.link}" class="today-suggestion-item-body">
               <img src="${item.image}" alt="" class="product-img">
@@ -294,6 +294,21 @@ const htmlRenderer = {
     const suggestionBody = document.querySelector(".today-suggestions-body");
     for (const item of data) {
       suggestionBody.insertAdjacentHTML("beforeend", this.htmlOfTodaySuggestedItem(item));
+    }
+  },
+
+  htmlOfProductTypeTile: function (data) {
+    return `<a href="${data.link}" target="_blank" rel="noopener noreferrer" class="product-type-tile">
+              <img src="${data.image}" alt="${data.name}">
+              <p>${data.name}</p>
+            </a>`
+  },
+
+  renderProductTypes: function (data) {
+    const productTypesBody = document.querySelector(".product-type-tiles");
+    productTypesBody.style.cssText = `--number-of-items: ${Math.ceil(data.length / 2)};`;
+    for (const item of data) {
+      productTypesBody.insertAdjacentHTML("beforeend", this.htmlOfProductTypeTile(item));
     }
   }
 }

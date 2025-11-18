@@ -9,219 +9,6 @@ const connection = await mysql.createConnection({
 
 const date = new Date();
 
-const shopeeMall = {
-  ad: {
-    name: "shopee mall ad",
-    image: "img/shopee-mall/ad-banner.jpg",
-    link: "https://www.google.com/"
-  },
-  items: [
-    {
-      name: "Thuốc lá",
-      image: "img/shopee-mall/item-1.webp",
-      link: "https://www.google.com/",
-      description: "Ưu đãi đến 50%"
-    },
-    {
-      name: "Lá chè",
-      image: "img/shopee-mall/item-2.webp",
-      link: "https://www.google.com/",
-      description: "Mua 1 được 2"
-    },
-    {
-      name: "Chè đậu đen",
-      image: "img/shopee-mall/item-3.webp",
-      link: "https://www.google.com/",
-      description: "Mua 1 tặng 1"
-    },
-    {
-      name: "Sữa rữa mặt",
-      image: "img/shopee-mall/item-4.webp",
-      link: "https://www.google.com/",
-      description: "Mua 1 tặng 1"
-    },
-    {
-      name: "Mật ong miền đông",
-      image: "img/shopee-mall/item-5.webp",
-      link: "https://www.google.com/",
-      description: "Mua 1 tặng 1"
-    },
-    {
-      name: "Đông trùng hạ thảo",
-      image: "img/shopee-mall/item-6.webp",
-      link: "https://www.google.com/",
-      description: "Mua là có quà"
-    },
-    {
-      name: "Thảo mộc trung hoa",
-      image: "img/shopee-mall/item-7.webp",
-      link: "https://www.google.com/",
-      description: "Giảm đến 50%"
-    },
-    {
-      name: "Hoa lan hồng ngoại",
-      image: "img/shopee-mall/item-8.webp",
-      link: "https://www.google.com/",
-      description: "Quà mọi đơn"
-    },
-    {
-      name: "Ngoại xoi",
-      image: "img/shopee-mall/item-9.webp",
-      link: "https://www.google.com/",
-      description: "Mua là có quà"
-    },
-    {
-      name: "Xôi dừa",
-      image: "img/shopee-mall/item-10.webp",
-      link: "https://www.google.com/",
-      description: "Mua 1 tặng 1"
-    },
-    {
-      name: "Dừa khô tẩm đường",
-      image: "img/shopee-mall/item-11.webp",
-      link: "https://www.google.com/",
-      description: "Deli siêu sale"
-    },
-    {
-      name: "Đường nâu nhập khẩu",
-      image: "img/shopee-mall/item-12.webp",
-      link: "https://www.google.com/",
-      description: "Mua 1 được 6"
-    },
-    {
-      name: "Khẩu súng nhựa",
-      image: "img/shopee-mall/item-13.webp",
-      link: "https://www.google.com/",
-      description: "Mua là có quà"
-    },
-    {
-      name: "Nhựa chất lượng cao",
-      image: "img/shopee-mall/item-14.webp",
-      link: "https://www.google.com/",
-      description: "Giảm đến 20%"
-    },
-    {
-      name: "Cao cao hàn quốc",
-      image: "img/shopee-mall/item-15.webp",
-      link: "https://www.google.com/",
-      description: "Mua là có quà"
-    }
-  ]
-}
-
-const topSeached = {
-  items: [
-    {
-      name: "Mô hình thép 3D",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-1.jpg",
-      sold: "51k"
-    },
-    {
-      name: "Mô hình 3D",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-2.jpg",
-      sold: "5k"
-    },
-    {
-      name: "Áo ngực không dây",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-3.jpg",
-      sold: "71k"
-    },
-    {
-      name: "Đầu chuyển Otg type C",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-4.jpg",
-      sold: "66k"
-    },
-    {
-      name: "Cắp HDMI",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-5.jpg",
-      sold: "39k"
-    },
-    {
-      name: "Giá đõ điện thoại",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-6.jpg",
-      sold: "14k"
-    },
-    {
-      name: "Đồ chơi lego",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-7.jpg",
-      sold: "7k"
-    },
-    {
-      name: "Đồng hồ gián tường",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-8.jpg",
-      sold: "4k"
-    },
-    {
-      name: "Bàn phím giả cơ",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-9.jpg",
-      sold: "45k"
-    },
-    {
-      name: "Đồ chơi cho bé",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-10.jpg",
-      sold: "3k"
-    },
-    {
-      name: "Chuột chơi game",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-11.jpg",
-      sold: "4k"
-    },
-    {
-      name: " Son kem lì mịn môi",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-12.jpg",
-      sold: ""
-    },
-    {
-      name: "Ổ điện",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-13.jpg",
-      sold: "2k"
-    },
-    {
-      name: "Quần lót nữ cotton",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-14.jpg",
-      sold: "16k"
-    },
-    {
-      name: "Tinh dầu bưởi Cocoon",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-15.jpg",
-      sold: "4k"
-    },
-    {
-      name: "Keycap",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-16.jpg",
-      sold: "17k"
-    },
-    {
-      name: "Áo babydoll nữ tay bèo",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-17.jpg",
-      sold: "12k"
-    },
-    {
-      name: "Áo lót nữ không gọng",
-      link: "https://www.google.com/",
-      image: "img/top-searched/item-18.jpg",
-      sold: "14k"
-    }
-  ]
-}
-
 const todaySuggestions = [
   {
     name: "Mô hình lắp rắp",
@@ -600,7 +387,7 @@ const database = {
       });
   },
 
-  mallBanners: function(){
+  mallBanners: function () {
     return connection.query(`select name, image, link from mallBanners where start <= curdate() and curdate() <= end order by start desc, end asc limit 1;`)
       .then(([result,]) => {
         return result[0];
@@ -617,12 +404,22 @@ const database = {
       });
   },
 
-  topSeached: function () {
-    return topSeached;
+  topSearches: function () {
+    return connection.query(`select name, image, searches, sold, concat('selection/', id) as link from productTypes order by searches desc limit 16;`)
+      .then(([result,]) => {
+        return result;
+      });
   },
 
   todaySuggestions: function () {
     return todaySuggestions;
+  },
+
+  productTypes: function () {
+    return connection.query(`select name, image, concat('productType/', id) as link from productTypes where parentId is null;`)
+      .then(([result,]) => {
+        return result;
+      });
   }
 }
 export default database;
