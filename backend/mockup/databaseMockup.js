@@ -7,305 +7,6 @@ const connection = await mysql.createConnection({
   database: "shopeeClone"
 })
 
-const date = new Date();
-
-const todaySuggestions = [
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-1.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Mall", style: "mall-label" }],
-    tags: [
-      { text: "Rẻ vô địch", style: "cheap-tag" },
-      { text: "Giảm 80k", style: "discount-tag" }
-    ],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Bàn làm việc",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-2.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Yêu thích", style: "liked-label" }],
-    tags: [{ text: "Flash sale 10/11", style: "flash-sale-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-3.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Xử lý", style: "process-label" }],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-4.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Yêu thích", style: "liked-label" }],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-5.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Yêu thích+", style: "liked-label" }],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-6.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-7.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Yêu thích+", style: "liked-label" }],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-8.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-9.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Yêu thích+", style: "liked-label" }],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-10.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Yêu thích+", style: "liked-label" }],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-11.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-12.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Yêu thích", style: "liked-label" }],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-13.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Yêu thích", style: "liked-label" }],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-14.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Yêu thích", style: "liked-label" }],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-15.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Yêu thích", style: "liked-label" }],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-16.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Mall", style: "mall-label" }],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-17.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [{ text: "Yêu thích", style: "liked-label" }],
-    tags: [{ text: "10% giảm", style: "discount-tag" }],
-    similarItems: "https://www.google.com/"
-  },
-  {
-    name: "Mô hình lắp rắp",
-    link: "https://www.google.com/",
-    image: "img/today-suggestions/item-18.webp",
-    price: "120.000",
-    sold: "5k",
-    overlays:
-    {
-      discount: "-27%",
-      video: true,
-      image: "img/today-suggestions/overlay-1-voucher.png"
-    },
-    labels: [],
-    tags: [
-      { text: "Rẻ vô địch", style: "cheap-tag" },
-      { text: "Giảm 30%", style: "discount-tag" }
-    ],
-    similarItems: "https://www.google.com/"
-  }
-]
-
 const database = {
   banners: function (main, sub) {
     const mainBanner = connection.query(`select image, link from banners where type = 'mainBanner' order by dateAdded limit ${main};`);
@@ -411,8 +112,28 @@ const database = {
       });
   },
 
-  todaySuggestions: function () {
-    return todaySuggestions;
+  todaySuggestions: async function () {
+    const [result,] = await connection.query(`select p.id, p.image, p.name, concat('/product/', p.id) as link, concat('/productType/', t.id) as similarItems, l.text, min(price) as price, sum(v.sold) as sold, l.text, l.style
+                                        from products as p
+                                        join productVariations as v on v.productId = p.id 
+                                        join productTypes as t on p.typeId = t.id
+                                        left join applyLabel as al on al.productId = p.id
+                                        left join labels as l on l.id = al.labelId
+                                        group by p.id, p.image, p.name, link, similarItems, l.text, l.style
+                                        order by rand() limit 24;`);
+    for (const item of result) {
+      [[item.overlays,],] = await connection.query(`select v2.image, v2.percentDiscount as discount from products as p2
+                                                join applyVoucher as av2 on p2.id = av2.productId 
+                                                join discountVouchers as v2 on v2.id = av2.voucherId
+                                                where p2.id = ${item.id}
+                                                order by v2.percentDiscount desc limit 1;`);
+
+      [item.tags,] = await connection.query(`select text, style from products as p
+                                                join applyTag as at on at.productId = p.id
+                                                join tags as t on t.id = at.tagId
+                                                where p.id = ${item.id};`);
+    }
+    return result;
   },
 
   productTypes: function () {

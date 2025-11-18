@@ -1165,9 +1165,9 @@ body {
 
 .today-suggestion-item-body {
   display: grid;
+  grid-template-rows: 1fr auto 1.5rem auto;
   grid-template-areas: "image-and-overlays" "name" "tags" "price-and-sold";
   grid-auto-flow: column;
-
   align-items: center;
   background-color: var(--background-color-2--);
   border: 1px solid rgba(128, 128, 128, 0.582);
@@ -1190,6 +1190,9 @@ body {
 
 .today-suggestion-item-body .item-name {
   grid-area: name;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .today-suggestion-item-body .item-tags {
@@ -1202,6 +1205,7 @@ body {
 
 .today-suggestion-item-body .product-img,
 .today-suggestion-item-body .sale-overlay {
+  aspect-ratio: 1;
   width: 100%;
   object-fit: contain;
 }
@@ -1225,7 +1229,7 @@ body {
 }
 
 .item-name {
-  padding: 0.5rem;
+  padding: 0.3rem 0.5rem;
   font-size: 0.9rem;
   color: var(--text-color-4--);
 }
@@ -1284,7 +1288,7 @@ body {
 }
 
 .item-tags {
-  padding: 0.5rem;
+  padding: 0.3rem 0.5rem;
   overflow: hidden;
   white-space: nowrap;
 }

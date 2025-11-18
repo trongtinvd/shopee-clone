@@ -58,7 +58,6 @@ function renderProductTypes() {
 }
 
 function renderFlashSale() {
-  const date = new Date();
   fetch(`/api/flashsale`)
     .then(data => data.json())
     .then(data => {

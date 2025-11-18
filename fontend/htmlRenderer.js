@@ -6,11 +6,11 @@ const htmlRenderer = {
   },
 
   htmlOfSubBanner: function (data, index) {
-    return `<a href="${data.link}" target="_blank"><div class="banner"><img src="${data.image}" alt="sub banner #${index}"></div></a>`;
+    return `<a href="${data.link}" target="_blank" rel="noopener noreferrer"><div class="banner"><img src="${data.image}" alt="sub banner #${index}"></div></a>`;
   },
 
   htmlOfMainBanner: function (data, index) {
-    return `<a href="${data.link}" target="_blank"><img data-banner-index="${index}" class="${index === 0 ? "active-main-banner" : ""}" src="${data.image}" alt="main banner #${index}"></a>`;
+    return `<a href="${data.link}" target="_blank" rel="noopener noreferrer"><img data-banner-index="${index}" class="${index === 0 ? "active-main-banner" : ""}" src="${data.image}" alt="main banner #${index}"></a>`;
   },
 
   renderBanner: function (data) {
@@ -63,7 +63,7 @@ const htmlRenderer = {
   },
 
   htmlOfSuggestSearchItem: function (data) {
-    return `<a href="${[data.link]}" target="_blank">${data.suggest}</a>`;
+    return `<a href="${[data.link]}" target="_blank" rel="noopener noreferrer">${data.suggest}</a>`;
   },
 
   renderSuggestSearch: function (data) {
@@ -104,7 +104,7 @@ const htmlRenderer = {
             <div class="cart-content-body"></div>
             <div class="cart-content-show-all">
               <span>${numberOfItem} hàng trong giỏ</span>
-              <a href="#" target="_blank" rel="noopener noreferrer">Xem giỏ hàng</a>
+              <a href="carts" target="_blank" rel="noopener noreferrer">Xem giỏ hàng</a>
             </div> `;
   },
 
@@ -269,24 +269,26 @@ const htmlRenderer = {
 
   htmlOfTodaySuggestedItem: function (item) {
     return `<div class="today-suggestion-item">
-            <a href="${item.link}" class="today-suggestion-item-body">
+            <a href="${item.link}" target="_blank" rel="noopener noreferrer"  class="today-suggestion-item-body">
               <img src="${item.image}" alt="" class="product-img">
-              ${item.overlays.image ? `<img src="${item.overlays.image}" alt="" class="sale-overlay">` : ``}
-              ${item.overlays.discount ? `<span class="discount-overlay">${item.overlays.discount}</span>` : ``}              
-              ${item.overlays.video ? `<span class="video-overlay"><i class="fa-solid fa-circle-play"></i></span>` : ``}
+              ${item.overlays ? `
+                                  ${item.overlays.image ? `<img src="${item.overlays.image}" alt="" class="sale-overlay">` : ``}
+                                  ${item.overlays.discount ? `<span class="discount-overlay">-${item.overlays.discount}%</span>` : ``}              
+                                  ${item.overlays.video ? `<span class="video-overlay"><i class="fa-solid fa-circle-play"></i></span>` : ``}
+                                `: ''}
               <p class="item-name">
-                ${item.labels.map(label => `<span class="${label.style}">${label.text}</span>`).join("")}                
+                ${item.style && item.text ? `<span class="${item.style}">${item.text}</span>` : ''}               
                 ${item.name}
               </p>
               <div class="item-tags">
-                ${item.tags.map(tag => `<span class="${tag.style}">${tag.text}</span>`).join(" ")}
+                ${item.tags ? item.tags.map(tag => `<span class="${tag.style}">${tag.text}</span>`).join(" ") : ''}
               </div>
               <div class="price-and-sold">
-                <p class="item-price">${item.price}</p>
-                <p class="item-sold">Đã bán ${item.sold}+</p>
+                <p class="item-price">${Intl.NumberFormat('en-US', { style: 'decimal' }).format(item.price)}</p>
+                <p class="item-sold">Đã bán ${item.sold > 1000 ? `${Math.floor(item.sold / 1000)}k` : item.sold}+</p>
               </div>
             </a>
-            <a href="${item.similarItems}" class="more-like-this-link">Tìm sản phẩm tương tự</a>
+            <a href="${item.similarItems}" target="_blank" rel="noopener noreferrer" class="more-like-this-link">Tìm sản phẩm tương tự</a>
           </div>`;
   },
 

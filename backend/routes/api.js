@@ -126,7 +126,7 @@ router.route("/topSearches")
 
 router.route("/todaySuggestions")
   .get((req, res) => {
-    database.mallPromotions()
+    database.todaySuggestions()
       .then(data => res.status(200).json(data))
       .catch(error => {
         console.log(`error: ${error}`);
