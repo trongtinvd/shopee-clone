@@ -718,8 +718,8 @@ where p.id = 9;
 */
 create table if not exists users (
 	id integer not null unique auto_increment,
-	username varchar(32),
-	password varchar(32),
+	username varchar(32) unique,
+	hashedPassword binary(60),
 	displayName varchar(32),
 	profilePicture varchar(500),
 	firstName varchar(32),
@@ -728,9 +728,11 @@ create table if not exists users (
 	primary key(id)
 );
 
-insert into users(username, password, displayName, profilePicture) values
-('username', 'password', 'The cow that is holy', '/img/user-profile/avatar-1.jpeg'),
-('zeropassword', 'namelessuser', 'The cat that bite', '/img/user-profile/avatar-2.jpeg');
+insert into users(username, hashedPassword, displayName, profilePicture) values
+('username', '$2b$10$Ud1QXMVEKY8.JSWU2SIqqOAUt2zDAWsIgc0tABvYjL3qGBAcTYfPK', 'The cow that is holy', '/img/user-profile/avatar-1.jpeg'),
+('zeropassword', '$2b$10$9Ja.762fY0VoxSMh6sQgsOKhhnMI.QF7tz9oc/B0hAjIlLP9tKWUm', 'The cat that bite', '/img/user-profile/avatar-2.jpeg');
+
+select * from users;
 
 create table if not exists cartItems(
 	id integer not null unique auto_increment,

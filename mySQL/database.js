@@ -1,4 +1,5 @@
 import mysql from "mysql2/promise";
+import bcrypt from "bcrypt";
 
 const connection = await mysql.createConnection({
   host: "localhost",
@@ -29,7 +30,7 @@ const database = {
   },
 
   suggestSearchs: function (data) {
-    return connection.query(`select suggest, link from suggestSearches as ss join users as u where ss.userId = u.id and u.username = '${data.username}' and u.password = '${data.password}' limit 7`)
+    return connection.query(`select suggest, link from suggestSearches as ss join users as u where ss.userId = u.id and u.username = '${data.username}' and u.hashedPassword = '${data.password}' limit 7`)
       .then(([result,]) => {
         return result;
       });
@@ -141,6 +142,13 @@ const database = {
       .then(([result,]) => {
         return result;
       });
+  },
+
+  signup: async function (data) {
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const result = await connection.query(`insert into users(username, hashedPassword, displayName, profilePicture) values 
+                                          ('${data.username}', '${hashedPassword}', '${data.displayname ? data.displayname : data.username}', '/img/user-profile/blank.jpg')`);
+    return { username: data.username, password: hashedPassword };
   }
 }
 export default database;

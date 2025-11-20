@@ -56,14 +56,21 @@
               <a href="#" target="_blank">English</a>
             </div>
           </div>
-          <div class="link-label user-menu-detector">
+          <input type="radio" name="login" id="logged-in"></input>
+          <label for="logged-in" class="link-label user-menu-detector logged-in-user">
             <a href="#" target="_blank" class="avatar "> </a>
             <div class="user-menu">
               <a href="#" target="_blank">Tài Khoản Của Tôi</a>
               <a href="#" target="_blank">Đơn Mua</a>
               <a href="#" target="_blank">Đăng Xuất</a>
             </div>
-          </div>
+          </label>
+          <input type="radio" name="login" checked id="login-signup"></input>
+          <label for="login-signup" class="link-label anonymous-user">
+            <a href="/login">Đăng nhập</a>
+            <span>|</span>
+            <a href="/signup">Đăng ký</a>
+          </label>
         </div>
       </div>
       <div class="search-and-cart">

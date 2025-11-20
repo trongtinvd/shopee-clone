@@ -1,7 +1,7 @@
 import htmlRenderer from "./htmlRenderer.js";
 import eventManager from "./eventManager.js";
 import dataManager from "./dataManager.js";
-import { devData } from "./utils.js";
+import { devData, getCookie } from "./utils.js";
 
 console.log("start");
 
@@ -14,13 +14,19 @@ function renderBanner() {
     });
 }
 
-function renderUser() {
-  fetch("/api/user/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
-    .then(data => data.json())
-    .then(data => {
-      dataManager.saveUser(data);
-      htmlRenderer.renderUser(dataManager.getUser());
-    });
+function renderUser(sessionCode) {
+  if (sessionCode) {
+    fetch("/api/user/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
+      .then(data => data.json())
+      .then(data => {
+        dataManager.saveUser(data);
+        htmlRenderer.renderUser(dataManager.getUser());
+      });
+  }
+  else {
+    htmlRenderer.renderLoginSignupButton();
+  }
+
 }
 
 function renderSuggestSearch() {
@@ -108,19 +114,23 @@ function renderTodaySuggestions() {
     })
 }
 
+function verifySessionCode(sessionCode) {
+  return sessionCode;
+}
 
+let sessionCode = verifySessionCode(getCookie('sessionCode'));
 
-renderUser();
-renderSuggestSearch();
+renderUser(sessionCode);
+renderSuggestSearch(sessionCode);
 renderBanner();
-renderNotifications();
-renderSearchHistory();
-renderCart();
+renderNotifications(sessionCode);
+renderSearchHistory(sessionCode);
+renderCart(sessionCode);
 renderProductTypes();
 renderFlashSale();
 renderVoucherBanner();
 renderMallBanners();
 renderMallPromotions();
 renderTopSearches();
-renderTodaySuggestions();
+renderTodaySuggestions(sessionCode);
 

@@ -1,5 +1,6 @@
 import { Router } from "express";
-import database from "../mockup/databaseMockup.js";
+import database from "../mySQL/database.js";
+import { isvalidSignupRequest } from "../utils/utils.js"
 const router = Router();
 
 
@@ -143,6 +144,31 @@ router.route("/productTypes")
         res.status(500).send(`error: ${error}`);
       })
   });
+
+router.route("/login")
+  .post(async (req, res) => {
+    console.log(req.body);
+    res.status(200).end();
+  })
+
+router.route("/signup")
+  .post(async (req, res, next) => {
+    if (!isvalidSignupRequest(req.body)) {
+      return res.status(400).send("Invalid signup data");
+    }
+    try {
+      const data = await database.signup(req.body);
+      return res.redirect(`/login.html?username=${data.username}`);
+    }
+    catch (error) {
+      switch (error.code) {
+        case 'ER_DUP_ENTRY':
+          return res.status(400).send("username has been taken");
+        default:
+          return next(error);
+      }
+    }
+  })
 
 
 export default router;

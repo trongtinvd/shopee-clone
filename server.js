@@ -9,8 +9,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
+app.get("/login", async (req, res) => res.status(200).render("login"));
+app.get("/signup", async (req, res) => res.status(200).render("signup"));
 
 app.use("/api", logger, apiRouter);
-app.use(express.static("../fontend"));
+app.use(express.static("public"));
 
 app.listen(3333);

@@ -57,6 +57,7 @@ const htmlRenderer = {
   },
 
   renderUser: function (data) {
+    document.getElementById("logged-in").checked = true;
     const avatar = document.querySelector(".avatar");
     avatar.insertAdjacentHTML("afterbegin", this.htmlOfUserName(data.displayName));
     avatar.insertAdjacentHTML("afterbegin", this.htmlOfProfilePicture(data.profilePicture));
@@ -312,6 +313,11 @@ const htmlRenderer = {
     for (const item of data) {
       productTypesBody.insertAdjacentHTML("beforeend", this.htmlOfProductTypeTile(item));
     }
+  },
+
+  renderLoginSignupButton: function(){
+    console.log('login/signup');
+    
   }
 }
 

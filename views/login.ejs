@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+</head>
+
+<body>
+  <form action="/api/login" method="post">
+    <h1>login</h1>
+    <label for="username">Username: <input type="text" name="username" minlength="4" maxlength="8" required></label>
+    <label for="password">Password: <input type="password" name="password" minlength="4" maxlength="8" required></label>
+    <label for="remember-me">Remember Me <input type="checkbox" name="rememberMe" checked></label>
+    <button type="submit">Login</button>
+  </form>
+  <a href="/signup">Signup</a>
+</body>
+
+</html>
