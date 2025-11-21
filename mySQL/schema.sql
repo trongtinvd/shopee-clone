@@ -719,7 +719,7 @@ where p.id = 9;
 create table if not exists users (
 	id integer not null unique auto_increment,
 	username varchar(32) unique,
-	hashedPassword binary(60),
+	hashedPassword char(60),
 	displayName varchar(32),
 	profilePicture varchar(500),
 	firstName varchar(32),

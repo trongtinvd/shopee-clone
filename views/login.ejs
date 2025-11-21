@@ -5,14 +5,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js" defer></script>
+  <script type="module" src="login.js" defer></script>
 </head>
 
 <body>
-  <form action="/api/login" method="post">
+  <form action="/api/login" method="post" id="login-form">
     <h1>login</h1>
-    <label for="username">Username: <input type="text" name="username" minlength="4" maxlength="8" required></label>
-    <label for="password">Password: <input type="password" name="password" minlength="4" maxlength="8" required></label>
-    <label for="remember-me">Remember Me <input type="checkbox" name="rememberMe" checked></label>
+    <label for="username">
+      Username:
+      <input type="text" name="username" minlength="4" maxlength="8" required id="username-input">
+    </label>
+    <label for="password">
+      Password:
+      <input type="password" name="password" id="password-input" minlength="4" maxlength="8" required>
+    </label>
+    <label for="remember-me">
+      Remember Me
+      <input type="checkbox" name="rememberMe" checked>
+    </label>
     <button type="submit">Login</button>
   </form>
   <a href="/signup">Signup</a>

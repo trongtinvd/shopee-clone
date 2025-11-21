@@ -1,9 +1,10 @@
 import { Router } from "express";
 import database from "../mySQL/database.js";
-import { isvalidSignupRequest } from "../utils/utils.js"
+import { isvalidSignupRequest, isValidLogin, createSessionCode, jsonResponse } from "../utils/utils.js"
+import bcrypt from "bcrypt";
 const router = Router();
 
-
+let currentUser = [];
 
 router.route("/banners/")
   .get((req, res) => {
@@ -146,29 +147,55 @@ router.route("/productTypes")
   });
 
 router.route("/login")
-  .post(async (req, res) => {
-    console.log(req.body);
-    res.status(200).end();
+  .post(async (req, res, next) => {
+    if (!isValidLogin(req.body)) {
+      return res.status(400).send("Invalid login data");
+    }
+    try {
+      const data = await database.login(req.body);
+
+      if (!data) {
+        return jsonResponse(res, 404, 'login fail', 'user do not exists', req.body);
+      }
+      if (!bcrypt.compareSync(req.body.password, data.hashedPassword)) {
+        return jsonResponse(res, 403, 'login fail', 'incorrect password', req.body);
+      }
+
+      const userData = {
+        username: data.username,
+        displayName: data.displayName,
+        profilePicture: data.profilePicture,
+        sessionCode: await createSessionCode()
+      };
+      currentUser.push(userData);
+      return jsonResponse(res, 200, 'login success', 'ok', userData);
+    }
+    catch (error) {
+      switch (error.code) {
+        default:
+          return next(error);
+      }
+    }
+
   })
 
 router.route("/signup")
   .post(async (req, res, next) => {
     if (!isvalidSignupRequest(req.body)) {
-      return res.status(400).send("Invalid signup data");
+      return jsonResponse(res, 400, 'bad request', 'sign in form is invalid');
     }
     try {
       const data = await database.signup(req.body);
-      return res.redirect(`/login.html?username=${data.username}`);
+      return jsonResponse(res, 201, 'sign up success', 'ok', req.body);
     }
     catch (error) {
       switch (error.code) {
         case 'ER_DUP_ENTRY':
-          return res.status(400).send("username has been taken");
+          return jsonResponse(res, 400, 'sign up fail', 'username has been taken', req.body);
         default:
           return next(error);
       }
     }
   })
-
 
 export default router;

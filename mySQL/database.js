@@ -1,5 +1,6 @@
 import mysql from "mysql2/promise";
 import bcrypt from "bcrypt";
+import { encryptPassword } from "../utils/utils.js";
 
 const connection = await mysql.createConnection({
   host: "localhost",
@@ -145,10 +146,18 @@ const database = {
   },
 
   signup: async function (data) {
-    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const hashedPassword = await encryptPassword(data.password);
     const result = await connection.query(`insert into users(username, hashedPassword, displayName, profilePicture) values 
                                           ('${data.username}', '${hashedPassword}', '${data.displayname ? data.displayname : data.username}', '/img/user-profile/blank.jpg')`);
     return { username: data.username, password: hashedPassword };
+  },
+
+  login: async function (data) {
+    const [rows, fields] = await connection.query(`select username, hashedPassword, displayName, profilePicture from users where username = '${data.username}';`);
+    if(rows.length){
+      return rows[0];
+    }
+    return null;
   }
 }
 export default database;

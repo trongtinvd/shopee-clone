@@ -1,7 +1,7 @@
 import htmlRenderer from "./htmlRenderer.js";
 import eventManager from "./eventManager.js";
 import dataManager from "./dataManager.js";
-import { devData, getCookie } from "./utils.js";
+import { devData } from "./utils.js";
 
 console.log("start");
 
@@ -118,7 +118,7 @@ function verifySessionCode(sessionCode) {
   return sessionCode;
 }
 
-let sessionCode = verifySessionCode(getCookie('sessionCode'));
+let sessionCode = Cookies.get('sessionCode');
 
 renderUser(sessionCode);
 renderSuggestSearch(sessionCode);
