@@ -16,29 +16,73 @@ function renderBanner() {
 
 function renderUser(sessionCode) {
   if (sessionCode) {
-    fetch("/api/user/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
-      .then(data => data.json())
-      .then(data => {
-        dataManager.saveUser(data);
-        htmlRenderer.renderUser(dataManager.getUser());
+    fetch("/api/user/", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      credentials: "include",
+      body: JSON.stringify({ ...devData.user.loginData, sessionCode })
+    })
+      .then(response => response.json())
+      .then(response => {
+        const { status, title, message, data, error } = response;
+        if (status === 200) {
+          htmlRenderer.renderUser(data);
+          eventManager.addLogoutEvent();
+        }
+        else if (status === 401) {
+          htmlRenderer.renderAnonymousUser();
+        }
+      })
+      .catch(error => {
+        console.log(`renderUser: ${error}`);
       });
   }
   else {
-    htmlRenderer.renderLoginSignupButton();
+    htmlRenderer.renderAnonymousUser();
   }
 
 }
 
 function renderSuggestSearch() {
-  fetch("/api/suggest-search/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
-    .then(data => data.json())
-    .then(data => htmlRenderer.renderSuggestSearch(data));
+  fetch("/api/suggest-search/", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(devData.user.loginData)
+  })
+    .then(response => response.json())
+    .then(response => {
+      const { status, title, message, data, error } = response;
+      if (status === 200) {
+        htmlRenderer.renderSuggestSearch(data);
+      }
+      else {
+        throw new Error(response);
+      }
+    })
+    .catch(error => {
+      console.log(`renderSuggestSearch: ${error}`);
+    });
 }
 
 function renderNotifications() {
-  fetch("/api/notifications/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
-    .then(data => data.json())
-    .then(data => htmlRenderer.renderNotification(data));
+  fetch("/api/notifications/", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ sessionCode: Cookies.get("sessionCode") })
+  })
+    .then(response => response.json())
+    .then(response => {
+      const { status, title, message, data, error } = response;
+      if (status === 200) {
+        htmlRenderer.renderNotification(data);
+      }
+      else {
+        throw new Error(response);
+      }
+    })
+    .catch(error => {
+      console.log(`renderNotifications: ${error}`);
+    });
 }
 
 function renderSearchHistory() {
@@ -114,14 +158,10 @@ function renderTodaySuggestions() {
     })
 }
 
-function verifySessionCode(sessionCode) {
-  return sessionCode;
-}
-
-let sessionCode = Cookies.get('sessionCode');
+const sessionCode = Cookies.get('sessionCode');
 
 renderUser(sessionCode);
-renderSuggestSearch(sessionCode);
+renderSuggestSearch();
 renderBanner();
 renderNotifications(sessionCode);
 renderSearchHistory(sessionCode);

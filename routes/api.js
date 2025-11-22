@@ -1,10 +1,8 @@
-import { Router } from "express";
+import { json, Router } from "express";
 import database from "../mySQL/database.js";
-import { isvalidSignupRequest, isValidLogin, createSessionCode, jsonResponse } from "../utils/utils.js"
+import { isValidLogoutRequest, isvalidSignupRequest, isValidLogin, createSessionCode, jsonResponse } from "../utils/utils.js"
 import bcrypt from "bcrypt";
 const router = Router();
-
-let currentUser = [];
 
 router.route("/banners/")
   .get((req, res) => {
@@ -20,35 +18,35 @@ router.route("/user/")
   .post((req, res) => {
     database.userInfo(req.body)
       .then(data => {
-        res.status(200).json(data)
+        res.status(200).json(jsonResponse(200, 'Success', 'ok', data))
       })
       .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
+        console.log(`/user => error: ${error}`);
+        res.status(500).send(jsonResponse(500, 'Some error at /user', '╥﹏╥', null, { message: `error: ${error}` }));
       })
   });
 
 router.route("/suggest-search/")
   .post((req, res) => {
-    database.suggestSearchs(req.body)
-      .then(result => {
-        res.status(200).json(result);
+    database.suggestSearchs()
+      .then(data => {
+        res.status(200).json(jsonResponse(200, 'Success', 'ok', data));
       })
       .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
+        console.log(`/suggest-search => error: ${error}`);
+        res.status(500).send(jsonResponse(500, 'Some error at /suggest-search', '╥﹏╥', null, { message: `error: ${error}` }));
       })
   });
 
 router.route("/notifications/")
   .post((req, res) => {
     database.notifications(req.body)
-      .then(result => {
-        res.status(200).json(result);
+      .then(data => {
+        res.status(200).json(jsonResponse(200, 'Success', 'ok', data));
       })
       .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
+        console.log(`/notifications => error: ${error}`);
+        res.status(500).send(jsonResponse(500, 'Some error at /notifications', '╥﹏╥', null, { message: `error: ${error}` }));
       })
   });
 
@@ -152,7 +150,7 @@ router.route("/login")
       return res.status(400).send("Invalid login data");
     }
     try {
-      const data = await database.login(req.body);
+      const data = await database.getUser(req.body);
 
       if (!data) {
         return jsonResponse(res, 404, 'login fail', 'user do not exists', req.body);
@@ -160,15 +158,9 @@ router.route("/login")
       if (!bcrypt.compareSync(req.body.password, data.hashedPassword)) {
         return jsonResponse(res, 403, 'login fail', 'incorrect password', req.body);
       }
-
-      const userData = {
-        username: data.username,
-        displayName: data.displayName,
-        profilePicture: data.profilePicture,
-        sessionCode: await createSessionCode()
-      };
-      currentUser.push(userData);
-      return jsonResponse(res, 200, 'login success', 'ok', userData);
+      const sessionCode = await createSessionCode();
+      database.addUserSession({ ...req.body, sessionCode });
+      res.status(200).json(jsonResponse(200, 'login success', 'ok', { cookies: { sessionCode } }));
     }
     catch (error) {
       switch (error.code) {
@@ -176,22 +168,36 @@ router.route("/login")
           return next(error);
       }
     }
+  });
 
+router.route('/logout')
+  .post(async (req, res, next) => {
+    if (!isValidLogoutRequest(req)) {
+      return res.status(400).json(jsonResponse(400, 'Bad logout request', 'ಠ╭╮ಠ', null, req.body));
+    }
+    database.endUserSession(req.body)
+      .then(() => {
+        return res.status(200).json(jsonResponse(200, 'Logout success', '\(^∇^)'))
+      })
+      .catch(error => {
+        console.log(`/logout error: ${JSON.stringify(error)}`);
+        return res.status(500).json(jsonResponse(500, 'logout error', '(˶°ㅁ°)!!', null, error));
+      })
   })
 
 router.route("/signup")
   .post(async (req, res, next) => {
     if (!isvalidSignupRequest(req.body)) {
-      return jsonResponse(res, 400, 'bad request', 'sign in form is invalid');
+      return res.status(400).json(jsonResponse(400, 'bad request', 'sign up form is invalid'));
     }
     try {
       const data = await database.signup(req.body);
-      return jsonResponse(res, 201, 'sign up success', 'ok', req.body);
+      return res.status(201).json(jsonResponse(201, 'sign up success', 'ok', data));
     }
     catch (error) {
       switch (error.code) {
         case 'ER_DUP_ENTRY':
-          return jsonResponse(res, 400, 'sign up fail', 'username has been taken', req.body);
+          return res.status(400).json(jsonResponse(400, 'sign up fail', 'username has been taken', req.body));
         default:
           return next(error);
       }

@@ -63,6 +63,10 @@ const htmlRenderer = {
     avatar.insertAdjacentHTML("afterbegin", this.htmlOfProfilePicture(data.profilePicture));
   },
 
+  renderAnonymousUser: function () {
+    return;
+  },
+
   htmlOfSuggestSearchItem: function (data) {
     return `<a href="${[data.link]}" target="_blank" rel="noopener noreferrer">${data.suggest}</a>`;
   },
@@ -77,7 +81,7 @@ const htmlRenderer = {
   htmlOfNotificationItem: function (data) {
     return `<a href="${data.link}" target="_blank" rel="noopener noreferrer" class="notification-link">
               <img src="${data.image}" alt="" class="notification-image">
-              <p class="notification-title">${data.name}</p>
+              <p class="notification-title">${data.title}</p>
               <p class="notification-content">${data.description}</p>
             </a>`;
   },
@@ -313,11 +317,6 @@ const htmlRenderer = {
     for (const item of data) {
       productTypesBody.insertAdjacentHTML("beforeend", this.htmlOfProductTypeTile(item));
     }
-  },
-
-  renderLoginSignupButton: function(){
-    console.log('login/signup');
-    
   }
 }
 

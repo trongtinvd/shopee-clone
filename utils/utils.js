@@ -11,6 +11,10 @@ export function isValidLogin(data) {
   return true;
 }
 
+export function isValidLogoutRequest(data) {
+  return true;
+}
+
 export function encryptPassword(password) {
   return bcrypt.hash(password, 10);
 }
@@ -19,6 +23,6 @@ export async function createSessionCode() {
   return crypto.randomBytes(32).toString('hex');
 }
 
-export function jsonResponse(res, status, title, message, data = null, error = null) {
-  return res.status(status).json({ status, title, message, data, error });
+export function jsonResponse(status, title, message, data = null, error = null) {
+  return { status, title, message, data, error };
 }

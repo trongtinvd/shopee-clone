@@ -732,7 +732,14 @@ insert into users(username, hashedPassword, displayName, profilePicture) values
 ('username', '$2b$10$Ud1QXMVEKY8.JSWU2SIqqOAUt2zDAWsIgc0tABvYjL3qGBAcTYfPK', 'The cow that is holy', '/img/user-profile/avatar-1.jpeg'),
 ('zeropassword', '$2b$10$9Ja.762fY0VoxSMh6sQgsOKhhnMI.QF7tz9oc/B0hAjIlLP9tKWUm', 'The cat that bite', '/img/user-profile/avatar-2.jpeg');
 
-select * from users;
+create table if not exists userSessions(
+	id integer not null unique auto_increment,
+    userId integer not null unique,
+    session varchar(300),
+    expire datetime,
+    primary key (id),
+    foreign key (userId) references users(id)
+);
 
 create table if not exists cartItems(
 	id integer not null unique auto_increment,
@@ -802,23 +809,23 @@ insert into banners(image, link, type, dateAdded) values
 ('/img/banners/sub-4.webp', '#', 'subBanner', current_timestamp());
 
 create table if not exists suggestSearches (
-	userId integer not null,
+	id integer not null unique auto_increment,
 	suggest varchar(500),
 	link varchar(500),
-	foreign key (userId) references users(id)
+	primary key(id)
 );
 
-insert into suggestSearches(userId, link, suggest) values
-(1, '#', 'Xi măng đồng tháp'),
-(1, '#', 'Măng non nội bài'),
-(1, '#', 'Bài tiến lên hàn quốc'),
-(1, '#', 'Mecha Girl'),
-(1, '#', 'Đồ Công Nghệ Độc Lạ'),
-(1, '#', 'Ví Kim Loại'),
-(1, '#', 'Kit Nhôm'),
-(1, '#', 'Đèn Edison'),
-(1, '#', 'Mạch Bàn Phím Bluetooth'),
-(1, '#', 'EDC');
+insert into suggestSearches(link, suggest) values
+('#', 'Xi măng đồng tháp'),
+('#', 'Măng non nội bài'),
+('#', 'Bài tiến lên hàn quốc'),
+('#', 'Mecha Girl'),
+('#', 'Đồ Công Nghệ Độc Lạ'),
+('#', 'Ví Kim Loại'),
+('#', 'Kit Nhôm'),
+('#', 'Đèn Edison'),
+('#', 'Mạch Bàn Phím Bluetooth'),
+('#', 'EDC');
 /*
 select suggest, link from suggestSearches as ss join users as u where ss.userId = u.id and u.username = 'username' and u.password = 'password' limit 7;
 */

@@ -10,41 +10,34 @@ const connection = await mysql.createConnection({
 })
 
 const database = {
-  banners: function (main, sub) {
-    const mainBanner = connection.query(`select image, link from banners where type = 'mainBanner' order by dateAdded limit ${main};`);
-    const subBanner = connection.query(`select image, link from banners where type = 'subBanner' order by dateAdded limit ${sub};`);
-    return Promise.all([mainBanner, subBanner])
-      .then(data => {
-        const result = {
-          mainBanners: data[0][0],
-          subBanners: data[1][0]
-        }
-        return result;
-      })
+  banners: async function (main, sub) {
+    const [mainBanners,] = await connection.query(`select image, link from banners where type = 'mainBanner' order by dateAdded limit ${main};`);
+    const [subBanners,] = await connection.query(`select image, link from banners where type = 'subBanner' order by dateAdded limit ${sub};`);
+    return { mainBanners, subBanners }
   },
 
-  userInfo: function (data) {
-    return connection.query(`select displayName, profilePicture from users where username = '${data.username}' and password = '${data.password}';`)
+  userInfo: async function (data) {
+    return await connection.query(`select displayName, profilePicture from users
+                                    join userSessions as us on users.id = us.userId
+                                    where us.session = '${data.sessionCode}';`)
       .then(([result,]) => {
         return result[0];
       })
   },
 
-  suggestSearchs: function (data) {
-    return connection.query(`select suggest, link from suggestSearches as ss join users as u where ss.userId = u.id and u.username = '${data.username}' and u.hashedPassword = '${data.password}' limit 7`)
-      .then(([result,]) => {
-        return result;
-      });
+  suggestSearchs: async function () {
+    const [result,] = await connection.query(`select suggest, link
+                                              from suggestSearches
+                                              limit 8;`)
+    return result;
   },
 
-  notifications: function (data) {
-    return connection.query(`select userId, title, image, concat('notifications/', notifications.id) as link, description
-                              from notifications
-                              join users on userId = users.id
-                              where username = '${data.username}' and password='${data.password}';`)
-      .then(([result,]) => {
-        return result;
-      });
+  notifications: async function (data) {
+    const [result,] = await connection.query(`select title, image, description 
+                                              from notifications as n
+                                              join userSessions as us on us.userId = n.userId
+                                              where session = '${data.sessionCode}';`)
+    return result;
   },
 
   searchHistories: function (data) {
@@ -152,12 +145,23 @@ const database = {
     return { username: data.username, password: hashedPassword };
   },
 
-  login: async function (data) {
+  getUser: async function (data) {
     const [rows, fields] = await connection.query(`select username, hashedPassword, displayName, profilePicture from users where username = '${data.username}';`);
-    if(rows.length){
-      return rows[0];
-    }
-    return null;
+    return rows.length ? rows[0] : null;
+  },
+
+  addUserSession: async function (data) {
+    const [rows, fields] = await connection.query(`insert into userSessions(userId, session) values 
+                                                    ((select id from users where username = '${data.username}'), '${data.sessionCode}') 
+                                                    ON DUPLICATE KEY UPDATE
+                                                    session = '${data.sessionCode}';`)
+    return rows.affectedRows;
+  },
+
+  endUserSession: async function (data) {
+    const [rows, fields] = await connection.query(`delete from userSessions 
+                                                  where session = '${data.sessionCode}';`)
+    return rows.affectedRows;
   }
 }
 export default database;

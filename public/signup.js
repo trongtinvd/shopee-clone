@@ -16,8 +16,16 @@ signupForm.addEventListener("submit", e => {
     .then(response => {
       console.log(response);
       const { status, title, message, data, error } = response;
-      if(status === 201){
+      if (status === 201) {
         window.location.href = `/login?username=${data.username}`
       }
+      else {
+        console.log(response);
+        alert(response);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      alert(error);
     });
 })

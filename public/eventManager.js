@@ -94,6 +94,32 @@ const eventManager = {
     const gridWrapper = document.querySelector(".top-searches-tiles");
     const tileWidth = document.querySelector(".top-searches-tile").clientWidth;
     this.addSectionNavigationButtonListener("x", nextButton, previousButton, gridWrapper, tileWidth);
+  },
+
+  addLogoutEvent: function () {
+    const logout = document.getElementById('logout-button');
+    logout.addEventListener('click', e => {
+      fetch('/api/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: "include",
+        body: JSON.stringify({ sessionCode: Cookies.get('sessionCode') })
+      })
+        .then(response => response.json())
+        .then(response => {
+          const { status, title, message, data, error } = response;
+          if (status === 200) {
+            Cookies.remove("sessionCode");
+            window.location.href = '/';
+          }
+          else {
+            throw new Error(response);
+          }
+        })
+        .catch(error => {
+          console.log(`lopgout error: ${JSON.stringify(error)}`);
+        })
+    })
   }
 }
 
