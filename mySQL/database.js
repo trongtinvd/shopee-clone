@@ -17,95 +17,82 @@ const database = {
   },
 
   userInfo: async function (data) {
-    return await connection.query(`select displayName, profilePicture from users
-                                    join userSessions as us on users.id = us.userId
-                                    where us.session = '${data.sessionCode}';`)
-      .then(([result,]) => {
-        return result[0];
-      })
+    const [rows, fields] = await connection.query(`select displayName, profilePicture from users
+                                                  join userSessions as us on users.id = us.userId
+                                                  where us.session = '${data.sessionCode}';`)
+    return rows[0];
   },
 
   suggestSearchs: async function () {
-    const [result,] = await connection.query(`select suggest, link
-                                              from suggestSearches
-                                              limit 8;`)
-    return result;
+    const [rows, fields] = await connection.query(`select suggest, link
+                                                  from suggestSearches
+                                                  limit 8;`)
+    return rows;
   },
 
   notifications: async function (data) {
-    const [result,] = await connection.query(`select title, image, description 
-                                              from notifications as n
-                                              join userSessions as us on us.userId = n.userId
-                                              where session = '${data.sessionCode}';`)
-    return result;
+    const [rows, fields] = await connection.query(`select title, image, description 
+                                                  from notifications as n
+                                                  join userSessions as us on us.userId = n.userId
+                                                  where session = '${data.sessionCode}';`)
+    return rows;
   },
 
   searchHistories: async function (data) {
-    const [rows, fields] = await connection.query(`select distinct keyword, time from searchHistories as sh
+    const [rows, fields] = await connection.query(`select distinct keyword, max(time) as time from searchHistories as sh
                                                   join userSessions as us on sh.userId = us.userId
                                                   where session = '${data.sessionCode}'
+                                                  group by keyword
                                                   order by time desc limit 9;`);
     return rows;
   },
 
-  cart: function (data) {
-    return connection.query(`select users.username, p.name, p.image, concat('product/',p.id) as link, p.variation1, pv.value1, p.variation2, pv.value2, p.variation3, pv.value3, pv.price, ci.amount, (pv.price * ci.amount) as total 
-                              from cartItems as ci 
-                              join users on ci.userId = users.id 
-                              join productVariations as pv on ci.productVariationId = pv.id 
-                              join products as p on pv.productId = p.id 
-                              where username = '${data.username}' and password = '${data.password}';`)
-      .then(([result,]) => {
-        return result;
-      });
+  cart: async function (data) {
+    const [rows, fields] = await connection.query(`select users.username, p.name, p.image, concat('product/',p.id) as link, p.variation1, pv.value1, p.variation2, pv.value2, p.variation3, pv.value3, pv.price, ci.amount, (pv.price * ci.amount) as total 
+                                                  from cartItems as ci 
+                                                  join users on ci.userId = users.id 
+                                                  join productVariations as pv on ci.productVariationId = pv.id 
+                                                  join products as p on pv.productId = p.id 
+                                                  where username = '${data.username}' and password = '${data.password}';`)
+    return rows;
   },
 
-  flashSale: function (data) {
-    const c1 = connection.query(`select start, end from flashSales where start <= curdate() and curdate() <= end;`);
-    const c2 = connection.query(`select p.id, p.name, concat('product/', p.id) as link, p.image, min(v.price) as price, i.percentDiscount as discount, i.total, i.remain, i.stamp 
-                                  from products as p 
-                                  join flashSaleItems as i on  p.id = i.productId 
-                                  join flashSales as fl on fl.id = i.flashSaleId
-                                  join productVariations as v on p.id = v.productId
-                                  where start = start <= curdate() and curdate() <= end
-                                  group by p.id, p.name, link, p.image, discount, i.total, i.remain, i.stamp;`);
-
-    return Promise.all([c1, c2])
-      .then(data => {
-        const [[[result1,], name1], [result2, name2]] = data;
-        return { ...result1, items: result2 };
-      })
+  flashSale: async function (data) {
+    const [[times,], fields1] = await connection.query(`select start, end from flashSales where start <= curdate() and curdate() <= end;`);
+    const [items, fileds2] = await connection.query(`select p.id, p.name, concat('product/', p.id) as link, p.image, min(v.price) as price, i.percentDiscount as discount, i.total, i.remain, i.stamp 
+                                                    from products as p 
+                                                    join flashSaleItems as i on  p.id = i.productId 
+                                                    join flashSales as fl on fl.id = i.flashSaleId
+                                                    join productVariations as v on p.id = v.productId
+                                                    where start = start <= curdate() and curdate() <= end
+                                                    group by p.id, p.name, link, p.image, discount, i.total, i.remain, i.stamp;`);
+    return { ...times, items };
   },
 
-  voucherBanners: function () {
-    return connection.query(`select name, image, link1, link2, link3 from voucherBanners where start <= curdate() and curdate() <= end order by start desc, end asc limit 1;`)
-      .then(([result,]) => {
-        return result[0];
-      });
+  voucherBanners: async function () {
+    const [rows, fields] = await connection.query(`select name, image, link1, link2, link3 
+                                                  from voucherBanners 
+                                                  where start <= curdate() and curdate() <= end 
+                                                  order by start desc, end asc limit 1;`);
+    return rows[0];
   },
 
-  mallBanners: function () {
-    return connection.query(`select name, image, link from mallBanners where start <= curdate() and curdate() <= end order by start desc, end asc limit 1;`)
-      .then(([result,]) => {
-        return result[0];
-      });
+  mallBanners: async function () {
+    const [rows, fields] = await connection.query(`select name, image, link from mallBanners where start <= curdate() and curdate() <= end order by start desc, end asc limit 1;`);
+    return rows[0];
   },
 
-  mallPromotions: function () {
-    return connection.query(`select concat('/vendor/', vendors.id) as link, image, name, slogan
-                              from mallPromotions as mp
-                              join vendors on mp.vendorId = vendors.id and vendors.isMall = true and start <= curdate() and curdate() <= end
-                              limit 13;`)
-      .then(([result,]) => {
-        return result;
-      });
+  mallPromotions: async function () {
+    const [rows, fields] = await connection.query(`select concat('/vendor/', vendors.id) as link, image, name, slogan
+                                                  from mallPromotions as mp
+                                                  join vendors on mp.vendorId = vendors.id and vendors.isMall = true and start <= curdate() and curdate() <= end
+                                                  limit 13;`);
+    return rows;
   },
 
-  topSearches: function () {
-    return connection.query(`select name, image, searches, sold, concat('selection/', id) as link from productTypes order by searches desc limit 16;`)
-      .then(([result,]) => {
-        return result;
-      });
+  topSearches: async function () {
+    const [rows, fields] = await connection.query(`select name, image, searches, sold, concat('selection/', id) as link from productTypes order by searches desc limit 16;`);
+    return rows;
   },
 
   todaySuggestions: async function () {
@@ -132,11 +119,9 @@ const database = {
     return result;
   },
 
-  productTypes: function () {
-    return connection.query(`select name, image, concat('productType/', id) as link from productTypes where parentId is null;`)
-      .then(([result,]) => {
-        return result;
-      });
+  productTypes: async function () {
+    const [rows, fields] = await connection.query(`select name, image, concat('productType/', id) as link from productTypes where parentId is null;`);
+    return rows;
   },
 
   signup: async function (data) {

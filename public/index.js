@@ -119,14 +119,14 @@ function renderSearch(sessionCode) {
 }
 
 function renderCart() {
-  fetch("/api/cart/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
+  fetch("/api/cart", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
     .then(data => data.json())
     .then(data => htmlRenderer.renderCart(data))
     .catch(error => htmlRenderer.renderEmptyCart());
 }
 
 function renderProductTypes() {
-  fetch(`./api/productTypes/`)
+  fetch(`./api/productTypes`)
     .then(data => data.json())
     .then(data => {
       htmlRenderer.renderProductTypes(data);
@@ -144,7 +144,7 @@ function renderFlashSale() {
 }
 
 function renderVoucherBanner() {
-  fetch(`./api/voucherBanners/`)
+  fetch(`./api/voucherBanners`)
     .then(data => data.json())
     .then(data => {
       htmlRenderer.renderVoucherBanners(data);
@@ -152,7 +152,7 @@ function renderVoucherBanner() {
 }
 
 function renderMallBanners() {
-  fetch(`./api/mallBanners/`)
+  fetch(`./api/mallBanners`)
     .then(data => data.json())
     .then(data => {
       htmlRenderer.renderMallBanners(data);
@@ -160,7 +160,7 @@ function renderMallBanners() {
 }
 
 function renderMallPromotions() {
-  fetch(`./api/mallPromotions/`)
+  fetch(`./api/mallPromotions`)
     .then(data => data.json())
     .then(data => {
       htmlRenderer.renderMallPromotions(data);
@@ -169,7 +169,7 @@ function renderMallPromotions() {
 }
 
 function renderTopSearches() {
-  fetch(`./api/topSearches/`)
+  fetch(`./api/topSearches`)
     .then(data => data.json())
     .then(data => {
       htmlRenderer.renderTopSearches(data);
@@ -178,7 +178,7 @@ function renderTopSearches() {
 }
 
 function renderTodaySuggestions() {
-  fetch(`./api/todaySuggestions/`)
+  fetch(`./api/todaySuggestions`)
     .then(data => data.json())
     .then(data => {
       htmlRenderer.renderTodaySuggestions(data);

@@ -1,31 +1,26 @@
 console.log("sign up");
 
-const signupForm = document.getElementById("signup-form");
-signupForm.addEventListener("submit", e => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-
-  fetch("./api/signup", {
-    method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
-      username: formData.get("username"),
-      password: formData.get("password"),
-      displayname: formData.get("displayname")
-    })
+async function signupEvent() {
+  const signupForm = document.getElementById("signup-form");
+  signupForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    try {
+      const response = await fetch("./api/signup", {
+        method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+          username: formData.get("username"),
+          password: formData.get("password"),
+          displayname: formData.get("displayname")
+        })
+      });
+      const jsonResponse = await response.json();
+      if (jsonResponse.status !== 201) throw jsonResponse;
+      window.location.href = `/login?username=${jsonResponse.data.username}`
+    }
+    catch (error) {
+      console.log(`Sign up error: ${error}`);
+    }
   })
-    .then(response => response.json())
-    .then(response => {
-      console.log(response);
-      const { status, title, message, data, error } = response;
-      if (status === 201) {
-        window.location.href = `/login?username=${data.username}`
-      }
-      else {
-        console.log(response);
-        alert(response);
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      alert(error);
-    });
-})
+}
+
+signupEvent();

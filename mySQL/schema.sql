@@ -41,12 +41,7 @@ insert into productTypes(name, image, searches, sold) values
 ('Chăm Sóc Thú Cưng','img/productTypes/thu-cung.png', rand()*10000, rand()*10000),
 ('Voucher & Dịch Vụ','img/productTypes/voucher.png', rand()*10000, rand()*10000),
 ('Dụng Cụ & Thiết Bị Tiện Ích','img/productTypes/dung-cu.png', rand()*10000, rand()*10000);
-/*
-select name, image, searches, sold, concat('productType/', id) as link from productTypes order by searches desc limit 16;
-*/
-/*
-select name, image, concat('productType/', id) as link from productTypes where parentId is null;
-*/
+
 create table products(
 	id integer not null unique auto_increment,
 	typeId integer,
@@ -676,46 +671,6 @@ insert into productVariations(productId, price, image, value1, value2, value3, s
 ((select id from products where name = 'Băng Keo Nano Dán 2 Mặt Trong Suốt'), 30000, null, '3M', null, null, rand()*5000, rand()*1000),
 ((select id from products where name = 'Băng Keo Nano Dán 2 Mặt Trong Suốt'), 50000, null, '5M', null, null, rand()*5000, rand()*1000);
 
-/*
-insert into products(typeId, name, description, image, variation1, variation2, variation3) values ((select id from productTypes where name = ''),'','description','img/products/-1.png', '', '', null);
-insert into applyLabel(productID, labelID) values
-((select id from products where name = ''), (select id from products where text = ''));
-insert into applyVoucher(productId, voucherId) values
-((select id from products where name = ''), 1)
-insert into applyTag(productId, tagId) values
-((select id from products where name = ''), 1),
-((select id from products where name = ''), 2);
-insert into productImages(productId, image) values ((select id from products where name = ''), 'img/product/-.png');
-insert into productVariations(productId, price, image, value1, value2, value3, sold, inStock) values ((select id from products where name = ''), '.000', 'img/product/-v.png', '', '', null, rand()*5000, rand()*1000);
-*/
-
-/*
-select * from products join productImages on products.id = productImages.productId;
-select * from products join productVariations on products.id = productVariations.productId;
-*/
-/*
-select p.id, p.image, p.name, concat('/product/', p.id) as link, concat('/productType/', t.id) as similarItems, l.text, min(price) as price, sum(v.sold) as sold, l.text, l.style
-from products as p
-join productVariations as v on v.productId = p.id
-join productTypes as t on p.typeId = t.id
-left join applyLabel as al on al.productId = p.id
-left join labels as l on l.id = al.labelId
-group by p.id, p.image, p.name, link, similarItems, l.text, l.style
-order by rand();
-*/
-/*
-select p2.id, v2.image, v2.percentDiscount from products as p2
-join applyVoucher as av2 on p2.id = av2.productId
-join discountVouchers as v2 on v2.id = av2.voucherId
-where p2.id = p2.id
-order by v2.percentDiscount desc limit 1;
-*/
-/*
-select text, style from products as p
-join applyTag as at on at.productId = p.id
-join tags as t on t.id = at.tagId
-where p.id = 9;
-*/
 create table if not exists users (
 	id integer not null unique auto_increment,
 	username varchar(32) unique,
@@ -758,15 +713,6 @@ insert into cartItems(userId, productVariationId, amount) values
 ((select id from users where username = 'username'), (select pv.id from productVariations as pv join products as p on pv.productId = p.id where p.name ='Dép Sục Nam Nữ NESTY' and pv.value1 = 'Nâu nhạt' and pv.value2 = '21-22' ), 3),
 ((select id from users where username = 'username'), (select pv.id from productVariations as pv join products as p on pv.productId = p.id where p.name ='Switch Leobog GrayWood V4' and pv.value1 = 'Leopog' and pv.value2 = 'prelube' ), 4),
 ((select id from users where username = 'username'), (select pv.id from productVariations as pv join products as p on pv.productId = p.id where p.name ='Bơm xe máy xe đạp nhỏ gọn Kiotool' and pv.value1 is null and pv.value2 is null ), 5);
-
-/*
-select users.username, p.name, p.image, concat('product/',p.id) as link, p.variation1, pv.value1, p.variation2, pv.value2, p.variation3, pv.value3, pv.price, ci.amount, (pv.price * ci.amount) as total
-from cartItems as ci
-join users on ci.userId = users.id
-join productVariations as pv on ci.productVariationId = pv.id
-join products as p on pv.productId = p.id
-where username = 'username';
-*/
 
 create table if not exists addresses (
 	id integer not null unique auto_increment,
@@ -826,9 +772,6 @@ insert into suggestSearches(link, suggest) values
 ('#', 'Đèn Edison'),
 ('#', 'Mạch Bàn Phím Bluetooth'),
 ('#', 'EDC');
-/*
-select suggest, link from suggestSearches as ss join users as u where ss.userId = u.id and u.username = 'username' and u.password = 'password' limit 7;
-*/
 
 create table if not exists notifications(
 	id integer not null unique auto_increment,
@@ -847,13 +790,6 @@ insert into notifications (userId, title, image, description) values
 ((select id from users where username ='username'), 'Giao hàng thành công', 'img/notifications/type-4-fast-delivery.png', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum impedit quidem voluptate, nisi exercitationem itaque incidunt est rerum, repellat alias eligendi, ut error animi! Qui voluptatem nisi illo, non deleniti dignissimos! Ratione, accusamus? Aspernatur, dolore magni. Repellat reiciendis accusantium odit explicabo. Ea quibusdam tempora ut voluptas in impedit odit? Reprehenderit.'),
 ((select id from users where username ='username'), 'Hủy đơn hàng thành công', 'img/notifications/type-5-top-deal.png', 'Lorem ipsum dolor sit amet consectetur adipisicing elit.');
 
-/*
-select userId, title, image, concat('notifications/', notifications.id) as link, description
-from notifications
-join users on userId = users.id
-where username = 'username' and password='password';
-*/
-
 create table if not exists searchHistories(
 	id integer not null unique auto_increment,
 	userId integer not null,
@@ -871,9 +807,6 @@ insert into searchHistories (userId, keyword) values
 ((select id from users where username ='username'),'Cửa thủy tinh'),
 ((select id from users where username ='username'),'Thủy tinh đánh sơn tinh'),
 ((select id from users where username ='username'),'Tinh Tinh cưỡi rồng');
-/*
-select name, link from searchHistories where userId = (select id from users where username = 'username' and password='password');
-*/
 
 create table if not exists searchAds(
 	id integer not null unique auto_increment,
@@ -910,28 +843,16 @@ create table if not exists flashSaleItems(
 	key(flashSaleId, productId)
 );
 
-insert into flashSales(start, end) values ('2025-11-17', '2025-11-18');
+insert into flashSales(start, end) values ('2025-11-17', '2026-11-18');
 insert into flashSaleItems(flashSaleId, productId, percentDiscount, stamp, total, remain) values
-((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Thắt lưng nam cao cấp'), 30, 'Yêu thích', 100, 90),
-((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Ô Dù Mini gấp gọn'), 27, 'Yêu thích+', 120, 79),
-((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Balo chống gù PTLUXURY'), 99, 'Mall', 314, 217),
-((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Túi cói Merci đi du lịch'), 69, 'Choice', 5, 1),
-((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Tinh Dầu Thơm Thiên Nhiên'), 20, 'Choice', 721, 4),
-((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Dép Nam, Nữ Quai Ngang Đúc Liền Khối Siêu Nhẹ DUWA'), 55, 'Mall', 32, 7),
-((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Thẻ nhớ Micro SD'), 6, 'Yêu thích+', 64, 63),
-((select id from flashSales where start = '2025-11-17' and end = '2025-11-18'), (select id from products where name = 'Áo thun ôm body cotton lông mịn'), 1, 'Yêu thích', 22, 11);
-/*
-select start, end from flashSales where start <= curdate() and curdate() <= end;
-*/
-/*
-select p.id, p.name, concat('product/', p.id) as link, p.image, min(v.price) as price, i.stamp, i.percentDiscount as discount, i.total, i.remain
-from products as p
-join flashSaleItems as i on p.id = i.productId
-join flashSales as fl on fl.id = i.flashSaleId
-join productVariations as v on p.id = v.productId
-where start = start <= curdate() and curdate() <= end
-group by p.id, p.name, link, p.image, i.stamp, discount, i.total, i.remain;
-*/
+((select id from flashSales where start = '2025-11-17' and end = '2026-11-18'), (select id from products where name = 'Thắt lưng nam cao cấp'), 30, 'Yêu thích', 100, 90),
+((select id from flashSales where start = '2025-11-17' and end = '2026-11-18'), (select id from products where name = 'Ô Dù Mini gấp gọn'), 27, 'Yêu thích+', 120, 79),
+((select id from flashSales where start = '2025-11-17' and end = '2026-11-18'), (select id from products where name = 'Balo chống gù PTLUXURY'), 99, 'Mall', 314, 217),
+((select id from flashSales where start = '2025-11-17' and end = '2026-11-18'), (select id from products where name = 'Túi cói Merci đi du lịch'), 69, 'Choice', 5, 1),
+((select id from flashSales where start = '2025-11-17' and end = '2026-11-18'), (select id from products where name = 'Tinh Dầu Thơm Thiên Nhiên'), 20, 'Choice', 721, 4),
+((select id from flashSales where start = '2025-11-17' and end = '2026-11-18'), (select id from products where name = 'Dép Nam, Nữ Quai Ngang Đúc Liền Khối Siêu Nhẹ DUWA'), 55, 'Mall', 32, 7),
+((select id from flashSales where start = '2025-11-17' and end = '2026-11-18'), (select id from products where name = 'Thẻ nhớ Micro SD'), 6, 'Yêu thích+', 64, 63),
+((select id from flashSales where start = '2025-11-17' and end = '2026-11-18'), (select id from products where name = 'Áo thun ôm body cotton lông mịn'), 1, 'Yêu thích', 22, 11);
 
 create table if not exists voucherBanners(
 	id integer not null unique auto_increment,
@@ -950,9 +871,6 @@ insert into voucherBanners(start, end, name, image, link1, link2, link3) values
 ('2025-04-01', '2025-07-30', 'april voucher', 'img/voucher-banner/three-voucher.webp', '#','#','#'),
 ('2025-05-01', '2025-08-30', 'june voucher', 'img/voucher-banner/three-voucher.webp', '#','#','#'),
 ('2025-01-01', '2025-12-30', '2025 voucher', 'img/voucher-banner/three-voucher.webp', '#','#','#');
-/*
-select name, image, link1, link2, link3 from voucherBanners where start <= curdate() and curdate() <= end order by start desc, end asc limit 1;
-*/
 
 create table if not exists mallBanners(
 	id integer not null unique auto_increment,
@@ -969,11 +887,7 @@ insert into mallBanners(start, end, name, image, link) values
 ('2025-10-01', '2026-02-27', 'new year banner', 'img/mall-banners/ad-banner.jpg', '#'),
 ('2025-11-01', '2026-02-27', '2026 banner', 'img/mall-banners/ad-banner.jpg', '#'),
 ('2025-01-01', '2025-12-30', '2025 banner', 'img/mall-banners/ad-banner.jpg', '#');
-/*
-select name, image, link from mallBanners where start <= curdate() and curdate() <= end order by start desc, end asc limit 1;
-*/
 
--- link image name description
 create table if not exists vendors(
 	id integer not null unique auto_increment,
 	name varchar(500),
@@ -1010,13 +924,6 @@ insert into mallPromotions(vendorId, start, end, image, slogan) values
 ((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-13.png', 'Mua là có quà'),
 ((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-14.png', 'Mua là có quà'),
 ((select id from vendors where isMall = true limit 1), '2025-01-01', '2025-12-30', 'img/mall-promotions/item-15.png', 'Ưu đãi đến 20%');
-/*
-select concat('/vendor/', vendors.id) as link, image, name, slogan
-from mallPromotions as mp
-join vendors on mp.vendorId = vendors.id and vendors.isMall = true and start <= curdate() and curdate() <= end
-limit 15;
-*/
-
 
 
 

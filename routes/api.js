@@ -196,7 +196,8 @@ router.route("/signup")
     catch (error) {
       switch (error.code) {
         case 'ER_DUP_ENTRY':
-          return res.status(400).json(jsonResponse(400, 'sign up fail', 'username has been taken', req.body));
+          console.log(`/signup error: ${JSON.stringify(error)}`);
+          return res.status(400).json(jsonResponse(400, 'sign up fail', 'username has been taken', req.body, error));
         default:
           console.log(`error: ${error}`);
           res.status(500).send(jsonResponse(500, `error when signing up`, '(ó﹏ò｡)', null, error));

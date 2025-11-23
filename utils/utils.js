@@ -1,4 +1,3 @@
-import database from "../mySQL/database.js";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 
