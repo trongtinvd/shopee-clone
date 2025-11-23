@@ -245,17 +245,17 @@ body {
 }
 
 #logged-in,
-#login-signup{
+#login-signup {
   display: none;
 }
 
 #logged-in+label,
-#login-signup+label{
+#login-signup+label {
   display: none;
 }
 
 #logged-in:checked+label,
-#login-signup:checked+label{
+#login-signup:checked+label {
   display: block;
 }
 
@@ -523,6 +523,16 @@ body {
   color: var(--text-color-2--);
   text-decoration: none;
   font-size: 0.8rem;
+}
+
+.search-ad {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-ad img {
+  height: 1.5rem;
 }
 
 .sale-banner {

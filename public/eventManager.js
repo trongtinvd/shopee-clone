@@ -120,6 +120,16 @@ const eventManager = {
           console.log(`lopgout error: ${JSON.stringify(error)}`);
         })
     })
+  },
+
+  addSearchingEvent: function () {
+    const searchBar = document.getElementById('search-bar');
+    const searchButton = document.getElementById('search-button');
+
+    searchButton.addEventListener('click', e => {
+      e.preventDefault();
+      window.location.href = `/search?keyword=${searchBar.value}`;
+    });
   }
 }
 

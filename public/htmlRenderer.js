@@ -95,8 +95,8 @@ const htmlRenderer = {
 
   renderSearchHistory: function (data) {
     const searchHistory = document.querySelector(".search-history-popup");
-    for (let i = 0; i < data.length; i++) {
-      searchHistory.insertAdjacentHTML("beforeend", `<a href="${data[i]["link"]}" target="_blank"  rel="noopener noreferrer">${data[i]["name"]}</a>`)
+    for (const item of data) {
+      searchHistory.insertAdjacentHTML('beforeend', `<a href="/search?keyword=${item.keyword}" target="_blank"  rel="noopener noreferrer">${item.keyword}</a>`);
     }
   },
 
@@ -317,6 +317,21 @@ const htmlRenderer = {
     for (const item of data) {
       productTypesBody.insertAdjacentHTML("beforeend", this.htmlOfProductTypeTile(item));
     }
+  },
+
+  htmlOfSearchAd: function (keyword, link = null, image = null) {
+    return `<a href="${link ? link : `search?keyword=${keyword}`}" target="_blank" rel="noopener noreferrer" class="search-ad">
+              <span>${keyword}</span>
+              ${image ? `<image src="${image}" alt="${keyword}">` : ''}
+            </a>`;
+  },
+
+  renderSearchAd: function (data) {
+    const { keyword, image, link } = data;
+    const searchBar = document.getElementById('search-bar');
+    searchBar.placeholder = keyword;
+    const searchPopup = document.querySelector('.search-history-popup');
+    searchPopup.insertAdjacentHTML('afterbegin', this.htmlOfSearchAd(keyword, link, image));
   }
 }
 

@@ -40,11 +40,12 @@ const database = {
     return result;
   },
 
-  searchHistories: function (data) {
-    return connection.query(`select name, link from searchHistories where userId = (select id from users where username = '${data.username}' and password='${data.password}');`)
-      .then(([result,]) => {
-        return result;
-      });
+  searchHistories: async function (data) {
+    const [rows, fields] = await connection.query(`select distinct keyword, time from searchHistories as sh
+                                                  join userSessions as us on sh.userId = us.userId
+                                                  where session = '${data.sessionCode}'
+                                                  order by time desc limit 9;`);
+    return rows;
   },
 
   cart: function (data) {
@@ -162,6 +163,25 @@ const database = {
     const [rows, fields] = await connection.query(`delete from userSessions 
                                                   where session = '${data.sessionCode}';`)
     return rows.affectedRows;
+  },
+
+  saveSearchHistory: async function (data) {
+    const [rows, fields] = await connection.query(`insert into searchHistories(userId, keyword) values
+                                                  ((select userId from userSessions where session = '${data.sessionCode}'), '${data.keyword}');`)
+    return rows.affectedRows;
+  },
+
+  searchProducts: async function (data) {
+    const [rows, fields] = await connection.query(`select * from products where name like '%${data.keyword}%';`);
+    return rows;
+  },
+
+  searchAd: async function (data) {
+    const [rows, fields] = await connection.query(`select keyword, link, image, start 
+                                                  from searchAds 
+                                                  where start < curdate() 
+                                                  order by start desc limit 1;`);
+    return rows[0];
   }
 }
 export default database;

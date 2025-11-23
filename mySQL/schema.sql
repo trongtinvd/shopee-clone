@@ -854,27 +854,40 @@ join users on userId = users.id
 where username = 'username' and password='password';
 */
 
-
 create table if not exists searchHistories(
 	id integer not null unique auto_increment,
 	userId integer not null,
-	name varchar(500) not null,
-	link varchar(500) not null,
+	keyword varchar(500) not null,
+    time datetime default now(),
 	primary key (id),
 	foreign key (userId) references users(id)
 );
 
-insert into searchHistories (userId, name, link) values
-((select id from users where username ='username'),'Doraemon tập 77','#'),
-((select id from users where username ='username'),'Conan tập 21','#'),
-((select id from users where username ='username'),'PC 2','#'),
-((select id from users where username ='username'),'Cửa kính','#'),
-((select id from users where username ='username'),'Cửa thủy tinh','#'),
-((select id from users where username ='username'),'Thủy tinh đánh sơn tinh','#'),
-((select id from users where username ='username'),'Tinh Tinh cưỡi rồng','#');
+insert into searchHistories (userId, keyword) values
+((select id from users where username ='username'),'Doraemon tập 77'),
+((select id from users where username ='username'),'Conan tập 21'),
+((select id from users where username ='username'),'PC 2'),
+((select id from users where username ='username'),'Cửa kính'),
+((select id from users where username ='username'),'Cửa thủy tinh'),
+((select id from users where username ='username'),'Thủy tinh đánh sơn tinh'),
+((select id from users where username ='username'),'Tinh Tinh cưỡi rồng');
 /*
 select name, link from searchHistories where userId = (select id from users where username = 'username' and password='password');
 */
+
+create table if not exists searchAds(
+	id integer not null unique auto_increment,
+    keyword varchar(500) not null,
+    link varchar(500),
+    image varchar(500),
+    start date,
+    primary key(id)
+);
+
+insert into searchAds(keyword, link, image, start) values
+('Mua 1 tặng 1', '#', '/img/ad-icons/free-ship.png', '2026-02-01'),
+('Giảm ngay 50%', '#', '/img/ad-icons/free-ship.png', '2025-06-01'),
+('Shopee bao ship 0Đ - Đăng ký ngay', '#', '/img/ad-icons/free-ship.png', '2025-01-01');
 
 create table if not exists flashSales(
 	id integer not null unique auto_increment,
@@ -1003,6 +1016,7 @@ from mallPromotions as mp
 join vendors on mp.vendorId = vendors.id and vendors.isMall = true and start <= curdate() and curdate() <= end
 limit 15;
 */
+
 
 
 

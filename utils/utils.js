@@ -2,19 +2,6 @@ import database from "../mySQL/database.js";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 
-export function isvalidSignupRequest(data) {
-
-  return true;
-}
-
-export function isValidLogin(data) {
-  return true;
-}
-
-export function isValidLogoutRequest(data) {
-  return true;
-}
-
 export function encryptPassword(password) {
   return bcrypt.hash(password, 10);
 }

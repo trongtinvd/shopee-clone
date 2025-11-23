@@ -1,20 +1,21 @@
 import { json, Router } from "express";
 import database from "../mySQL/database.js";
-import { isValidLogoutRequest, isvalidSignupRequest, isValidLogin, createSessionCode, jsonResponse } from "../utils/utils.js"
+import { createSessionCode, jsonResponse } from "../utils/utils.js"
+import validator from "../utils/validator.js";
 import bcrypt from "bcrypt";
 const router = Router();
 
-router.route("/banners/")
+router.route("/banners")
   .get((req, res) => {
     database.banners(8, 2)
       .then(data => res.status(200).json(data))
       .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
+        console.log(`/banner error: ${error}`);
+        res.status(500).send(jsonResponse(500, `error when obtaining banners`, '(ó﹏ò｡)', null, error));
       })
   });
 
-router.route("/user/")
+router.route("/user")
   .post((req, res) => {
     database.userInfo(req.body)
       .then(data => {
@@ -26,7 +27,7 @@ router.route("/user/")
       })
   });
 
-router.route("/suggest-search/")
+router.route("/suggest-search")
   .post((req, res) => {
     database.suggestSearchs()
       .then(data => {
@@ -38,7 +39,7 @@ router.route("/suggest-search/")
       })
   });
 
-router.route("/notifications/")
+router.route("/notifications")
   .post((req, res) => {
     database.notifications(req.body)
       .then(data => {
@@ -50,47 +51,47 @@ router.route("/notifications/")
       })
   });
 
-router.route("/search-histories/")
-  .post((req, res) => {
-    database.searchHistories(req.body)
-      .then(result => {
-        res.status(200).json(result);
-      })
-      .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
-      })
+router.route("/search-histories")
+  .post(async (req, res) => {
+    try {
+      const rows = await database.searchHistories(req.body)
+      res.status(200).json(jsonResponse(200, 'Obtained the search histories', '(`꒳´)✧', rows));
+    }
+    catch (error) {
+      console.log(`/search-histories error: ${error}`);
+      res.status(500).send(jsonResponse(500, `error when obtaining search histories`, '(ó﹏ò｡)', null, error));
+    }
   });
 
-router.route("/cart/")
+router.route("/cart")
   .post((req, res) => {
     database.cart(req.body)
       .then(result => {
         res.status(200).json(result);
       })
       .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
+        console.log(`/cart error: ${error}`);
+        res.status(500).send(jsonResponse(500, `error when obtaining cart infomation`, '(ó﹏ò｡)', null, error));
       })
   });
 
-router.route("/flashsale/")
+router.route("/flashsale")
   .get((req, res) => {
     database.flashSale()
       .then(data => res.status(200).json(data))
       .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
+        console.log(`/flash-sale error: ${error}`);
+        res.status(500).send(jsonResponse(500, `error when obtaining flash sales`, '(ó﹏ò｡)', null, error));
       })
   });
 
-router.route("/voucherBanners/")
+router.route("/voucherBanners")
   .get((req, res) => {
     database.voucherBanners()
       .then(data => res.status(200).json(data))
       .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
+        console.log(`/voucherBanners error: ${error}`);
+        res.status(500).send(jsonResponse(500, `error when obtaining voucher banners`, '(ó﹏ò｡)', null, error));
       })
   });
 
@@ -99,8 +100,8 @@ router.route("/mallBanners")
     database.mallBanners()
       .then(data => res.status(200).json(data))
       .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
+        console.log(`/mallBanners error: ${error}`);
+        res.status(500).send(jsonResponse(500, `error when obtaining mall banner`, '(ó﹏ò｡)', null, error));
       })
   });
 
@@ -109,8 +110,8 @@ router.route("/mallPromotions")
     database.mallPromotions()
       .then(data => res.status(200).json(data))
       .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
+        console.log(`/mallPromotions error: ${error}`);
+        res.status(500).send(jsonResponse(500, `error`, '(ó﹏ò｡)', null, error));
       })
   });
 
@@ -119,8 +120,8 @@ router.route("/topSearches")
     database.topSearches()
       .then(data => res.status(200).json(data))
       .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
+        console.log(`/topSearches error: ${error}`);
+        res.status(500).send(jsonResponse(500, `error`, '(ó﹏ò｡)', null, error));
       })
   });
 
@@ -129,8 +130,8 @@ router.route("/todaySuggestions")
     database.todaySuggestions()
       .then(data => res.status(200).json(data))
       .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
+        console.log(`/todaySuggestions error: ${error}`);
+        res.status(500).send(jsonResponse(500, `error`, '(ó﹏ò｡)', null, error));
       })
   });
 
@@ -139,14 +140,14 @@ router.route("/productTypes")
     database.productTypes()
       .then(data => res.status(200).json(data))
       .catch(error => {
-        console.log(`error: ${error}`);
-        res.status(500).send(`error: ${error}`);
+        console.log(`/productTypes error: ${error}`);
+        res.status(500).send(jsonResponse(500, `error`, '(ó﹏ò｡)', null, error));
       })
   });
 
 router.route("/login")
-  .post(async (req, res, next) => {
-    if (!isValidLogin(req.body)) {
+  .post(async (req, res) => {
+    if (!validator.isValidLogin(req.body)) {
       return res.status(400).send("Invalid login data");
     }
     try {
@@ -163,16 +164,14 @@ router.route("/login")
       res.status(200).json(jsonResponse(200, 'login success', 'ok', { cookies: { sessionCode } }));
     }
     catch (error) {
-      switch (error.code) {
-        default:
-          return next(error);
-      }
+      console.log(`error: ${error}`);
+      res.status(500).send(jsonResponse(500, `login error`, '(ó﹏ò｡)', null, error));
     }
   });
 
 router.route('/logout')
-  .post(async (req, res, next) => {
-    if (!isValidLogoutRequest(req)) {
+  .post(async (req, res) => {
+    if (!validator.isValidLogoutRequest(req)) {
       return res.status(400).json(jsonResponse(400, 'Bad logout request', 'ಠ╭╮ಠ', null, req.body));
     }
     database.endUserSession(req.body)
@@ -183,11 +182,11 @@ router.route('/logout')
         console.log(`/logout error: ${JSON.stringify(error)}`);
         return res.status(500).json(jsonResponse(500, 'logout error', '(˶°ㅁ°)!!', null, error));
       })
-  })
+  });
 
 router.route("/signup")
-  .post(async (req, res, next) => {
-    if (!isvalidSignupRequest(req.body)) {
+  .post(async (req, res) => {
+    if (!validator.isvalidSignupRequest(req.body)) {
       return res.status(400).json(jsonResponse(400, 'bad request', 'sign up form is invalid'));
     }
     try {
@@ -199,9 +198,38 @@ router.route("/signup")
         case 'ER_DUP_ENTRY':
           return res.status(400).json(jsonResponse(400, 'sign up fail', 'username has been taken', req.body));
         default:
-          return next(error);
+          console.log(`error: ${error}`);
+          res.status(500).send(jsonResponse(500, `error when signing up`, '(ó﹏ò｡)', null, error));
       }
     }
-  })
+  });
+
+router.route('/search')
+  .post(async (req, res) => {
+    if (!validator.isvalidSearch(req.body)) {
+      return res.status(400).json(jsonResponse(400, 'bad request', 'search is invalid'));
+    }
+    try {
+      const isSave = await database.saveSearchHistory(req.body);
+      const data = await database.searchProducts(req.body);
+      return res.status(200).json(jsonResponse(200, 'Search success', 'Here is the products we found', data));
+    }
+    catch (error) {
+      console.log(`error: ${error}`);
+      res.status(500).send(jsonResponse(500, `error when searching`, '(ó﹏ò｡)', null, error));
+    }
+  });
+
+router.route('/searchAd')
+  .get(async (req, res,) => {
+    try {
+      const data = await database.searchAd();
+      return res.status(200).json(jsonResponse(200, 'Success', 'Here is the a', data));
+    }
+    catch (error) {
+      console.log(`error: ${error}`);
+      res.status(500).send(jsonResponse(500, `error when obtaining search ad`, '(ó﹏ò｡)', null, error));
+    }
+  });
 
 export default router;

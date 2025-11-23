@@ -40,7 +40,6 @@ function renderUser(sessionCode) {
   else {
     htmlRenderer.renderAnonymousUser();
   }
-
 }
 
 function renderSuggestSearch() {
@@ -85,10 +84,38 @@ function renderNotifications() {
     });
 }
 
-function renderSearchHistory() {
-  fetch("/api/search-histories/", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
-    .then(data => data.json())
-    .then(data => htmlRenderer.renderSearchHistory(data));
+function renderSearchHistory(sessionCode) {
+  fetch('/api/search-histories', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ sessionCode })
+  })
+    .then(response => response.json())
+    .then(response => {
+      htmlRenderer.renderSearchHistory(response.data);
+    })
+    .catch(error => {
+      console.log(`error when getting search histories: ${JSON.stringify(error)}`)
+    });
+}
+
+function renderSearchAd() {
+  fetch('/api/searchAd')
+    .then(response => response.json())
+    .then(response => {
+      htmlRenderer.renderSearchAd(response.data);
+    })
+    .catch(error => {
+      console.log(`error when getting search histories: ${JSON.stringify(error)}`)
+    });
+}
+
+function renderSearch(sessionCode) {
+  eventManager.addSearchingEvent();
+  renderSuggestSearch();
+  renderSearchAd();
+  renderSearchHistory(sessionCode);
 }
 
 function renderCart() {
@@ -161,10 +188,9 @@ function renderTodaySuggestions() {
 const sessionCode = Cookies.get('sessionCode');
 
 renderUser(sessionCode);
-renderSuggestSearch();
+renderSearch(sessionCode)
 renderBanner();
 renderNotifications(sessionCode);
-renderSearchHistory(sessionCode);
 renderCart(sessionCode);
 renderProductTypes();
 renderFlashSale();

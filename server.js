@@ -13,6 +13,7 @@ app.use(cors());
 
 app.get("/login", async (req, res) => res.status(200).render("login"));
 app.get("/signup", async (req, res) => res.status(200).render("signup"));
+app.get("/search", async (req, res) => res.status(200).render('search'));
 
 app.use("/api", logger, apiRouter);
 app.use(express.static("public"));
