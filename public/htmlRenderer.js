@@ -332,6 +332,51 @@ const htmlRenderer = {
     searchBar.placeholder = keyword;
     const searchPopup = document.querySelector('.search-history-popup');
     searchPopup.insertAdjacentHTML('afterbegin', this.htmlOfSearchAd(keyword, link, image));
+  },
+
+  htmlOfvariations: function (data) {
+    let values = [];
+    values[0] = [...(new Set(data.variations.map(row => row.value1)))];
+    values[1] = [...(new Set(data.variations.map(row => row.value2)))];
+    values[2] = [...(new Set(data.variations.map(row => row.value3)))];
+
+    let html = '';
+    for (let i = 0; i < values.length; i++) {
+      if (!data.catergories[i])
+        continue;
+      html += `<div class="product-variation">
+                  <h3>${data.catergories[i]}</h3>
+                  ${values[i].map(option => `<label><input type="radio" name="${data.catergories[i]}" value="${option}"><span>${option}</span></label>`).join('')}
+                </div>`
+    }
+    return html;
+  },
+
+  textOfPrice: function (price) {
+    return new String(Intl.NumberFormat('en-US', { style: 'decimal' }).format(Math.ceil(price)));
+  },
+
+  renderProductInfo: function (data) {
+    if (!data)
+      return;
+
+    const imageScroller = document.querySelector('.image-scroller');
+    imageScroller.style.cssText = `--number-of-items: ${data.productImages.length};`;
+    for (const image of data.productImages)
+      imageScroller.insertAdjacentHTML('beforeend', `<img src="${image}">`);
+    document.querySelector('.big-image').insertAdjacentHTML('afterbegin', `<img src="${data.productImages[0]}" alt="" srcset="">`);
+
+    for (const voucher of data.vouchers)
+      document.querySelector('.product-vouchers').insertAdjacentHTML('beforeend', `<div>giảm -${voucher.percentDiscount}%</div>`);
+
+    const sold = data.variations.reduce((sum, current) => sum + current.sold, 0);
+    document.querySelector('.sold').insertAdjacentText('afterbegin', sold > 999 ? `${Math.ceil(sold / 100) / 10}k` : data.sold);
+
+    document.querySelector('.product-variations').innerHTML = this.htmlOfvariations({ catergories: [data.variation1, data.variation2, data.variation3], variations: data.variations });
+    document.querySelector('.product-name').innerHTML = data.name;
+    document.querySelector('.product-description').insertAdjacentHTML('beforeend', `<p>${data.description}</p>`)
+    document.querySelector('.true-price').insertAdjacentText('afterbegin', this.textOfPrice(data.variations[0].price));
+    document.querySelector('.illusion-price').insertAdjacentText('afterbegin', this.textOfPrice(data.variations.reduce((max, current) => current.price > max ? current.price : max, 0) * 1.4));
   }
 }
 

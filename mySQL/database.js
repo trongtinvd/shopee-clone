@@ -151,6 +151,10 @@ const database = {
   },
 
   saveSearchHistory: async function (data) {
+    if (!data.sessionCode) {
+      return null;
+    }
+
     const [rows, fields] = await connection.query(`insert into searchHistories(userId, keyword) values
                                                   ((select userId from userSessions where session = '${data.sessionCode}'), '${data.keyword}');`)
     return rows.affectedRows;
@@ -167,6 +171,40 @@ const database = {
                                                   where start < curdate() 
                                                   order by start desc limit 1;`);
     return rows[0];
+  },
+
+  product: async function (id) {
+
+    const [images,] = await connection.query(`select image from productImages
+                                      where productId = ${id}
+                                      union
+                                      select image from products
+                                      where id = ${id}
+                                      union
+                                      select image from productVariations
+                                      where productId = ${id}
+                                      order by image;`);
+    const [vouchers,] = await connection.query(`select dv.name, percentDiscount from applyVoucher as av
+                                                join discountVouchers as dv on dv.id = av.voucherId
+                                                join products as p on p.id = av.productId
+                                                where p.id = ${id};`)
+    const [[product,],] = await connection.query(`select name, description, variation1, variation2, variation3
+                                                  from products as p
+                                                  join productVariations pv on pv.productId = p.id 
+                                                  where p.id = ${id};`);
+    const [variations,] = await connection.query(`select price, pv.image, value1, value2, value3, sold, instock
+                                                    from products as p
+                                                    join productVariations pv on pv.productId = p.id 
+                                                    where p.id = ${id};`);
+    const result = {
+      ...product,
+      productImages: images.map(row => row.image).filter(item=>item),
+      vouchers: vouchers,
+      reviewScore: null, // implement later
+      reviewCount: null,  // implement later
+      variations
+    };
+    return result;
   }
 }
 export default database;

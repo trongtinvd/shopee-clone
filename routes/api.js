@@ -225,11 +225,23 @@ router.route('/searchAd')
   .get(async (req, res,) => {
     try {
       const data = await database.searchAd();
-      return res.status(200).json(jsonResponse(200, 'Success', 'Here is the a', data));
+      return res.status(200).json(jsonResponse(200, 'Success', 'Here is the ad', data));
     }
     catch (error) {
       console.log(`error: ${error}`);
       res.status(500).send(jsonResponse(500, `error when obtaining search ad`, '(ó﹏ò｡)', null, error));
+    }
+  });
+
+router.route('/product/:id')
+  .get(async (req, res) => {
+    try {
+      const data = await database.product(req.params.id);
+      return res.status(200).json(jsonResponse(200, 'Success', 'Here is the product infomations', data));
+    }
+    catch (error) {
+      console.log(`error: ${error}`);
+      res.status(500).send(jsonResponse(500, `error when obtaining product infomations`, '(ó﹏ò｡)', null, error));
     }
   });
 

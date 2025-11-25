@@ -1,0 +1,140 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+body {
+  width: min(98%, 1200px);
+  justify-self: center;
+}
+
+.product-display {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  width: 100%;
+}
+
+.product-info {
+  padding: 0 1rem;
+}
+
+.product-image {
+  display: flex;
+  flex-direction: column;
+}
+
+.big-image img {
+  object-fit: contain;
+  width: 100%;
+}
+
+.image-scroller {
+  display: grid;
+  grid-template-columns: repeat(var(--number-of-items, 6), 20%);
+  overflow: scroll;
+}
+
+.image-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.image-scroller img {
+  object-fit: contain;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0.1rem;
+}
+
+.product-review-summary {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-price {
+  display: flex;
+  padding: 1rem;
+  justify-content: start;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.true-price {
+  color: red;
+}
+
+.illusion-price {
+  color: gray;
+  text-decoration: line-through;
+}
+
+.product-vouchers,
+.delivery-option,
+.safe-purchase,
+.product-variation,
+.amount-spinner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.product-vouchers h3,
+.delivery-option h3,
+.safe-purchase h3,
+.product-variation h3,
+.amount-spinner h3 {
+  padding: 0.5rem;
+  color: gray;
+  height: 5rem;
+  width: 7rem;
+  font-size: 0.9rem;
+  font-weight: lighter;
+}
+
+.product-vouchers div {
+  display: flex;
+  padding: 0 0.2rem;
+}
+
+.product-variation input[type="radio"] {
+  display: none;
+}
+
+.product-variation input[type="radio"]+span {
+  height: auto;
+  padding: 0.5rem;
+  margin: 0 0.5rem;
+  border: 1px solid gray;
+  user-select: none;
+}
+
+.product-variation input[type="radio"]:checked+span {
+  border-color: orange;
+}
+
+.amount-spinner {
+  display: flex;
+  align-items: stretch;
+}
+
+.amount-spinner div {
+  display: flex;
+  align-items: stretch;
+  height: 2rem;
+}
+
+.amount-spinner button {
+  aspect-ratio: 1;
+}
+
+.amount-counter {
+  padding: 0 0.2rem;
+}
+
+.buying-buttons button {
+  padding: 1rem;
+  width: 12rem;
+}

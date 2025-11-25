@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import apiRouter from "./routes/api.js";
+import productRouter from "./routes/product.js";
 import { logger } from "./utils/middleware.js";
 import cookieParser from "cookie-parser";
 const app = express();
@@ -11,10 +12,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 
+app.get("/", async (req, res) => res.status(200).render("index"));
 app.get("/login", async (req, res) => res.status(200).render("login"));
 app.get("/signup", async (req, res) => res.status(200).render("signup"));
 app.get("/search", async (req, res) => res.status(200).render('search'));
-
+app.use("/product", productRouter);
 app.use("/api", logger, apiRouter);
 app.use(express.static("public"));
 

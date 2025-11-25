@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product</title>
+  <script>
+    const expressParams = <%- JSON.stringify(locals.params) %>;
+  </script>
+  <script type="module" src="/product.js" defer></script>
+  <link rel="stylesheet" href="/styles/product.css">
+</head>
+
+<body>
+  <section class="product-type-link"><a href="#" target="_blank" rel="noopener noreferrer">Thời trang nam</a></section>
+  <section class="product-display">
+    <div class="product-images">
+      <div class="big-image"></div>
+      <div class="image-scroller"> </div>
+      <div class="social-media-links"></div>
+    </div>
+    <div class="product-info">
+      <h1 class="product-name"></h1>
+      <div class="product-review-summary">
+        <div> <span class="review-score"></span>★★★★★ </div>
+        <div><span class="review-count"></span> Đánh giá</div>
+        <div><span class="sold"></span>+ đã bán</div>
+        <a href="#">Tố cáo</a>
+      </div>
+      <div class="product-price">
+        <div><span class="true-price"></span>đ</div>
+        <span>🎫</span>
+        <div><span class="illusion-price"></span>đ</div>
+      </div>
+      <form class="buying-form" id="buying-form">
+        <div class="product-vouchers">
+          <h3>Voucher của shop</h3>
+        </div>
+        <div class="delivery-option">
+          <h3>Vận chuyển</h3>
+          <div>
+            <div>⛟ Nhận từ x tháng y đến z tháng w</div>
+            <div>Tặng 15.000đ voucher nếu nhận sau thời gian trên</div>
+          </div>
+        </div>
+        <div class="safe-purchase">
+          <h3>An toàn mua sắm cùng shopee</h3>
+          <div> 🛡 Shopee Xử Lý · Trả hàng miễn phí 15 ngày </div>
+        </div>
+        <div class="product-variations"> </div>
+        <div class="amount-spinner">
+          <h3>Số lượng</h3>
+          <div>
+            <button id="decrease-amount">-</button>
+            <input type="number" value="0" min="0" name="" class="amount-counter" id="amount">
+            <button id="increase-amount">+</button>
+          </div>
+        </div>
+        <div class="buying-buttons">
+          <button>Thêm vào giỏ hàng</button>
+          <button>Mua ngay</button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <section class="vendor-info">
+
+  </section>
+  <section class="product-description">
+    <h2>Mô tả sản phẩm</h2>
+  </section>
+</body>
+
+</html>

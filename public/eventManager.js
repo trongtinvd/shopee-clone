@@ -130,6 +130,39 @@ const eventManager = {
       e.preventDefault();
       window.location.href = `/search?keyword=${searchBar.value}`;
     });
+  },
+
+  addProductEvents: function (data) {
+    const scrollingImages = document.querySelectorAll('.image-scroller img');
+    for (const image of scrollingImages) {
+      image.addEventListener('click', e => {
+        document.querySelector('.big-image img').src = image.src;
+      });
+    }
+
+    const amountInput = document.getElementById('amount');
+    document.getElementById('decrease-amount').addEventListener('click', e => {
+      e.preventDefault();
+      const newValue = Math.max(0, new Number(amountInput.value) - 1);
+      amountInput.value = newValue;
+    });
+    document.getElementById('increase-amount').addEventListener('click', e => {
+      e.preventDefault();
+      const newValue = new Number(amountInput.value) + 1;
+      amountInput.value = newValue;
+    });
+
+    const variationNames = [data.variation1, data.variation2, data.variation3]
+    let chosenValues = [null, null, null];
+    const buyingForm = document.getElementById('buying-form');
+    buyingForm.addEventListener('change', e => {
+      const variationIndex = variationNames.findIndex(item => item === e.target.name)
+      if (e.target.type === 'radio') {
+        chosenValues[variationIndex] = e.target.value;
+        const selectedVariation = data.variations.find(item => item.value1 === chosenValues[0] && item.value2 === chosenValues[1] && item.value3 === chosenValues[2]);
+        document.querySelector('.true-price').innerHTML = htmlRenderer.textOfPrice(selectedVariation.price);
+      }
+    })
   }
 }
 
