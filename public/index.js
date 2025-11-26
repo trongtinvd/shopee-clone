@@ -1,6 +1,7 @@
 import htmlRenderer from "./htmlRenderer.js";
 import eventManager from "./eventManager.js";
 import dataManager from "./dataManager.js";
+import Cookies from "https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.mjs";
 import { devData } from "./utils.js";
 
 console.log("start");
@@ -29,7 +30,7 @@ function renderUser(sessionCode) {
           htmlRenderer.renderUser(data);
           eventManager.addLogoutEvent();
         }
-        else if (status === 401) {
+        else if (status === 401 || status === 404) {
           htmlRenderer.renderAnonymousUser();
         }
       })
@@ -118,11 +119,20 @@ function renderSearch(sessionCode) {
   renderSearchHistory(sessionCode);
 }
 
-function renderCart() {
-  fetch("/api/cart", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(devData.user.loginData) })
-    .then(data => data.json())
-    .then(data => htmlRenderer.renderCart(data))
-    .catch(error => htmlRenderer.renderEmptyCart());
+async function renderCart(sessionCode) {
+  try {
+    const dataStream = await fetch("/api/myCart-simple", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ sessionCode })
+    })
+    const { status, title, message, data, error } = await dataStream.json();
+    htmlRenderer.renderCart(data);
+  }
+  catch (error) {
+    console.log(`error at /cart: ${error}`);
+  }
 }
 
 function renderProductTypes() {

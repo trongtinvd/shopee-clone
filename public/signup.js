@@ -1,3 +1,5 @@
+import Cookies from "https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.mjs";
+
 console.log("sign up");
 
 async function signupEvent() {

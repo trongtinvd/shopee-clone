@@ -695,7 +695,7 @@ insert into users(username, hashedPassword, displayName, profilePicture) values
 create table if not exists userSessions(
 	id integer not null unique auto_increment,
     userId integer not null unique,
-    session varchar(300),
+    session varchar(300) unique,
     expire datetime,
     primary key (id),
     foreign key (userId) references users(id)
@@ -708,7 +708,8 @@ create table if not exists cartItems(
 	amount integer default 0,
 	primary key(id),
 	foreign key(userId) references users(id),
-	foreign key(productVariationId) references productVariations(id)
+	foreign key(productVariationId) references productVariations(id),
+  key(userId, productVariationId)
 );
 
 

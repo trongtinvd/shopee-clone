@@ -1,5 +1,6 @@
 import htmlRenderer from "./htmlRenderer.js";
 import { clamp } from "./utils.js";
+import Cookies from "https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.mjs";
 
 const eventManager = {
 
@@ -132,38 +133,107 @@ const eventManager = {
     });
   },
 
-  addProductEvents: function (data) {
-    const scrollingImages = document.querySelectorAll('.image-scroller img');
-    for (const image of scrollingImages) {
-      image.addEventListener('click', e => {
-        document.querySelector('.big-image img').src = image.src;
+  '/product': {
+    submitData: {
+      amount: 0,
+      variation: null
+    },
+
+    spinnerButtonsOnClick() {
+      const amountInput = document.getElementById('amount');
+      document.getElementById('decrease-amount').addEventListener('click', e => {
+        e.preventDefault();
+        const newValue = Math.max(0, new Number(amountInput.value) - 1);
+        amountInput.value = newValue;
+        this.submitData.amount = newValue;
+        this.updateProductFormButtonAvailability();
       });
-    }
+      document.getElementById('increase-amount').addEventListener('click', e => {
+        e.preventDefault();
+        const newValue = new Number(amountInput.value) + 1;
+        amountInput.value = newValue;
+        this.submitData.amount = newValue;
+        this.updateProductFormButtonAvailability();
+      });
+    },
 
-    const amountInput = document.getElementById('amount');
-    document.getElementById('decrease-amount').addEventListener('click', e => {
-      e.preventDefault();
-      const newValue = Math.max(0, new Number(amountInput.value) - 1);
-      amountInput.value = newValue;
-    });
-    document.getElementById('increase-amount').addEventListener('click', e => {
-      e.preventDefault();
-      const newValue = new Number(amountInput.value) + 1;
-      amountInput.value = newValue;
-    });
-
-    const variationNames = [data.variation1, data.variation2, data.variation3]
-    let chosenValues = [null, null, null];
-    const buyingForm = document.getElementById('buying-form');
-    buyingForm.addEventListener('change', e => {
-      const variationIndex = variationNames.findIndex(item => item === e.target.name)
-      if (e.target.type === 'radio') {
-        chosenValues[variationIndex] = e.target.value;
-        const selectedVariation = data.variations.find(item => item.value1 === chosenValues[0] && item.value2 === chosenValues[1] && item.value3 === chosenValues[2]);
-        document.querySelector('.true-price').innerHTML = htmlRenderer.textOfPrice(selectedVariation.price);
+    updateBigImageOnClick() {
+      const scrollingImages = document.querySelectorAll('.image-scroller img');
+      for (const image of scrollingImages) {
+        image.addEventListener('click', e => {
+          document.querySelector('.big-image img').src = image.src;
+        });
       }
-    })
-  }
+    },
+
+    updatePriceOnChange(data) {
+      let chosenValues = [null, null, null];
+      document.getElementById('buying-form').addEventListener('change', e => {
+        if (e.target.type === 'radio') {
+          const i = data.catergories.findIndex(item => item === e.target.name)
+          chosenValues[i] = e.target.value;
+          this.submitData.variation = data.variations.find(item => item.value1 === chosenValues[0] && item.value2 === chosenValues[1] && item.value3 === chosenValues[2]);
+          if (this.submitData.variation)
+            document.querySelector('.true-price').innerHTML = htmlRenderer.textOfPrice(this.submitData.variation.price);
+          this.updateProductFormButtonAvailability();
+        }
+      });
+    },
+
+    addToCartOnClick(data) {
+      document.getElementById('add-to-cart-button').addEventListener('click', e => {
+        e.preventDefault();
+        const formData = new FormData(document.getElementById('buying-form'));
+        this.submitData.amount = formData.get('amount');
+        this.submitData.variation = data.variations.find(item => item.value1 === formData.get(data.catergories[0]) && item.value2 === formData.get(data.catergories[1]) && item.value3 === formData.get(data.catergories[2]));
+
+        fetch('/api/addToCart', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: "include",
+          body: JSON.stringify({
+            sessionCode: Cookies.get('sessionCode'),
+            item: this.submitData
+          })
+        })
+          .then(response => response.json())
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.log('error at /api/cart', error);
+          });
+      });
+    },
+
+    updateProductFormButtonAvailability() {
+      const decreaseButton = document.getElementById('decrease-amount');
+      const addToCartButton = document.getElementById('add-to-cart-button');
+      const buyNowButton = document.getElementById('buy-now-button');
+      const amountInput = document.getElementById('amount');
+      if (amountInput.value > 0 && this.submitData.variation) {
+        decreaseButton.disabled = false;
+        addToCartButton.disabled = false;
+        buyNowButton.disabled = false;
+      }
+      else {
+        decreaseButton.disabled = true;
+        addToCartButton.disabled = true;
+        buyNowButton.disabled = true;
+      }
+    },
+
+    addProductEvents(data) {
+      if (data.variations.length === 1)
+        this.submitData.variation = data.variations[0];
+
+      this.updateBigImageOnClick();
+      this.spinnerButtonsOnClick();
+      this.updatePriceOnChange(data);
+      this.updateProductFormButtonAvailability();
+      this.addToCartOnClick(data);
+    }
+  },
 }
 
 export default eventManager;

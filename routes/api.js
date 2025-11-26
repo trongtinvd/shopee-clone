@@ -19,7 +19,10 @@ router.route("/user")
   .post((req, res) => {
     database.userInfo(req.body)
       .then(data => {
-        res.status(200).json(jsonResponse(200, 'Success', 'ok', data))
+        if (data)
+          return res.status(200).json(jsonResponse(200, 'Success', 'ok', data));
+        else
+          return res.status(404).json(jsonResponse(404, 'Login fail', 'logout now', data));
       })
       .catch(error => {
         console.log(`/user => error: ${error}`);
@@ -63,16 +66,16 @@ router.route("/search-histories")
     }
   });
 
-router.route("/cart")
-  .post((req, res) => {
-    database.cart(req.body)
-      .then(result => {
-        res.status(200).json(result);
-      })
-      .catch(error => {
-        console.log(`/cart error: ${error}`);
-        res.status(500).send(jsonResponse(500, `error when obtaining cart infomation`, '(ó﹏ò｡)', null, error));
-      })
+router.route("/myCart-simple")
+  .post(async (req, res) => {
+    try {
+      const data = await database.cart(req.body)
+      return res.status(200).json(jsonResponse(200, 'Success', 'Here is the cart infomation', data));
+    }
+    catch (error) {
+      console.log(`error: ${error}`);
+      res.status(500).send(jsonResponse(500, `error when ad to cart`, '(ó﹏ò｡)', null, error));
+    }
   });
 
 router.route("/flashsale")
@@ -154,10 +157,10 @@ router.route("/login")
       const data = await database.getUser(req.body);
 
       if (!data) {
-        return jsonResponse(res, 404, 'login fail', 'user do not exists', req.body);
+        return res.status(404).json(jsonResponse(404, 'login fail', 'user do not exists', req.body));
       }
       if (!bcrypt.compareSync(req.body.password, data.hashedPassword)) {
-        return jsonResponse(res, 403, 'login fail', 'incorrect password', req.body);
+        return res.status(403).json(jsonResponse(403, 'login fail', 'incorrect password', req.body));
       }
       const sessionCode = await createSessionCode();
       database.addUserSession({ ...req.body, sessionCode });
@@ -242,6 +245,21 @@ router.route('/product/:id')
     catch (error) {
       console.log(`error: ${error}`);
       res.status(500).send(jsonResponse(500, `error when obtaining product infomations`, '(ó﹏ò｡)', null, error));
+    }
+  });
+
+router.route('/addToCart')
+  .post(async (req, res) => {
+    try {
+      const success = await database.AddToCart(req.body);
+      if (success)
+        return res.status(200).json(jsonResponse(200, 'Success', 'Here is the cart infomation'));
+      else
+        return res.status(500).json(jsonResponse(500, 'Fail adding to cart', 'Cannot insert', null, req.body));
+    }
+    catch (error) {
+      console.log(`error: ${error}`);
+      res.status(500).send(jsonResponse(500, `error when ad to cart`, '(ó﹏ò｡)', null, error));
     }
   });
 

@@ -1,3 +1,4 @@
+import Cookies from "https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.mjs";
 
 function autofillUsername() {
   const params = new URLSearchParams(document.location.search);

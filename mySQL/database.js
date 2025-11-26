@@ -48,12 +48,12 @@ const database = {
   },
 
   cart: async function (data) {
-    const [rows, fields] = await connection.query(`select users.username, p.name, p.image, concat('product/',p.id) as link, p.variation1, pv.value1, p.variation2, pv.value2, p.variation3, pv.value3, pv.price, ci.amount, (pv.price * ci.amount) as total 
+    const [rows, fields] = await connection.query(`select p.name, p.image, concat('product/',p.id) as link, pv.price, ci.amount, (pv.price * ci.amount) as total 
                                                   from cartItems as ci 
-                                                  join users on ci.userId = users.id 
+                                                  join userSessions as us on ci.userId = us.userId 
                                                   join productVariations as pv on ci.productVariationId = pv.id 
                                                   join products as p on pv.productId = p.id 
-                                                  where username = '${data.username}' and password = '${data.password}';`)
+                                                  where us.session = '${data.sessionCode}';`)
     return rows;
   },
 
@@ -188,23 +188,57 @@ const database = {
                                                 join discountVouchers as dv on dv.id = av.voucherId
                                                 join products as p on p.id = av.productId
                                                 where p.id = ${id};`)
-    const [[product,],] = await connection.query(`select name, description, variation1, variation2, variation3
+    const [[product,],] = await connection.query(`select p.id as id, name, description, variation1, variation2, variation3
                                                   from products as p
                                                   join productVariations pv on pv.productId = p.id 
                                                   where p.id = ${id};`);
-    const [variations,] = await connection.query(`select price, pv.image, value1, value2, value3, sold, instock
+    const [variations,] = await connection.query(`select pv.id as id, price, pv.image, value1, value2, value3, sold, instock
                                                     from products as p
                                                     join productVariations pv on pv.productId = p.id 
                                                     where p.id = ${id};`);
     const result = {
-      ...product,
-      productImages: images.map(row => row.image).filter(item=>item),
+      productId: product.productId,
+      name: product.name,
+      description: product.description,
+      catergories: [product.variation1, product.variation2, product.variation3],
+      productImages: images.map(row => row.image).filter(item => item),
       vouchers: vouchers,
       reviewScore: null, // implement later
       reviewCount: null,  // implement later
       variations
     };
     return result;
+  },
+
+  AddToCart: async function (data) {
+    let { sessionCode, item: { amount, variation: { id } } } = data;
+
+    const [[itemExisted,],] = await connection.query(`select amount from cartItems
+                                                      where userId = (select u.id 
+                                                                      from users as u
+                                                                      join userSessions as us on us.userId= u.id
+                                                                      where us.session = '${sessionCode}') 
+                                                            and productVariationId = ${id};`)
+    if (itemExisted) {
+      amount = new Number(itemExisted.amount) + new Number(amount);
+      const [result] = await connection.query(`update cartItems
+                                                    set amount = ${amount}
+                                                    where userId = (select u.id 
+                                                                      from users as u
+                                                                      join userSessions as us on us.userId= u.id
+                                                                      where us.session = '${sessionCode}') 
+                                                          and productVariationId = ${id};`)
+      return result.affectedRows;
+    }
+    else {
+      const [result] = await connection.query(`insert into cartItems(userId, productVariationId, amount) values
+                                                  ((select u.id 
+                                                  from users as u
+                                                  join userSessions as us on us.userId= u.id
+                                                  where us.session = '${sessionCode}'), ${id}, ${amount});`)
+      return result.affectedRows;
+    }
+
   }
 }
 export default database;
